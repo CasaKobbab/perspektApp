@@ -1,0 +1,111 @@
+
+import React from "react";
+import { Link } from "react-router-dom";
+import { useTranslation, createPageUrl, getTopicKey } from "@/components/i18n/translations";
+import { Clock, Lock } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { format } from "date-fns";
+import { nb, enUS } from "date-fns/locale";
+
+export default function ArticleCard({ article, topicColors, user, showImage = true }) {
+  const [currentLocale, setCurrentLocale] = React.useState('nb');
+  const { t } = useTranslation(currentLocale);
+
+  React.useEffect(() => {
+    setCurrentLocale(localStorage.getItem('preferred_locale') || 'nb');
+
+    const handleLocaleChange = (event) => {
+      setCurrentLocale(event.detail);
+    };
+
+    window.addEventListener('localeChanged', handleLocaleChange);
+    return () => window.removeEventListener('localeChanged', handleLocaleChange);
+  }, []);
+
+  const canReadArticle = () => {
+    if (article.access_level === 'free') return true;
+    if (user?.subscription_status === 'subscriber' || user?.subscription_status === 'premium') return true;
+    if (article.access_level === 'metered' && (!user || (user.articles_read || 0) < 3)) return true;
+    return false;
+  };
+
+  const getLocaleForDateFns = (localeString) => {
+    switch (localeString) {
+      case 'en': return enUS;
+      case 'nb': return nb;
+      default: return nb;
+    }
+  };
+
+  return (
+    <article className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group">
+      <div className="p-6">
+        <div className="flex items-center gap-4 mb-4">
+          <Link to={createPageUrl(`Topics?filter=${article.topic}`)}>
+            <Badge className={topicColors[article.topic] || "bg-gray-100 text-gray-800"}>
+              {t(getTopicKey(article.topic))}
+            </Badge>
+          </Link>
+          <div className="flex items-center text-sm text-gray-500">
+            <Clock className="w-4 h-4 mr-1" />
+            {article.reading_time || 5} {t('common.readingTime')}
+          </div>
+          {article.access_level !== 'free' && (
+            <div className="flex items-center text-sm text-yellow-600">
+              <Lock className="w-4 h-4 mr-1" />
+              {t(`common.${article.access_level}`)}
+            </div>
+          )}
+        </div>
+
+        {showImage && article.featured_image && (
+          <Link to={createPageUrl(`Article?id=${article.id}`)} className="block mb-6">
+            <img 
+              src={article.featured_image} 
+              alt={article.image_alt || article.title}
+              className="w-full h-48 object-cover rounded-lg group-hover:scale-105 transition-transform duration-300"
+            />
+          </Link>
+        )}
+
+        <Link to={createPageUrl(`Article?id=${article.id}`)}>
+          <h2 className="text-xl font-bold text-gray-900 mb-3 font-serif group-hover:text-blue-800 transition-colors line-clamp-2">
+            {article.title}
+          </h2>
+        </Link>
+
+        {article.dek && (
+          <p className="text-gray-600 text-base leading-relaxed mb-4 line-clamp-2">
+            {article.dek}
+          </p>
+        )}
+
+        <div className="flex items-center justify-between">
+          <div className="flex items-center text-sm text-gray-500">
+            <img src={article.author_avatar_url || 'https://via.placeholder.com/24'} alt={article.author_name} className="w-6 h-6 rounded-full mr-2 object-cover" />
+            {article.author_id ? (
+              <Link to={createPageUrl(`AuthorProfile?id=${article.author_id}`)} className="font-medium text-gray-900 hover:text-blue-800 transition-colors">
+                {article.author_name}
+              </Link>
+            ) : (
+              <span className="font-medium text-gray-900">{article.author_name}</span>
+            )}
+            <span className="mx-2">•</span>
+            <span>
+              {format(new Date(article.published_date || article.created_date), "d. MMMM", { locale: getLocaleForDateFns(currentLocale) })}
+            </span>
+          </div>
+
+          {!canReadArticle() && (
+            <Link to={createPageUrl("Subscribe")}>
+              <Button size="sm" variant="outline" className="text-xs">
+                {t('article.subscribeToRead')}
+              </Button>
+            </Link>
+          )}
+        </div>
+      </div>
+    </article>
+  );
+}
