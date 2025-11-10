@@ -1,4 +1,5 @@
 
+
 // Translation resources and i18n logic
 const translations = {
   nb: {
@@ -173,12 +174,15 @@ const translations = {
     admin: {
       title: "Adminpanel",
       articles: "Artikler",
+      videos: "Videoer",
       users: "Brukere",
       topics: "Emner",
       authors: "Forfattere",
       settings: "Innstillinger",
       articleManagement: "Artikkelbehandling",
       articleManagementDesc: "Behandle alle artikler på plattformen.",
+      videoManagement: "Videoadministrasjon",
+      videoManagementDesc: "Administrer videoer på plattformen.",
       userManagement: "Brukerbehandling",
       userManagementDesc: "Denne funksjonaliteten kommer snart.",
       userManagementDescLive: "Behandle alle brukere på plattformen.",
@@ -186,6 +190,8 @@ const translations = {
       topicManagementDesc: "Denne funksjonaliteten kommer snart.",
       authorManagement: "Forfatterbehandling",
       authorManagementDesc: "Opprett og administrer forfatterprofiler.",
+      settingsManagement: "Innstillinger",
+      settingsManagementDesc: "Administrer plattforminnstillinger.",
       newArticle: "Ny artikkel",
       newAuthor: "Ny forfatter",
       editArticle: "Rediger artikkel",
@@ -474,12 +480,15 @@ const translations = {
     admin: {
       title: "Admin Panel",
       articles: "Articles",
+      videos: "Videos",
       users: "Users",
       topics: "Topics",
       authors: "Authors",
       settings: "Settings",
       articleManagement: "Article Management",
       articleManagementDesc: "Manage all articles on the platform.",
+      videoManagement: "Video Management",
+      videoManagementDesc: "Manage videos on the platform.",
       userManagement: "User Management",
       userManagementDesc: "This functionality is coming soon.",
       userManagementDescLive: "Manage all users on the platform.",
@@ -487,6 +496,8 @@ const translations = {
       topicManagementDesc: "This functionality is coming soon.",
       authorManagement: "Author Management",
       authorManagementDesc: "Create and manage author profiles.",
+      settingsManagement: "Settings",
+      settingsManagementDesc: "Manage platform settings.",
       newArticle: "New Article",
       newAuthor: "New Author",
       editArticle: "Edit Article",

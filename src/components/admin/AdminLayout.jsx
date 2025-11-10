@@ -1,13 +1,13 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { useTranslation, createPageUrl } from "@/components/i18n/translations";
 import {
   FileText,
+  Video,
   Users,
   Bookmark,
   Settings,
-  Edit3, // Added Edit3 icon
+  Edit3,
   LogOut,
   Home,
 } from "lucide-react";
@@ -18,8 +18,9 @@ export default function AdminLayout({ children, activePage, setActivePage, user,
   const { t } = useTranslation(currentLocale);
   
   const navigationItems = [
-    { name: t('admin.articles'), slug: "articles", icon: FileText, roles: ["admin", "editor"] }, // Modified roles for articles
-    { name: t('admin.authors'), slug: "authors", icon: Edit3, roles: ["admin", "editor"] }, // Added authors item
+    { name: t('admin.articles'), slug: "articles", icon: FileText, roles: ["admin", "editor"] },
+    { name: currentLocale === 'nb' ? 'Videoer' : 'Videos', slug: "videos", icon: Video, roles: ["admin", "editor"] },
+    { name: t('admin.authors'), slug: "authors", icon: Edit3, roles: ["admin", "editor"] },
     { name: t('admin.users'), slug: "users", icon: Users, roles: ["admin"] },
     { name: t('admin.topics'), slug: "topics", icon: Bookmark, roles: ["admin", "editor"] },
     { name: t('admin.settings'), slug: "settings", icon: Settings, roles: ["admin"] },
@@ -39,7 +40,7 @@ export default function AdminLayout({ children, activePage, setActivePage, user,
             <div className="w-8 h-8 bg-gradient-to-br from-nordic-sea to-laks rounded-lg flex items-center justify-center">
               <span className="text-paper-white font-bold text-sm">P</span>
             </div>
-            <span className="text-xl font-bold font-serif">Perspektiv</span>
+            <span className="text-xl font-bold font-serif">Perspekt</span>
           </Link>
           <p className="text-xs text-warm-sand mt-1">{t('admin.title')}</p>
         </div>
