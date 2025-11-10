@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Article, User } from "@/entities/all";
 import { Video } from "@/entities/Video";
@@ -155,17 +156,9 @@ export default function Home() {
 
       {/* Latest Articles Grid with 3 columns */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="flex items-center justify-between mb-12">
-          <div>
-            <h2 className="text-3xl font-bold text-primary font-serif mb-2">{t('home.latestArticles')}</h2>
-            <p className="text-secondary">{t('home.latestSubtitle')}</p>
-          </div>
-          <Link to="/Latest">
-            <Button variant="outline" className="flex items-center border-theme text-secondary hover:bg-warm-sand dark:hover:bg-slate-ink">
-              {t('home.seeAll')}
-              <ArrowRight className="ml-2 w-4 h-4" />
-            </Button>
-          </Link>
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-primary font-serif mb-2">{t('home.latestArticles')}</h2>
+          <p className="text-secondary">{t('home.latestSubtitle')}</p>
         </div>
 
         <div className="grid lg:grid-cols-12 gap-8">
