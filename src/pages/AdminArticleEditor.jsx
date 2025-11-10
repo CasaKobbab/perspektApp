@@ -16,8 +16,8 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue } from
-"@/components/ui/select";
+  SelectValue
+} from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { ArrowLeft, Save, Loader2 } from "lucide-react"; // NEW: Import Loader2 for saving state
 import { UploadFile } from "@/integrations/Core"; // NEW: Import UploadFile integration
@@ -76,13 +76,13 @@ export default function AdminArticleEditor() {
 
   // Available topics with language-agnostic keys
   const availableTopics = [
-  { slug: "news", nameKey: "topics.news" },
-  { slug: "opinion", nameKey: "topics.opinion" },
-  { slug: "culture", nameKey: "topics.culture" },
-  { slug: "technology", nameKey: "topics.technology" },
-  { slug: "economy", nameKey: "topics.economy" },
-  { slug: "sports", nameKey: "topics.sports" }];
-
+    { slug: "news", nameKey: "topics.news" },
+    { slug: "opinion", nameKey: "topics.opinion" },
+    { slug: "culture", nameKey: "topics.culture" },
+    { slug: "technology", nameKey: "topics.technology" },
+    { slug: "economy", nameKey: "topics.economy" },
+    { slug: "sports", nameKey: "topics.sports" }
+  ];
 
 
   useEffect(() => {
@@ -287,81 +287,80 @@ export default function AdminArticleEditor() {
   const canPublish = currentUser?.role === 'admin' || currentUser?.role === 'editor';
 
   return (
-    <div className="max-w-5xl mx-auto p-8 bg-white rounded-lg shadow-lg"> {/* Updated styling */}
-      <form onSubmit={handleSubmit}> {/* Changed to handleSubmit */}
+    <div className="max-w-5xl mx-auto p-8 card-surface rounded-lg shadow-lg">
+      <form onSubmit={handleSubmit}>
         <div className="flex justify-between items-center mb-8">
-          <Button variant="ghost" onClick={() => navigate(createPageUrl("Admin"))}>
+          <Button variant="ghost" onClick={() => navigate(createPageUrl("Admin"))} className="text-secondary hover:text-primary">
             <ArrowLeft className="w-4 h-4 mr-2" />
             {t('admin.backToOverview')}
           </Button>
-          <h1 className="text-3xl font-bold text-gray-900">
+          <h1 className="text-3xl font-bold text-primary">
             {articleId ? t('admin.editArticle') : t('admin.newArticle')}
           </h1>
-          {/* Empty div to balance the flex space, or can add other actions */}
           <div></div>
         </div>
 
-        <div className="space-y-6"> {/* Group main content inputs */}
+        <div className="space-y-6">
           <div className="mb-6">
-            <Label htmlFor="title" className="block text-lg font-semibold mb-2">{t('admin.title')}</Label>
+            <Label htmlFor="title" className="block text-lg font-semibold mb-2 text-primary">{t('admin.title')}</Label>
             <Input
               type="text"
               id="title"
-              name="title" // Added name for handleInputChange(e)
+              name="title"
               value={article.title}
-              onChange={handleInputChange} className="text-2xl bg-background text-slate-900 p-4 flex h-10 w-full rounded-md border border-input ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
-
-              required />
-
+              onChange={handleInputChange}
+              className="text-2xl bg-surface border-default text-primary p-4"
+              required
+            />
           </div>
           <div className="mb-6">
-            <Label htmlFor="dek" className="block text-lg font-semibold mb-2">{t('admin.ingress')}</Label>
+            <Label htmlFor="dek" className="block text-lg font-semibold mb-2 text-primary">{t('admin.ingress')}</Label>
             <Textarea
               id="dek"
-              name="dek" // Added name for handleInputChange(e)
+              name="dek"
               value={article.dek || ""}
-              onChange={handleInputChange} className="bg-background text-slate-900 p-4 text-sm flex min-h-[80px] w-full rounded-md border border-input ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-
-              rows={3} />
-
+              onChange={handleInputChange}
+              className="bg-surface border-default text-primary p-4"
+              rows={3}
+            />
           </div>
 
-          <div className="text-slate-900 mb-6">
-            <Label htmlFor="body" className="block text-lg font-semibold mb-2">{t('admin.bodyText')}</Label>
-            <ReactQuill
-              ref={quillRef} // Attach the ref here
-              theme="snow"
-              value={article.body}
-              onChange={handleBodyChange} // Specific handler for Quill
-              modules={modules} // Apply modules for toolbar and custom handlers
-              formats={formats} // Apply formats
-              className="bg-white" />
-
+          <div className="mb-6">
+            <Label htmlFor="body" className="block text-lg font-semibold mb-2 text-primary">{t('admin.bodyText')}</Label>
+            <div className="bg-surface rounded-md border border-default">
+              <ReactQuill
+                ref={quillRef}
+                theme="snow"
+                value={article.body}
+                onChange={handleBodyChange}
+                modules={modules}
+                formats={formats}
+              />
+            </div>
           </div>
         </div>
 
         {/* Metadata Section */}
-        <div className="bg-gray-50 p-6 rounded-lg border mb-8">
-          <h2 className="text-xl font-bold mb-4">{t('admin.metadata')}</h2>
+        <div className="bg-surface p-6 rounded-lg border border-default mb-8">
+          <h2 className="text-xl font-bold mb-4 text-primary">{t('admin.metadata')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <Label htmlFor="author" className="font-semibold">{t('admin.author')}</Label>
+              <Label htmlFor="author" className="font-semibold text-primary">{t('admin.author')}</Label>
               <Select onValueChange={handleAuthorChange} value={article.author_profile_id || "no-author"}>
-                <SelectTrigger className="bg-background text-slate-900 px-3 py-2 text-sm flex h-10 w-full items-center justify-between rounded-md border border-input ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1">
+                <SelectTrigger className="bg-surface border-default text-primary">
                   <SelectValue placeholder={t('admin.selectAuthor')} />
                 </SelectTrigger>
-                <SelectContent>
-                  {/* Option to clear selection - using "no-author" instead of empty string */}
-                  <SelectItem key="no-author" value="no-author">
+                <SelectContent className="bg-surface border-default">
+                  <SelectItem key="no-author" value="no-author" className="text-primary hover:bg-warm-sand dark:hover:bg-slate-ink">
                     {t('admin.noAuthor')}
                   </SelectItem>
                   {authors.map((author) =>
-                  <SelectItem key={author.id} value={author.id}>
+                    <SelectItem key={author.id} value={author.id} className="text-primary hover:bg-warm-sand dark:hover:bg-slate-ink">
                       <div className="flex items-center gap-2">
                         <img
-                        src={author.avatar_url || 'https://via.placeholder.com/24'}
-                        alt={author.name}
-                        className="w-6 h-6 rounded-full object-cover" />
+                          src={author.avatar_url || 'https://via.placeholder.com/24'}
+                          alt={author.name}
+                          className="w-6 h-6 rounded-full object-cover" />
 
                         <span>{author.name}</span>
                       </div>
@@ -372,14 +371,14 @@ export default function AdminArticleEditor() {
             </div>
 
             <div>
-              <Label htmlFor="topic" className="font-semibold">{t('admin.topic')}</Label>
+              <Label htmlFor="topic" className="font-semibold text-primary">{t('admin.topic')}</Label>
               <Select value={article.topic} onValueChange={(v) => handleSelectOrSwitchChange("topic", v)}>
-                <SelectTrigger className="bg-background text-slate-900 px-3 py-2 text-sm flex h-10 w-full items-center justify-between rounded-md border border-input ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1">
+                <SelectTrigger className="bg-surface border-default text-primary">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-surface border-default">
                   {availableTopics.map((topic) =>
-                  <SelectItem key={topic.slug} value={topic.slug}>
+                    <SelectItem key={topic.slug} value={topic.slug} className="text-primary hover:bg-warm-sand dark:hover:bg-slate-ink">
                       {t(topic.nameKey)}
                     </SelectItem>
                   )}
@@ -388,65 +387,65 @@ export default function AdminArticleEditor() {
             </div>
 
             <div>
-              <Label htmlFor="status" className="font-semibold">{t('admin.status')}</Label>
+              <Label htmlFor="status" className="font-semibold text-primary">{t('admin.status')}</Label>
               <Select value={article.status} onValueChange={(v) => handleSelectOrSwitchChange("status", v)}>
-                <SelectTrigger className="bg-background text-slate-900 px-3 py-2 text-sm flex h-10 w-full items-center justify-between rounded-md border border-input ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1">
+                <SelectTrigger className="bg-surface border-default text-primary">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="draft">{t('common.draft')}</SelectItem>
-                  <SelectItem value="in_review">{t('common.inReview')}</SelectItem>
-                  {canPublish && <SelectItem value="published">{t('common.published')}</SelectItem>}
-                  {canPublish && <SelectItem value="archived">{t('common.archived')}</SelectItem>}
+                <SelectContent className="bg-surface border-default">
+                  <SelectItem value="draft" className="text-primary hover:bg-warm-sand dark:hover:bg-slate-ink">{t('common.draft')}</SelectItem>
+                  <SelectItem value="in_review" className="text-primary hover:bg-warm-sand dark:hover:bg-slate-ink">{t('common.inReview')}</SelectItem>
+                  {canPublish && <SelectItem value="published" className="text-primary hover:bg-warm-sand dark:hover:bg-slate-ink">{t('common.published')}</SelectItem>}
+                  {canPublish && <SelectItem value="archived" className="text-primary hover:bg-warm-sand dark:hover:bg-slate-ink">{t('common.archived')}</SelectItem>}
                 </SelectContent>
               </Select>
             </div>
 
             <div>
-              <Label htmlFor="access_level" className="font-semibold">{t('admin.accessLevel')}</Label>
+              <Label htmlFor="access_level" className="font-semibold text-primary">{t('admin.accessLevel')}</Label>
               <Select value={article.access_level} onValueChange={(v) => handleSelectOrSwitchChange("access_level", v)} disabled={!canPublish}>
-                <SelectTrigger className="bg-background text-slate-900 px-3 py-2 text-sm flex h-10 w-full items-center justify-between rounded-md border border-input ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1">
+                <SelectTrigger className="bg-surface border-default text-primary">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="free">{t('common.free')}</SelectItem>
-                  <SelectItem value="metered">{t('common.metered')}</SelectItem>
-                  <SelectItem value="premium">{t('common.premium')}</SelectItem>
+                <SelectContent className="bg-surface border-default">
+                  <SelectItem value="free" className="text-primary hover:bg-warm-sand dark:hover:bg-slate-ink">{t('common.free')}</SelectItem>
+                  <SelectItem value="metered" className="text-primary hover:bg-warm-sand dark:hover:bg-slate-ink">{t('common.metered')}</SelectItem>
+                  <SelectItem value="premium" className="text-primary hover:bg-warm-sand dark:hover:bg-slate-ink">{t('common.premium')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             <div className="md:col-span-2">
-              <Label htmlFor="tags" className="font-semibold">{t('admin.tags')}</Label>
+              <Label htmlFor="tags" className="font-semibold text-primary">{t('admin.tags')}</Label>
               <Input
                 id="tags"
-                name="tags" // Added name
+                name="tags"
                 value={article.tags.join(", ")}
-                onChange={(e) => handleSelectOrSwitchChange("tags", e.target.value.split(",").map((t) => t.trim()))} className="bg-background text-slate-900 px-3 py-2 text-base flex h-10 w-full rounded-md border border-input ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm" />
-
-
-              <p className="text-sm text-gray-500 mt-1">{t('admin.tagsHint')}</p>
+                onChange={(e) => handleSelectOrSwitchChange("tags", e.target.value.split(",").map((t) => t.trim()))}
+                className="bg-surface border-default text-primary"
+              />
+              <p className="text-sm text-secondary mt-1">{t('admin.tagsHint')}</p>
             </div>
 
             <div className="md:col-span-2">
-              <Label htmlFor="featured_image" className="font-semibold">{t('admin.featuredImage')}</Label>
+              <Label htmlFor="featured_image" className="font-semibold text-primary">{t('admin.featuredImage')}</Label>
               <Input
                 id="featured_image"
-                name="featured_image" // Added name
+                name="featured_image"
                 value={article.featured_image}
-                onChange={handleInputChange} className="bg-background text-slate-900 px-3 py-2 text-base flex h-10 w-full rounded-md border border-input ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm" />
-
-
+                onChange={handleInputChange}
+                className="bg-surface border-default text-primary"
+              />
             </div>
             <div className="md:col-span-2">
-              <Label htmlFor="image_alt" className="font-semibold">{t('admin.imageAlt')}</Label>
+              <Label htmlFor="image_alt" className="font-semibold text-primary">{t('admin.imageAlt')}</Label>
               <Input
                 id="image_alt"
-                name="image_alt" // Added name
+                name="image_alt"
                 value={article.image_alt}
-                onChange={handleInputChange} className="bg-background text-slate-900 px-3 py-2 text-base flex h-10 w-full rounded-md border border-input ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm" />
-
-
+                onChange={handleInputChange}
+                className="bg-surface border-default text-primary"
+              />
             </div>
 
             <div className="flex items-center space-x-2">
@@ -454,53 +453,58 @@ export default function AdminArticleEditor() {
                 id="featured"
                 checked={article.featured}
                 onCheckedChange={(c) => handleSelectOrSwitchChange("featured", c)}
-                disabled={!canPublish} />
-
-              <Label htmlFor="featured">{t('common.featuredOnHomepage')}</Label>
+                disabled={!canPublish}
+              />
+              <Label htmlFor="featured" className="text-primary">{t('common.featuredOnHomepage')}</Label>
             </div>
 
             <div className="md:col-span-2">
-              <Label htmlFor="locale" className="font-semibold">{t('common.language')}</Label>
+              <Label htmlFor="locale" className="font-semibold text-primary">{t('common.language')}</Label>
               <Select value={article.locale} onValueChange={(v) => handleSelectOrSwitchChange("locale", v)}>
-                <SelectTrigger className="bg-background text-slate-900 px-3 py-2 text-sm flex h-10 w-full items-center justify-between rounded-md border border-input ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1">
+                <SelectTrigger className="bg-surface border-default text-primary">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="nb">Norsk</SelectItem>
-                  <SelectItem value="en">English</SelectItem>
+                <SelectContent className="bg-surface border-default">
+                  <SelectItem value="nb" className="text-primary hover:bg-warm-sand dark:hover:bg-slate-ink">Norsk</SelectItem>
+                  <SelectItem value="en" className="text-primary hover:bg-warm-sand dark:hover:bg-slate-ink">English</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             <div className="md:col-span-2">
-              <Label htmlFor="translation_group_id" className="font-semibold">{t('admin.translationGroup')}</Label>
+              <Label htmlFor="translation_group_id" className="font-semibold text-primary">{t('admin.translationGroup')}</Label>
               <Input
                 id="translation_group_id"
-                name="translation_group_id" // Added name
+                name="translation_group_id"
                 value={article.translation_group_id}
                 onChange={handleInputChange}
-                placeholder={generateUUID()} className="bg-background text-slate-900 px-3 py-2 text-base flex h-10 w-full rounded-md border border-input ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm" />
-
-
-              <p className="text-sm text-gray-500 mt-1">
+                placeholder={generateUUID()}
+                className="bg-surface border-default text-primary"
+              />
+              <p className="text-sm text-secondary mt-1">
                 {currentLocale === 'nb' ? 'Unik ID som grupperer alle oversettelser av denne artikkelen.' : 'Unique ID that groups all translations of this article.'}
               </p>
             </div>
             {article.original_article_id &&
-            <div className="md:col-span-2">
-                <Label htmlFor="original_article_id" className="font-semibold">{t('admin.originalArticle')}</Label>
-                <Input id="original_article_id" value={article.original_article_id} readOnly className="bg-background text-slate-50 px-3 py-2 text-base flex h-10 w-full rounded-md border border-input ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm" />
+              <div className="md:col-span-2">
+                <Label htmlFor="original_article_id" className="font-semibold text-primary">{t('admin.originalArticle')}</Label>
+                <Input
+                  id="original_article_id"
+                  value={article.original_article_id}
+                  readOnly
+                  className="bg-surface border-default text-secondary"
+                />
               </div>
             }
           </div>
         </div>
 
         <div className="flex justify-end mt-8">
-          <Button type="submit" disabled={isSaving}>
+          <Button type="submit" disabled={isSaving} className="bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500 text-white font-semibold hover:from-emerald-600 hover:via-teal-500 hover:to-cyan-600 shadow-md hover:shadow-lg transition-all duration-300">
             {isSaving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {t('admin.saveArticle')}
           </Button>
         </div>
       </form>
-    </div>);
-
+    </div>
+  );
 }
