@@ -130,7 +130,7 @@ export default function Home() {
             <div className="bg-paper-white/10 backdrop-blur-sm rounded-xl p-6 max-w-md mx-auto">
                 <p className="text-warm-sand mb-4">{t('home.welcomeBack')}, {user.full_name}!</p>
                 <Link to="/Latest">
-                  <Button className="desktop navigation links (Home, Latest, Topics, Authors) in the header] desktop navigation links (Home, Latest, Topics, Authors) in the header] bg-[#154B67] text-slate-50 px-4 py-2 text-sm font-medium desktop navigation links (Home, Latest, Topics, Authors) in the header] inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-10 hover:bg-warm-sand">
+                  <Button className="bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500 text-white font-semibold px-6 py-3 rounded-lg hover:from-emerald-600 hover:via-teal-500 hover:to-cyan-600 transition-all duration-300 shadow-lg hover:shadow-xl">
                     {t('home.readLatestArticles')}
                     <ArrowRight className="ml-2 w-4 h-4" />
                   </Button>
@@ -225,3 +225,4 @@ export default function Home() {
     </div>);
 
 }
+```
