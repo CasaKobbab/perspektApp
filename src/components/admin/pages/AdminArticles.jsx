@@ -88,7 +88,7 @@ export default function AdminArticles({ user, currentLocale }) {
           <p className="text-secondary mt-1">{t('admin.articleManagementDesc')}</p>
         </div>
         <Link to={createPageUrl("AdminArticleEditor")}>
-          <Button className="btn-primary">
+          <Button className="bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500 text-white font-semibold hover:from-emerald-600 hover:via-teal-500 hover:to-cyan-600 shadow-md hover:shadow-lg transition-all duration-300">
             <Plus className="w-4 h-4 mr-2" />
             {t('admin.newArticle')}
           </Button>
