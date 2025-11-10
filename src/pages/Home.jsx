@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Article, User } from "@/entities/all";
+import { Video } from "@/entities/Video";
 import { Link } from "react-router-dom";
 import { useTranslation } from "@/components/i18n/translations";
 import { Clock, ArrowRight, Star, TrendingUp } from "lucide-react";
@@ -12,12 +13,14 @@ import ArticleCard from "../components/home/ArticleCard";
 import FeaturedSection from "../components/home/FeaturedSection";
 import TopicNavigation from "../components/home/TopicNavigation";
 import NewsletterSignup from "../components/home/NewsletterSignup";
+import LatestVideos from "../components/home/LatestVideos";
 
 export default function Home() {
   const [currentLocale, setCurrentLocale] = useState('nb');
   const { t } = useTranslation(currentLocale);
   const [user, setUser] = useState(null);
   const [articles, setArticles] = useState([]);
+  const [videos, setVideos] = useState([]);
   const [featuredArticles, setFeaturedArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -41,12 +44,14 @@ export default function Home() {
     const loadData = async () => {
       setIsLoading(true);
       try {
-        const [allArticles, currentUser] = await Promise.all([
-        Article.filter({ status: 'published', locale: currentLocale }, '-published_date', 20),
-        User.me().catch(() => null)]
-        );
+        const [allArticles, allVideos, currentUser] = await Promise.all([
+          Article.filter({ status: 'published', locale: currentLocale }, '-published_date', 20),
+          Video.filter({ status: 'published', locale: currentLocale }, '-published_date', 4).catch(() => []),
+          User.me().catch(() => null)
+        ]);
 
         setArticles(allArticles);
+        setVideos(allVideos);
         setFeaturedArticles(allArticles.filter((article) => article.featured).slice(0, 3));
         setUser(currentUser);
       } catch (error) {
@@ -71,8 +76,8 @@ export default function Home() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-paper-white dark:bg-slate-ink">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-nordic-sea"></div>
-      </div>);
-
+      </div>
+    );
   }
 
   return (
@@ -108,8 +113,8 @@ export default function Home() {
               {t('home.subtitle')}
             </p>
             
-            {!user ?
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            {!user ? (
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link to="/Subscribe">
                   <Button size="lg" className="bg-paper-white text-nordic-sea hover:bg-warm-sand font-semibold px-8">
                     {t('home.startSubscription')}
@@ -117,16 +122,16 @@ export default function Home() {
                   </Button>
                 </Link>
                 <Button
-                variant="outline"
-                size="lg"
-                className="border-paper-white text-paper-white hover:bg-paper-white hover:text-nordic-sea px-8"
-                onClick={async () => await User.login()}>
-
+                  variant="outline"
+                  size="lg"
+                  className="border-paper-white text-paper-white hover:bg-paper-white hover:text-nordic-sea px-8"
+                  onClick={async () => await User.login()}
+                >
                   {t('nav.login')}
                 </Button>
-              </div> :
-
-            <div className="bg-paper-white/10 backdrop-blur-sm rounded-xl p-6 max-w-md mx-auto">
+              </div>
+            ) : (
+              <div className="bg-paper-white/10 backdrop-blur-sm rounded-xl p-6 max-w-md mx-auto">
                 <p className="text-warm-sand mb-4">{t('home.welcomeBack')}, {user.full_name}!</p>
                 <Link to="/Latest">
                   <Button className="bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500 text-white font-semibold px-6 py-3 rounded-lg hover:from-emerald-600 hover:via-teal-500 hover:to-cyan-600 transition-all duration-300 shadow-lg hover:shadow-xl">
@@ -135,7 +140,7 @@ export default function Home() {
                   </Button>
                 </Link>
               </div>
-            }
+            )}
           </div>
         </div>
       </section>
@@ -144,11 +149,11 @@ export default function Home() {
       <TopicNavigation />
 
       {/* Featured Articles */}
-      {featuredArticles.length > 0 &&
-      <FeaturedSection articles={featuredArticles} topicColors={topicColors} />
-      }
+      {featuredArticles.length > 0 && (
+        <FeaturedSection articles={featuredArticles} topicColors={topicColors} />
+      )}
 
-      {/* Latest Articles Grid */}
+      {/* Latest Articles Grid with 3 columns */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="flex items-center justify-between mb-12">
           <div>
@@ -163,23 +168,28 @@ export default function Home() {
           </Link>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Main Content */}
-          <div className="lg:col-span-2">
-            <div className="space-y-8">
-              {articles.slice(0, 6).map((article) =>
-              <ArticleCard
-                key={article.id}
-                article={article}
-                topicColors={topicColors}
-                user={user} />
+        <div className="grid lg:grid-cols-12 gap-8">
+          {/* Latest Videos - Left Column */}
+          <div className="lg:col-span-3">
+            <LatestVideos videos={videos} topicColors={topicColors} />
+          </div>
 
-              )}
+          {/* Main Content - Center Column */}
+          <div className="lg:col-span-6">
+            <div className="space-y-8">
+              {articles.slice(0, 6).map((article) => (
+                <ArticleCard
+                  key={article.id}
+                  article={article}
+                  topicColors={topicColors}
+                  user={user}
+                />
+              ))}
             </div>
           </div>
 
-          {/* Sidebar */}
-          <div className="lg:col-span-1 space-y-8">
+          {/* Sidebar - Right Column */}
+          <div className="lg:col-span-3 space-y-8">
             {/* Newsletter Signup */}
             <NewsletterSignup user={user} />
 
@@ -190,22 +200,22 @@ export default function Home() {
                 {t('home.popularTopics')}
               </h3>
               <div className="flex flex-wrap gap-2">
-                {Object.keys(topicColors).map((topic) =>
-                <Link key={topic} to={`/Topics?filter=${topic}`}>
+                {Object.keys(topicColors).map((topic) => (
+                  <Link key={topic} to={`/Topics?filter=${topic}`}>
                     <Badge
-                    variant="secondary"
-                    className={`${topicColors[topic]} cursor-pointer hover:opacity-80 transition-opacity`}>
-
+                      variant="secondary"
+                      className={`${topicColors[topic]} cursor-pointer hover:opacity-80 transition-opacity`}
+                    >
                       {t(`topics.${topic}`)}
                     </Badge>
                   </Link>
-                )}
+                ))}
               </div>
             </div>
 
             {/* Subscription CTA */}
-            {!user &&
-            <div className="card-surface rounded-lg p-6 text-center bg-gradient-to-br from-warm-sand to-laks dark:from-slate-ink dark:to-nordic-sea">
+            {!user && (
+              <div className="card-surface rounded-lg p-6 text-center bg-gradient-to-br from-warm-sand to-laks dark:from-slate-ink dark:to-nordic-sea">
                 <Star className="w-8 h-8 text-nordic-sea dark:text-laks mx-auto mb-3" />
                 <h3 className="font-semibold text-primary mb-2">{t('home.getAccess')}</h3>
                 <p className="text-sm text-secondary mb-4">
@@ -217,10 +227,10 @@ export default function Home() {
                   </Button>
                 </Link>
               </div>
-            }
+            )}
           </div>
         </div>
       </section>
-    </div>);
-
+    </div>
+  );
 }
