@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { AuthorProfile } from "@/entities/AuthorProfile";
 import { useTranslation } from "@/components/i18n/translations";
@@ -69,7 +70,10 @@ export default function AdminAuthors({ user, currentLocale }) {
           <h1 className="text-3xl font-bold text-primary">{t('admin.authorManagement')}</h1>
           <p className="text-secondary mt-1">{t('admin.authorManagementDesc')}</p>
         </div>
-        <Button className="btn-primary" onClick={handleNew}>
+        <Button 
+          className="bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500 text-white font-semibold hover:from-emerald-600 hover:via-teal-500 hover:to-cyan-600 shadow-md hover:shadow-lg transition-all duration-300" 
+          onClick={handleNew}
+        >
           <Plus className="w-4 h-4 mr-2" />
           {t('admin.newAuthor')}
         </Button>
