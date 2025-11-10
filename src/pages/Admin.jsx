@@ -9,7 +9,8 @@ import AdminUsers from "../components/admin/pages/AdminUsers";
 import AdminTopics from "../components/admin/pages/AdminTopics";
 import AdminAuthors from "../components/admin/pages/AdminAuthors";
 import AdminSettings from "../components/admin/pages/AdminSettings";
-import { ShieldAlert } from "lucide-react";
+import AdminVideos from "../components/admin/pages/AdminVideos"; // New import
+import { ShieldAlert, FileText, Video, Users, BookOpen, UserRound, Settings } from "lucide-react"; // Added new icons
 import { Button } from "@/components/ui/button";
 
 export default function Admin() {
@@ -57,6 +58,8 @@ export default function Admin() {
     switch (activePage) {
       case "articles":
         return <AdminArticles user={user} currentLocale={currentLocale} />;
+      case "videos": // New case for videos
+        return <AdminVideos user={user} currentLocale={currentLocale} />;
       case "users":
         return <AdminUsers user={user} currentLocale={currentLocale} />;
       case "topics":
@@ -66,7 +69,68 @@ export default function Admin() {
       case "settings":
         return <AdminSettings user={user} currentLocale={currentLocale} />;
       default:
-        return <AdminArticles user={user} currentLocale={currentLocale} />;
+        // New default case rendering a dashboard of cards
+        return (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div
+              onClick={() => setActivePage('articles')}
+              className="card-surface p-6 rounded-lg cursor-pointer hover:shadow-lg transition-shadow border-2 border-transparent hover:border-accent">
+
+              <FileText className="w-12 h-12 text-accent mb-4" />
+              <h2 className="text-2xl font-bold mb-2 text-primary">{t('admin.articleManagement')}</h2>
+              <p className="text-secondary">{t('admin.articleManagementDesc')}</p>
+            </div>
+
+            <div
+              onClick={() => setActivePage('videos')}
+              className="card-surface p-6 rounded-lg cursor-pointer hover:shadow-lg transition-shadow border-2 border-transparent hover:border-accent">
+
+              <Video className="w-12 h-12 text-accent mb-4" />
+              <h2 className="text-2xl font-bold mb-2 text-primary">
+                {t('admin.videoManagement')}
+              </h2>
+              <p className="text-secondary">
+                {t('admin.videoManagementDesc')}
+              </p>
+            </div>
+
+            <div
+              onClick={() => setActivePage('users')}
+              className="card-surface p-6 rounded-lg cursor-pointer hover:shadow-lg transition-shadow border-2 border-transparent hover:border-accent">
+
+              <Users className="w-12 h-12 text-accent mb-4" />
+              <h2 className="text-2xl font-bold mb-2 text-primary">{t('admin.userManagement')}</h2>
+              <p className="text-secondary">{t('admin.userManagementDesc')}</p>
+            </div>
+
+            <div
+              onClick={() => setActivePage('topics')}
+              className="card-surface p-6 rounded-lg cursor-pointer hover:shadow-lg transition-shadow border-2 border-transparent hover:border-accent">
+
+              <BookOpen className="w-12 h-12 text-accent mb-4" />
+              <h2 className="text-2xl font-bold mb-2 text-primary">{t('admin.topicManagement')}</h2>
+              <p className="text-secondary">{t('admin.topicManagementDesc')}</p>
+            </div>
+
+            <div
+              onClick={() => setActivePage('authors')}
+              className="card-surface p-6 rounded-lg cursor-pointer hover:shadow-lg transition-shadow border-2 border-transparent hover:border-accent">
+
+              <UserRound className="w-12 h-12 text-accent mb-4" />
+              <h2 className="text-2xl font-bold mb-2 text-primary">{t('admin.authorManagement')}</h2>
+              <p className="text-secondary">{t('admin.authorManagementDesc')}</p>
+            </div>
+
+            <div
+              onClick={() => setActivePage('settings')}
+              className="card-surface p-6 rounded-lg cursor-pointer hover:shadow-lg transition-shadow border-2 border-transparent hover:border-accent">
+
+              <Settings className="w-12 h-12 text-accent mb-4" />
+              <h2 className="text-2xl font-bold mb-2 text-primary">{t('admin.settingsManagement')}</h2>
+              <p className="text-secondary">{t('admin.settingsManagementDesc')}</p>
+            </div>
+          </div>
+        );
     }
   };
 
