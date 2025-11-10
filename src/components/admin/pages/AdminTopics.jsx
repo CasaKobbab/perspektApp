@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from "@/components/i18n/translations";
 import { Topic } from '@/entities/Topic';
@@ -70,7 +71,10 @@ export default function AdminTopics({ user, currentLocale }) {
           <h1 className="text-3xl font-bold text-primary">{t('admin.topicManagement')}</h1>
           <p className="text-secondary mt-1">Create, edit, and manage content topics.</p>
         </div>
-        <Button className="btn-primary" onClick={handleNew}>
+        <Button 
+          className="bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500 text-white font-semibold hover:from-emerald-600 hover:via-teal-500 hover:to-cyan-600 shadow-md hover:shadow-lg transition-all duration-300" 
+          onClick={handleNew}
+        >
           <Plus className="w-4 h-4 mr-2" />
           New Topic
         </Button>
