@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Article, User } from "@/entities/all";
 import { Video } from "@/entities/Video";
@@ -45,16 +44,39 @@ export default function Home() {
     const loadData = async () => {
       setIsLoading(true);
       try {
-        const [allArticles, allVideos, currentUser] = await Promise.all([
-          Article.filter({ status: 'published', locale: currentLocale }, '-published_date', 20),
-          Video.filter({ status: 'published', locale: currentLocale }, '-published_date', 4).catch(() => []),
-          User.me().catch(() => null)
-        ]);
+        // Fetch articles with locale filter
+        const allArticles = await Article.filter({ status: 'published', locale: currentLocale }, '-published_date', 20);
+        
+        // Fetch videos - first try with locale, if empty try without locale filter
+        let allVideos = [];
+        try {
+          allVideos = await Video.filter({ status: 'published', locale: currentLocale }, '-published_date', 4);
+          
+          // If no videos found for current locale, try fetching all published videos
+          if (!allVideos || allVideos.length === 0) {
+            console.log(`No videos found for locale: ${currentLocale}, fetching all published videos`);
+            allVideos = await Video.filter({ status: 'published' }, '-published_date', 4);
+          }
+        } catch (videoError) {
+          console.error('Error loading videos:', videoError);
+          // Try fetching all published videos as fallback
+          try {
+            allVideos = await Video.filter({ status: 'published' }, '-published_date', 4);
+          } catch (fallbackError) {
+            console.error('Error loading videos (fallback):', fallbackError);
+            allVideos = [];
+          }
+        }
+
+        // Fetch current user
+        const currentUser = await User.me().catch(() => null);
 
         setArticles(allArticles);
         setVideos(allVideos);
         setFeaturedArticles(allArticles.filter((article) => article.featured).slice(0, 3));
         setUser(currentUser);
+        
+        console.log('Loaded videos:', allVideos);
       } catch (error) {
         console.error('Error loading data:', error);
       }
