@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { useTranslation, createPageUrl, getTopicKey } from "@/components/i18n/translations";
@@ -39,20 +38,20 @@ export default function ArticleCard({ article, topicColors, user, showImage = tr
   };
 
   return (
-    <article className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group">
+    <article className="card-surface rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group border border-default">
       <div className="p-6">
-        <div className="flex items-center gap-4 mb-4">
+        <div className="flex items-center gap-4 mb-4 flex-wrap">
           <Link to={createPageUrl(`Topics?filter=${article.topic}`)}>
-            <Badge className={topicColors[article.topic] || "bg-gray-100 text-gray-800"}>
+            <Badge className={`${topicColors[article.topic] || "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200"} transition-colors`}>
               {t(getTopicKey(article.topic))}
             </Badge>
           </Link>
-          <div className="flex items-center text-sm text-gray-500">
+          <div className="flex items-center text-sm text-secondary">
             <Clock className="w-4 h-4 mr-1" />
             {article.reading_time || 5} {t('common.readingTime')}
           </div>
           {article.access_level !== 'free' && (
-            <div className="flex items-center text-sm text-yellow-600">
+            <div className="flex items-center text-sm text-accent">
               <Lock className="w-4 h-4 mr-1" />
               {t(`common.${article.access_level}`)}
             </div>
@@ -64,34 +63,38 @@ export default function ArticleCard({ article, topicColors, user, showImage = tr
             <img 
               src={article.featured_image} 
               alt={article.image_alt || article.title}
-              className="w-full h-48 object-cover rounded-lg group-hover:scale-105 transition-transform duration-300"
+              className="w-full h-48 object-cover rounded-lg group-hover:scale-105 transition-transform duration-300 shadow-sm"
             />
           </Link>
         )}
 
         <Link to={createPageUrl(`Article?id=${article.id}`)}>
-          <h2 className="text-xl font-bold text-gray-900 mb-3 font-serif group-hover:text-blue-800 transition-colors line-clamp-2">
+          <h2 className="text-xl font-bold text-primary mb-3 font-serif group-hover:text-accent transition-colors line-clamp-2">
             {article.title}
           </h2>
         </Link>
 
         {article.dek && (
-          <p className="text-gray-600 text-base leading-relaxed mb-4 line-clamp-2">
+          <p className="text-secondary text-base leading-relaxed mb-4 line-clamp-2">
             {article.dek}
           </p>
         )}
 
-        <div className="flex items-center justify-between">
-          <div className="flex items-center text-sm text-gray-500">
-            <img src={article.author_avatar_url || 'https://via.placeholder.com/24'} alt={article.author_name} className="w-6 h-6 rounded-full mr-2 object-cover" />
+        <div className="flex items-center justify-between pt-4 border-t border-default">
+          <div className="flex items-center text-sm text-secondary">
+            <img 
+              src={article.author_avatar_url || 'https://via.placeholder.com/24'} 
+              alt={article.author_name} 
+              className="w-6 h-6 rounded-full mr-2 object-cover ring-2 ring-accent/20" 
+            />
             {article.author_id ? (
-              <Link to={createPageUrl(`AuthorProfile?id=${article.author_id}`)} className="font-medium text-gray-900 hover:text-blue-800 transition-colors">
+              <Link to={createPageUrl(`AuthorProfile?id=${article.author_id}`)} className="font-medium text-primary hover:text-accent transition-colors">
                 {article.author_name}
               </Link>
             ) : (
-              <span className="font-medium text-gray-900">{article.author_name}</span>
+              <span className="font-medium text-primary">{article.author_name}</span>
             )}
-            <span className="mx-2">•</span>
+            <span className="mx-2 text-muted">•</span>
             <span>
               {format(new Date(article.published_date || article.created_date), "d. MMMM", { locale: getLocaleForDateFns(currentLocale) })}
             </span>
@@ -99,7 +102,7 @@ export default function ArticleCard({ article, topicColors, user, showImage = tr
 
           {!canReadArticle() && (
             <Link to={createPageUrl("Subscribe")}>
-              <Button size="sm" variant="outline" className="text-xs">
+              <Button size="sm" variant="outline" className="text-xs border-accent text-accent hover:bg-accent hover:text-on-accent transition-colors">
                 {t('article.subscribeToRead')}
               </Button>
             </Link>
