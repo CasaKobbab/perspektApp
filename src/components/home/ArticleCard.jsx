@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 import { useTranslation, createPageUrl, getTopicKey } from "@/components/i18n/translations";
@@ -69,7 +70,7 @@ export default function ArticleCard({ article, topicColors, user, showImage = tr
         )}
 
         <Link to={createPageUrl(`Article?id=${article.id}`)}>
-          <h2 className="text-xl font-bold text-primary mb-3 font-serif group-hover:text-accent transition-colors line-clamp-2">
+          <h2 className="text-xl font-bold text-primary mb-3 font-serif group-hover:bg-gradient-to-r group-hover:from-emerald-500 group-hover:via-teal-400 group-hover:to-cyan-500 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300 line-clamp-2">
             {article.title}
           </h2>
         </Link>
