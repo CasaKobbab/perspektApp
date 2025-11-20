@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Article } from "@/entities/Article";
@@ -97,7 +96,7 @@ export default function AdminArticles({ user, currentLocale }) {
 
       <div className="card-surface rounded-lg">
         <Table>
-          <TableHeader>
+          <TableHeader className="hidden md:table-header-group">
             <TableRow className="border-theme">
               <TableHead className="text-primary">{t('admin.title')}</TableHead>
               <TableHead className="text-primary">{t('admin.author')}</TableHead>
@@ -117,66 +116,111 @@ export default function AdminArticles({ user, currentLocale }) {
               </TableRow>
             ) : articles.length > 0 ? (
               articles.map((article) => (
-                <TableRow key={article.id} className="border-theme hover:bg-warm-sand dark:hover:bg-slate-ink">
-                  <TableCell className="font-medium text-primary">{article.title}</TableCell>
-                  <TableCell className="text-secondary">{article.author_name}</TableCell>
-                  <TableCell>
+                <TableRow key={article.id} className="block md:table-row mb-4 md:mb-0 border border-theme md:border-b-0 rounded-lg md:rounded-none p-4 md:p-0 bg-white dark:bg-slate-ink md:bg-transparent hover:bg-warm-sand dark:hover:bg-slate-ink shadow-sm md:shadow-none">
+                  <TableCell className="flex justify-between items-center md:table-cell py-2 md:py-4 border-b border-theme md:border-b-0 font-medium text-primary">
+                    <span className="md:hidden text-secondary font-normal">{t('admin.title')}</span>
+                    {article.title}
+                  </TableCell>
+                  <TableCell className="flex justify-between items-center md:table-cell py-2 md:py-4 border-b border-theme md:border-b-0 text-secondary">
+                    <span className="md:hidden text-secondary font-normal">{t('admin.author')}</span>
+                    {article.author_name}
+                  </TableCell>
+                  <TableCell className="flex justify-between items-center md:table-cell py-2 md:py-4 border-b border-theme md:border-b-0">
+                    <span className="md:hidden text-secondary font-normal">{t('admin.status')}</span>
                     <Badge className={statusColors[article.status]}>
                       {t(`common.${article.status}`)}
                     </Badge>
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="flex justify-between items-center md:table-cell py-2 md:py-4 border-b border-theme md:border-b-0">
+                    <span className="md:hidden text-secondary font-normal">{t('admin.access')}</span>
                     <Badge className={accessColors[article.access_level]}>
                       {t(`common.${article.access_level}`)}
                     </Badge>
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="flex justify-between items-center md:table-cell py-2 md:py-4 border-b border-theme md:border-b-0">
+                    <span className="md:hidden text-secondary font-normal">{t('common.language')}</span>
                     <Badge variant="outline" className="border-theme text-secondary">
                       {article.locale?.toUpperCase() || 'NB'}
                     </Badge>
                   </TableCell>
-                  <TableCell className="text-secondary">
+                  <TableCell className="flex justify-between items-center md:table-cell py-2 md:py-4 border-b border-theme md:border-b-0 text-secondary">
+                    <span className="md:hidden text-secondary font-normal">{t('admin.publishedDate')}</span>
                     {article.published_date
                       ? format(new Date(article.published_date), "d. MMM yyyy", { 
                           locale: getLocaleForDateFns(currentLocale) 
                         })
                       : "-"}
                   </TableCell>
-                  <TableCell className="text-right">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" className="text-secondary hover:text-primary">
-                          <MoreHorizontal className="w-4 h-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="card-surface">
-                        <DropdownMenuItem 
-                          onClick={() => navigate(createPageUrl(`Article?id=${article.id}`))}
-                          className="text-secondary hover:text-primary hover:bg-warm-sand dark:hover:bg-slate-ink"
+                  <TableCell className="block md:table-cell py-2 md:py-4 md:text-right">
+                    {/* Mobile Actions */}
+                    <div className="md:hidden flex flex-col gap-2 mt-2">
+                      <Button 
+                        variant="outline" 
+                        onClick={() => navigate(createPageUrl(`Article?id=${article.id}`))}
+                        className="w-full justify-start"
+                      >
+                        <Eye className="w-4 h-4 mr-2" />
+                        {t('common.preview')}
+                      </Button>
+                      {canEdit && (
+                        <Button 
+                          variant="outline" 
+                          onClick={() => navigate(createPageUrl(`AdminArticleEditor?id=${article.id}`))}
+                          className="w-full justify-start"
                         >
-                          <Eye className="w-4 h-4 mr-2" />
-                          {t('common.preview')}
-                        </DropdownMenuItem>
-                        {canEdit && (
+                          <Edit className="w-4 h-4 mr-2" />
+                          {t('common.edit')}
+                        </Button>
+                      )}
+                      {canDelete && (
+                        <Button 
+                          variant="destructive" 
+                          onClick={() => handleDelete(article.id)}
+                          className="w-full justify-start"
+                        >
+                          <Trash2 className="w-4 h-4 mr-2" />
+                          {t('common.delete')}
+                        </Button>
+                      )}
+                    </div>
+
+                    {/* Desktop Actions */}
+                    <div className="hidden md:block">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" size="icon" className="text-secondary hover:text-primary">
+                            <MoreHorizontal className="w-4 h-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end" className="card-surface">
                           <DropdownMenuItem 
-                            onClick={() => navigate(createPageUrl(`AdminArticleEditor?id=${article.id}`))}
+                            onClick={() => navigate(createPageUrl(`Article?id=${article.id}`))}
                             className="text-secondary hover:text-primary hover:bg-warm-sand dark:hover:bg-slate-ink"
                           >
-                            <Edit className="w-4 h-4 mr-2" />
-                            {t('common.edit')}
+                            <Eye className="w-4 h-4 mr-2" />
+                            {t('common.preview')}
                           </DropdownMenuItem>
-                        )}
-                        {canDelete && (
-                          <DropdownMenuItem 
-                            onClick={() => handleDelete(article.id)} 
-                            className="text-red-600 hover:bg-red-50 dark:hover:bg-red-900"
-                          >
-                            <Trash2 className="w-4 h-4 mr-2" />
-                            {t('common.delete')}
-                          </DropdownMenuItem>
-                        )}
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                          {canEdit && (
+                            <DropdownMenuItem 
+                              onClick={() => navigate(createPageUrl(`AdminArticleEditor?id=${article.id}`))}
+                              className="text-secondary hover:text-primary hover:bg-warm-sand dark:hover:bg-slate-ink"
+                            >
+                              <Edit className="w-4 h-4 mr-2" />
+                              {t('common.edit')}
+                            </DropdownMenuItem>
+                          )}
+                          {canDelete && (
+                            <DropdownMenuItem 
+                              onClick={() => handleDelete(article.id)} 
+                              className="text-red-600 hover:bg-red-50 dark:hover:bg-red-900"
+                            >
+                              <Trash2 className="w-4 h-4 mr-2" />
+                              {t('common.delete')}
+                            </DropdownMenuItem>
+                          )}
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))
