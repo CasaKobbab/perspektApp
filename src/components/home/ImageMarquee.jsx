@@ -4,7 +4,6 @@ import { BannerImage } from '@/entities/BannerImage';
 export default function ImageMarquee() {
   const [banners, setBanners] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isDesktop, setIsDesktop] = useState(false);
   const touchStartX = useRef(null);
   const touchEndX = useRef(null);
 
@@ -18,42 +17,19 @@ export default function ImageMarquee() {
       }
     };
     loadBanners();
-
-    const checkSize = () => {
-      setIsDesktop(window.innerWidth >= 768);
-    };
-    
-    // Initial check
-    checkSize();
-    
-    window.addEventListener('resize', checkSize);
-    return () => window.removeEventListener('resize', checkSize);
   }, []);
 
-  // Reset index when view mode changes to prevent out-of-bounds
   useEffect(() => {
-    setCurrentIndex(0);
-  }, [isDesktop]);
+    if (banners.length <= 1) return;
 
-  const itemsPerView = isDesktop ? 2 : 1;
-  
-  // Group banners into slides
-  const slides = [];
-  if (banners.length > 0) {
-    for (let i = 0; i < banners.length; i += itemsPerView) {
-      slides.push(banners.slice(i, i + itemsPerView));
-    }
-  }
+    const currentDuration = banners[currentIndex]?.duration || 5000;
 
-  useEffect(() => {
-    if (slides.length <= 1) return;
+    const timer = setTimeout(() => {
+      setCurrentIndex((prev) => (prev + 1) % banners.length);
+    }, currentDuration);
 
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % slides.length);
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [slides.length]);
+    return () => clearTimeout(timer);
+  }, [currentIndex, banners.length, banners]);
 
   const handleTouchStart = (e) => {
     touchStartX.current = e.targetTouches[0].clientX;
@@ -72,12 +48,12 @@ export default function ImageMarquee() {
 
     if (isLeftSwipe) {
       // Next slide
-      setCurrentIndex((prev) => (prev + 1) % slides.length);
+      setCurrentIndex((prev) => (prev + 1) % banners.length);
     }
 
     if (isRightSwipe) {
       // Previous slide
-      setCurrentIndex((prev) => (prev - 1 + slides.length) % slides.length);
+      setCurrentIndex((prev) => (prev - 1 + banners.length) % banners.length);
     }
 
     touchStartX.current = null;
@@ -88,40 +64,47 @@ export default function ImageMarquee() {
 
   return (
     <div 
-      className="w-full bg-surface border-b border-default h-20 relative overflow-hidden z-10 select-none"
+      className="w-full border-b border-default h-20 relative overflow-hidden z-10 select-none group"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
-      <div className="w-full h-full max-w-7xl mx-auto px-4 relative">
-        {slides.map((slideImages, index) => (
+      <div className="w-full h-full relative">
+        {banners.map((banner, index) => (
           <div
-            key={index}
-            className={`absolute inset-0 flex items-center justify-center gap-12 transition-opacity duration-500 ease-in-out ${
+            key={`${banner.id}-${index}`}
+            className={`absolute inset-0 transition-opacity duration-500 ease-in-out ${
               index === currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
             }`}
           >
-            {slideImages.map((banner, i) => (
-              <div key={`${banner.id}-${i}`} className="h-12 flex items-center justify-center">
-                <img
-                  src={banner.image_url}
-                  alt={banner.alt_text || 'Partner logo'}
-                  className="h-full w-auto object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300 cursor-pointer"
-                />
-              </div>
-            ))}
+            {/* Image */}
+            <img
+              src={banner.image_url}
+              alt={banner.alt_text || 'Banner'}
+              className="w-full h-full object-cover"
+            />
+            
+            {/* Dark Overlay */}
+            <div className="absolute inset-0 bg-black/40" />
+            
+            {/* Caption Overlay */}
+            <div className="absolute inset-0 flex items-center justify-center px-4">
+              <span className="text-white font-bold text-lg md:text-xl drop-shadow-md text-center">
+                {banner.caption}
+              </span>
+            </div>
           </div>
         ))}
         
-        {/* Optional indicators for better UX if multiple slides exist */}
-        {slides.length > 1 && (
-          <div className="absolute bottom-1 left-0 right-0 flex justify-center gap-1 z-20">
-            {slides.map((_, idx) => (
+        {/* Slide Indicators */}
+        {banners.length > 1 && (
+          <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1.5 z-20">
+            {banners.map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => setCurrentIndex(idx)}
-                className={`w-1.5 h-1.5 rounded-full transition-colors ${
-                  idx === currentIndex ? 'bg-primary' : 'bg-border-default'
+                className={`w-1.5 h-1.5 rounded-full transition-colors shadow-sm ${
+                  idx === currentIndex ? 'bg-white' : 'bg-white/40 hover:bg-white/60'
                 }`}
                 aria-label={`Go to slide ${idx + 1}`}
               />

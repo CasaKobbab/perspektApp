@@ -2,8 +2,93 @@ import React, { useState, useEffect } from 'react';
 import { BannerImage } from '@/entities/BannerImage';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
-import { Trash2, Upload, Loader2, Image as ImageIcon } from 'lucide-react';
+import { Trash2, Upload, Loader2, Image as ImageIcon, Save } from 'lucide-react';
+
+const BannerItem = ({ banner, onDelete, onUpdate }) => {
+  const [caption, setCaption] = useState(banner.caption || '');
+  const [duration, setDuration] = useState(banner.duration || 5000);
+  const [isSaving, setIsSaving] = useState(false);
+  const [hasChanges, setHasChanges] = useState(false);
+
+  const handleSave = async () => {
+    setIsSaving(true);
+    try {
+      await onUpdate(banner.id, { caption, duration: parseInt(duration) });
+      setHasChanges(false);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleCaptionChange = (e) => {
+    setCaption(e.target.value);
+    setHasChanges(true);
+  };
+
+  const handleDurationChange = (e) => {
+    setDuration(e.target.value);
+    setHasChanges(true);
+  };
+
+  return (
+    <div className="group relative bg-white dark:bg-gray-800 rounded-lg border border-default p-4 shadow-sm hover:shadow-md transition-all">
+      <div className="aspect-video flex items-center justify-center bg-gray-50 dark:bg-black/20 rounded-md mb-4 overflow-hidden relative">
+        <img 
+          src={banner.image_url} 
+          alt={banner.alt_text} 
+          className="w-full h-full object-cover"
+        />
+        <Button
+          variant="destructive"
+          size="icon"
+          onClick={() => onDelete(banner.id)}
+          className="absolute top-2 right-2 h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity"
+        >
+          <Trash2 className="w-4 h-4" />
+        </Button>
+      </div>
+      
+      <div className="space-y-3">
+        <div className="space-y-1">
+          <Label htmlFor={`caption-${banner.id}`} className="text-xs text-secondary">Caption</Label>
+          <Input 
+            id={`caption-${banner.id}`}
+            value={caption}
+            onChange={handleCaptionChange}
+            placeholder="Enter text overlay..."
+            className="h-8 text-sm"
+          />
+        </div>
+        
+        <div className="flex items-end gap-2">
+          <div className="space-y-1 flex-1">
+            <Label htmlFor={`duration-${banner.id}`} className="text-xs text-secondary">Duration (ms)</Label>
+            <Input 
+              id={`duration-${banner.id}`}
+              type="number"
+              value={duration}
+              onChange={handleDurationChange}
+              step={500}
+              min={1000}
+              className="h-8 text-sm"
+            />
+          </div>
+          <Button 
+            size="sm" 
+            onClick={handleSave}
+            disabled={!hasChanges || isSaving}
+            className={`h-8 ${hasChanges ? 'bg-primary text-primary-foreground' : 'bg-secondary/20 text-secondary'}`}
+          >
+            {isSaving ? <Loader2 className="w-3 h-3 animate-spin" /> : <Save className="w-3 h-3" />}
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default function AdminBanners() {
   const [banners, setBanners] = useState([]);
@@ -32,12 +117,13 @@ export default function AdminBanners() {
 
     setIsUploading(true);
     try {
-      // Process sequentially to avoid overwhelming requests if many files
       for (const file of files) {
         const { file_url } = await base44.integrations.Core.UploadFile({ file });
         await BannerImage.create({
           image_url: file_url,
-          alt_text: file.name.split('.')[0]
+          alt_text: file.name.split('.')[0],
+          caption: '',
+          duration: 5000
         });
       }
       fetchBanners();
@@ -46,8 +132,18 @@ export default function AdminBanners() {
       alert("Failed to upload some images.");
     } finally {
       setIsUploading(false);
-      // Reset input
       e.target.value = null;
+    }
+  };
+
+  const handleUpdate = async (id, data) => {
+    try {
+      await BannerImage.update(id, data);
+      // Optimistic update or refetch - let's refetch to be safe
+      await fetchBanners();
+    } catch (error) {
+      console.error("Update failed:", error);
+      alert("Failed to update banner.");
     }
   };
 
@@ -66,7 +162,7 @@ export default function AdminBanners() {
       <div className="flex justify-between items-center">
         <div>
           <h2 className="text-2xl font-bold text-primary">Banner Management</h2>
-          <p className="text-secondary">Manage partner logos and banners for the homepage slider.</p>
+          <p className="text-secondary">Manage homepage slider images, captions, and timing.</p>
         </div>
         
         <div className="relative">
@@ -110,30 +206,14 @@ export default function AdminBanners() {
           </CardContent>
         </Card>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {banners.map((banner) => (
-            <div key={banner.id} className="group relative bg-white dark:bg-gray-800 rounded-lg border border-default p-4 shadow-sm hover:shadow-md transition-all">
-              <div className="aspect-video flex items-center justify-center bg-gray-50 dark:bg-black/20 rounded-md mb-3 overflow-hidden">
-                <img 
-                  src={banner.image_url} 
-                  alt={banner.alt_text} 
-                  className="max-w-full max-h-full object-contain"
-                />
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-xs text-secondary truncate max-w-[120px]" title={banner.alt_text}>
-                  {banner.alt_text || 'Untitled'}
-                </span>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => handleDelete(banner.id)}
-                  className="text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20 h-8 w-8"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </Button>
-              </div>
-            </div>
+            <BannerItem 
+              key={banner.id} 
+              banner={banner} 
+              onDelete={handleDelete} 
+              onUpdate={handleUpdate} 
+            />
           ))}
         </div>
       )}
