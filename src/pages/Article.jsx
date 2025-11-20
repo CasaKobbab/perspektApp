@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Article, User } from "@/entities/all";
 import { Badge } from "@/components/ui/badge";
@@ -213,7 +212,7 @@ export default function ArticlePage() {
               }
             </div>
 
-            <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 font-serif leading-tight mb-6">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 font-serif leading-tight mb-6">
               {article.title}
             </h1>
 

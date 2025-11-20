@@ -111,7 +111,8 @@ export default function AdminUsers({ user, currentLocale }) {
         </div>
       </div>
 
-      <div className="card-surface rounded-lg">
+      <div className="card-surface rounded-lg overflow-hidden">
+        <div className="overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow className="border-theme">
@@ -182,6 +183,7 @@ export default function AdminUsers({ user, currentLocale }) {
             )}
           </TableBody>
         </Table>
+        </div>
       </div>
       
       {editingUser && (

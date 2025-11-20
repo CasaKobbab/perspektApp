@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from "@/components/i18n/translations";
 import { Topic } from '@/entities/Topic';
@@ -80,7 +79,8 @@ export default function AdminTopics({ user, currentLocale }) {
         </Button>
       </div>
 
-      <div className="card-surface rounded-lg">
+      <div className="card-surface rounded-lg overflow-hidden">
+        <div className="overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow className="border-theme">
@@ -128,6 +128,7 @@ export default function AdminTopics({ user, currentLocale }) {
             )}
           </TableBody>
         </Table>
+        </div>
       </div>
 
       <TopicFormModal

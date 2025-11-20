@@ -219,7 +219,8 @@ export default function AdminVideos({ user, currentLocale }) {
         </Button>
       </div>
 
-      <div className="card-surface rounded-lg">
+      <div className="card-surface rounded-lg overflow-hidden">
+        <div className="overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow className="border-theme">
@@ -311,6 +312,7 @@ export default function AdminVideos({ user, currentLocale }) {
             )}
           </TableBody>
         </Table>
+        </div>
       </div>
 
       {/* Video Form Modal */}
