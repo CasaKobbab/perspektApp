@@ -14,6 +14,7 @@ import FeaturedSection from "../components/home/FeaturedSection";
 import TopicNavigation from "../components/home/TopicNavigation";
 import NewsletterSignup from "../components/home/NewsletterSignup";
 import LatestVideos from "../components/home/LatestVideos";
+import ImageMarquee from "../components/home/ImageMarquee";
 
 export default function Home() {
   const [currentLocale, setCurrentLocale] = useState('nb');
@@ -115,9 +116,13 @@ export default function Home() {
                     transform: scale(1.05);
                 }
             }
-        `}
-      </style>
-      {/* Hero Section */}
+            `}
+            </style>
+
+            {/* Partner Slider */}
+            <ImageMarquee />
+
+            {/* Hero Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-24">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Column: Text & CTA */}

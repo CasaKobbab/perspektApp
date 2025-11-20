@@ -26,8 +26,9 @@ export default function AdminLayout({ children, activePage, setActivePage, user,
     { name: t('admin.authors'), slug: "authors", icon: Edit3, roles: ["admin", "editor"] },
     { name: t('admin.users'), slug: "users", icon: Users, roles: ["admin"] },
     { name: t('admin.topics'), slug: "topics", icon: Bookmark, roles: ["admin", "editor"] },
+    { name: "Banners", slug: "banners", icon: FileText, roles: ["admin", "editor"] },
     { name: t('admin.settings'), slug: "settings", icon: Settings, roles: ["admin"] },
-  ];
+    ];
   
   const handleLogout = async () => {
     await UserEntity.logout();
