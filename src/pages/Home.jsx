@@ -118,28 +118,32 @@ export default function Home() {
         `}
       </style>
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-nordic-sea via-slate-ink to-nordic-sea text-paper-white">
-        <div
-          className="absolute inset-0 bg-no-repeat bg-center opacity-5"
-          style={{
-            backgroundImage: 'url(https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c87ff5923f3448855aec56/5b1079ffe_IBSTuwaygKBsfuzb7Ls7W.jpg)',
-            animation: 'slow-zoom 40s infinite alternate ease-in-out'
-          }}
+      <section className="relative overflow-hidden min-h-[85vh] flex items-center justify-center">
+        {/* Light Mode Background */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center z-0 dark:hidden transition-opacity duration-300"
+          style={{ backgroundImage: 'url(https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c87ff5923f3448855aec56/9fa10a590_GeneratedImageNovember202025-4_06PM.png)' }}
         />
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-          <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-[#a59e9c] mb-6 font-serif lg:text-6xl leading-tight">
+        {/* Dark Mode Background */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center z-0 hidden dark:block transition-opacity duration-300"
+          style={{ backgroundImage: 'url(https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c87ff5923f3448855aec56/f16872292_GeneratedImageNovember202025-4_01PM.png)' }}
+        />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 text-center w-full">
+          <div className="max-w-4xl mx-auto">
+            <h1 className="text-primary mb-6 font-serif text-4xl lg:text-6xl leading-tight drop-shadow-md font-bold">
               {t('home.title')}
-              <span className="bg-gradient-to-r from-warm-sand to-laks bg-clip-text text-transparent"> {t('home.titleHighlight')}</span>
+              <span className="text-accent drop-shadow-md"> {t('home.titleHighlight')}</span>
             </h1>
-            <p className="text-xl lg:text-2xl text-warm-sand mb-8 leading-relaxed">
+            <p className="text-xl lg:text-2xl text-primary/90 mb-10 leading-relaxed drop-shadow-md font-medium">
               {t('home.subtitle')}
             </p>
-            
+
             {!user ? (
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <Link to="/Subscribe">
-                  <Button size="lg" className="bg-paper-white text-nordic-sea hover:bg-warm-sand font-semibold px-8">
+                  <Button size="lg" className="bg-accent text-white hover:bg-accent/90 font-semibold px-8 shadow-lg h-12 text-lg border-none">
                     {t('home.startSubscription')}
                     <ArrowRight className="ml-2 w-5 h-5" />
                   </Button>
@@ -147,19 +151,19 @@ export default function Home() {
                 <Button
                   variant="outline"
                   size="lg"
-                  className="border-paper-white text-paper-white hover:bg-paper-white hover:text-nordic-sea px-8"
+                  className="border-2 border-primary text-primary bg-transparent hover:bg-primary hover:text-white px-8 shadow-lg h-12 text-lg transition-colors"
                   onClick={async () => await User.login()}
                 >
                   {t('nav.login')}
                 </Button>
               </div>
             ) : (
-              <div className="bg-paper-white/10 backdrop-blur-sm rounded-xl p-6 max-w-md mx-auto">
-                <p className="text-warm-sand mb-4">{t('home.welcomeBack')}, {user.full_name}!</p>
+              <div className="max-w-md mx-auto">
+                <p className="text-primary text-xl mb-6 drop-shadow-md font-semibold">{t('home.welcomeBack')}, {user.full_name}!</p>
                 <Link to="/Latest">
-                  <Button className="bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500 text-white font-semibold px-6 py-3 rounded-lg hover:from-emerald-600 hover:via-teal-500 hover:to-cyan-600 transition-all duration-300 shadow-lg hover:shadow-xl">
+                  <Button className="bg-accent text-white font-bold px-8 py-4 h-auto text-lg rounded-lg hover:bg-accent/90 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
                     {t('home.readLatestArticles')}
-                    <ArrowRight className="ml-2 w-4 h-4" />
+                    <ArrowRight className="ml-2 w-5 h-5" />
                   </Button>
                 </Link>
               </div>
