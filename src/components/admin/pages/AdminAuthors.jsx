@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { AuthorProfile } from "@/entities/AuthorProfile";
 import { useTranslation } from "@/components/i18n/translations";
@@ -81,7 +80,7 @@ export default function AdminAuthors({ user, currentLocale }) {
 
       <div className="card-surface rounded-lg">
         <Table>
-          <TableHeader>
+          <TableHeader className="hidden md:table-header-group">
             <TableRow className="border-theme">
               <TableHead className="w-20"></TableHead>
               <TableHead className="text-primary">{t('admin.fullName')}</TableHead>
@@ -98,19 +97,48 @@ export default function AdminAuthors({ user, currentLocale }) {
               </TableRow>
             ) : authors.length > 0 ? (
               authors.map((author) => (
-                <TableRow key={author.id} className="border-theme hover:bg-warm-sand dark:hover:bg-slate-ink">
-                  <TableCell>
-                    <img src={author.avatar_url || 'https://via.placeholder.com/40'} alt={author.name} className="w-10 h-10 rounded-full object-cover" />
+                <TableRow key={author.id} className="block md:table-row mb-4 md:mb-0 border border-theme md:border-b-0 rounded-lg md:rounded-none p-4 md:p-0 bg-white dark:bg-slate-ink md:bg-transparent hover:bg-warm-sand dark:hover:bg-slate-ink shadow-sm md:shadow-none">
+                  <TableCell className="flex justify-center md:justify-start md:table-cell py-2 md:py-4 border-b border-theme md:border-b-0">
+                    <img src={author.avatar_url || 'https://via.placeholder.com/40'} alt={author.name} className="w-20 h-20 md:w-10 md:h-10 rounded-full object-cover" />
                   </TableCell>
-                  <TableCell className="font-medium text-primary">{author.name}</TableCell>
-                  <TableCell className="text-secondary">{author.user_id ? t('admin.linkedUser') : t('admin.notLinked')}</TableCell>
-                  <TableCell className="text-right">
-                    <Button variant="ghost" size="icon" onClick={() => handleEdit(author)} className="text-secondary hover:text-primary">
-                      <Edit className="w-4 h-4" />
-                    </Button>
-                    <Button variant="ghost" size="icon" onClick={() => handleDelete(author.id)} className="text-red-500 hover:text-red-700">
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
+                  <TableCell className="flex justify-between items-center md:table-cell py-2 md:py-4 border-b border-theme md:border-b-0 font-medium text-primary">
+                    <span className="md:hidden text-secondary font-normal">{t('admin.fullName')}</span>
+                    {author.name}
+                  </TableCell>
+                  <TableCell className="flex justify-between items-center md:table-cell py-2 md:py-4 border-b border-theme md:border-b-0 text-secondary">
+                    <span className="md:hidden text-secondary font-normal">{t('admin.linkedUser')}</span>
+                    {author.user_id ? t('admin.linkedUser') : t('admin.notLinked')}
+                  </TableCell>
+                  <TableCell className="block md:table-cell py-2 md:py-4 md:text-right">
+                    {/* Mobile Actions */}
+                    <div className="md:hidden flex flex-col gap-2 mt-2">
+                      <Button 
+                        variant="outline" 
+                        onClick={() => handleEdit(author)}
+                        className="w-full justify-start"
+                      >
+                        <Edit className="w-4 h-4 mr-2" />
+                        {t('common.edit')}
+                      </Button>
+                      <Button 
+                        variant="destructive" 
+                        onClick={() => handleDelete(author.id)}
+                        className="w-full justify-start"
+                      >
+                        <Trash2 className="w-4 h-4 mr-2" />
+                        {t('common.delete')}
+                      </Button>
+                    </div>
+
+                    {/* Desktop Actions */}
+                    <div className="hidden md:block">
+                      <Button variant="ghost" size="icon" onClick={() => handleEdit(author)} className="text-secondary hover:text-primary">
+                        <Edit className="w-4 h-4" />
+                      </Button>
+                      <Button variant="ghost" size="icon" onClick={() => handleDelete(author.id)} className="text-red-500 hover:text-red-700">
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))
