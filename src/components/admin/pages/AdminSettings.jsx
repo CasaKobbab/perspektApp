@@ -111,12 +111,12 @@ export default function AdminSettings({ user, currentLocale }) {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-8 sticky top-0 bg-primary py-4 z-10">
+      <div className="flex flex-col gap-4 mb-8 sticky top-0 bg-primary py-4 z-10 md:flex-row md:items-center md:justify-between">
         <div>
           <h1 className="text-3xl font-bold text-primary">{t('admin.settings')}</h1>
           <p className="text-secondary mt-1">Manage your site's global configuration.</p>
         </div>
-        <Button onClick={handleSave} disabled={isSaving}>
+        <Button onClick={handleSave} disabled={isSaving} className="w-full md:w-auto h-11">
           {isSaving && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
           {t('common.save')}
         </Button>

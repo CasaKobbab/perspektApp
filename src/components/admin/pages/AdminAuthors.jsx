@@ -64,13 +64,13 @@ export default function AdminAuthors({ user, currentLocale }) {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex flex-col gap-4 mb-8 md:flex-row md:items-center md:justify-between">
         <div>
           <h1 className="text-3xl font-bold text-primary">{t('admin.authorManagement')}</h1>
           <p className="text-secondary mt-1">{t('admin.authorManagementDesc')}</p>
         </div>
         <Button 
-          className="bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500 text-white font-semibold hover:from-emerald-600 hover:via-teal-500 hover:to-cyan-600 shadow-md hover:shadow-lg transition-all duration-300" 
+          className="w-full md:w-auto h-11 bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500 text-white font-semibold hover:from-emerald-600 hover:via-teal-500 hover:to-cyan-600 shadow-md hover:shadow-lg transition-all duration-300" 
           onClick={handleNew}
         >
           <Plus className="w-4 h-4 mr-2" />
