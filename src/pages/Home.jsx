@@ -174,14 +174,14 @@ export default function Home() {
           {/* Right Column: Image */}
           <div className="order-2 relative">
             <img 
-              src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c87ff5923f3448855aec56/9fa10a590_GeneratedImageNovember202025-4_06PM.png" 
+              src={siteSettings?.hero_image_light || "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c87ff5923f3448855aec56/9fa10a590_GeneratedImageNovember202025-4_06PM.png"} 
               alt="Perspekt Light Theme" 
-              className="w-full h-auto rounded-2xl shadow-xl dark:hidden"
+              className="w-full h-full object-cover rounded-2xl shadow-xl dark:hidden"
             />
             <img 
-              src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c87ff5923f3448855aec56/f16872292_GeneratedImageNovember202025-4_01PM.png" 
+              src={siteSettings?.hero_image_dark || "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c87ff5923f3448855aec56/f16872292_GeneratedImageNovember202025-4_01PM.png"} 
               alt="Perspekt Dark Theme" 
-              className="w-full h-auto rounded-2xl shadow-xl hidden dark:block"
+              className="w-full h-full object-cover rounded-2xl shadow-xl hidden dark:block"
             />
           </div>
         </div>
