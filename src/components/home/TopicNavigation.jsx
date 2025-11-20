@@ -40,7 +40,7 @@ export default function TopicNavigation() {
   return (
     <section className="bg-surface border-b border-default transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex overflow-x-auto py-4 space-x-8 scrollbar-hide">
+        <div className="hidden md:flex overflow-x-auto py-4 space-x-8 scrollbar-hide">
           {topics.map((topic) => (
             <Link
               key={topic.slug}
