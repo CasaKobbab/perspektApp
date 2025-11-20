@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation, LOCALE_LABELS } from "@/components/i18n/translations";
@@ -274,7 +273,7 @@ function LayoutContent({ children, currentPageName }) {
                 alt="Perspekt Logo" 
                 className="w-8 h-8 rounded-lg transition-transform group-hover:scale-105" 
               />
-              <span className="text-2xl font-bold gradient-text">Perspekt</span>
+              <span className="text-2xl font-bold gradient-text hidden md:block">Perspekt</span>
             </Link>
 
             {/* Desktop Navigation */}
