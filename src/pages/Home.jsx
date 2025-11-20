@@ -3,6 +3,7 @@ import { Article, User } from "@/entities/all";
 import { Video } from "@/entities/Video";
 import { Link } from "react-router-dom";
 import { useTranslation } from "@/components/i18n/translations";
+import { useTheme } from "@/components/theme/ThemeProvider";
 import { Clock, ArrowRight, Star, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -16,6 +17,7 @@ import NewsletterSignup from "../components/home/NewsletterSignup";
 import LatestVideos from "../components/home/LatestVideos";
 
 export default function Home() {
+  const { theme } = useTheme();
   const [currentLocale, setCurrentLocale] = useState('nb');
   const { t } = useTranslation(currentLocale);
   const [user, setUser] = useState(null);
@@ -122,7 +124,10 @@ export default function Home() {
         <div
           className="absolute inset-0 bg-no-repeat bg-center opacity-5"
           style={{
-            backgroundImage: 'url(https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c87ff5923f3448855aec56/5b1079ffe_IBSTuwaygKBsfuzb7Ls7W.jpg)',
+            backgroundImage: `url(${theme === 'dark' 
+              ? 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c87ff5923f3448855aec56/208390a4c_GeneratedImageNovember202025-4_06PM.png'
+              : 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c87ff5923f3448855aec56/533d7de77_GeneratedImageNovember202025-4_01PM.png'
+            })`,
             animation: 'slow-zoom 40s infinite alternate ease-in-out'
           }}
         />
