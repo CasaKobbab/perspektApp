@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Article } from "@/entities/Article";
@@ -94,8 +95,7 @@ export default function AdminArticles({ user, currentLocale }) {
         </Link>
       </div>
 
-      <div className="card-surface rounded-lg overflow-hidden">
-        <div className="overflow-x-auto">
+      <div className="card-surface rounded-lg">
         <Table>
           <TableHeader>
             <TableRow className="border-theme">
@@ -189,7 +189,6 @@ export default function AdminArticles({ user, currentLocale }) {
             )}
           </TableBody>
         </Table>
-        </div>
       </div>
     </div>
   );

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { AuthorProfile } from "@/entities/AuthorProfile";
 import { useTranslation } from "@/components/i18n/translations";
@@ -78,8 +79,7 @@ export default function AdminAuthors({ user, currentLocale }) {
         </Button>
       </div>
 
-      <div className="card-surface rounded-lg overflow-hidden">
-        <div className="overflow-x-auto">
+      <div className="card-surface rounded-lg">
         <Table>
           <TableHeader>
             <TableRow className="border-theme">
@@ -123,7 +123,6 @@ export default function AdminAuthors({ user, currentLocale }) {
             )}
           </TableBody>
         </Table>
-        </div>
       </div>
 
       {isModalOpen && (

@@ -8,7 +8,7 @@ import Topics from './pages/Topics';
 import Authors from './pages/Authors';
 import Author from './pages/Author';
 import Account from './pages/Account';
-import __Layout from './Layout.jsx';
+import Layout from './Layout.jsx';
 
 
 export const PAGES = {
@@ -27,5 +27,5 @@ export const PAGES = {
 export const pagesConfig = {
     mainPage: "Home",
     Pages: PAGES,
-    Layout: __Layout,
+    Layout: Layout,
 };
