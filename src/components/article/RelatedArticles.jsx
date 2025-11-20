@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Article } from "@/entities/Article";
 import { Link } from "react-router-dom";
@@ -52,15 +51,15 @@ export default function RelatedArticles({ currentArticle }) {
   }
 
   return (
-    <section className="bg-gray-50 py-16">
+    <section className="bg-secondary py-16">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 font-serif">
+          <h2 className="text-3xl font-bold text-primary font-serif">
             Relaterte artikler
           </h2>
           <Link 
             to={createPageUrl(`Topics?filter=${currentArticle.topic}`)}
-            className="text-blue-600 hover:text-blue-800 flex items-center font-medium"
+            className="text-accent hover:text-accent-hover flex items-center font-medium"
           >
             Se alle fra {currentArticle.topic}
             <ArrowRight className="w-4 h-4 ml-1" />
@@ -74,7 +73,7 @@ export default function RelatedArticles({ currentArticle }) {
               to={createPageUrl(`Article?id=${article.id}`)}
               className="group"
             >
-              <article className="bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300">
+              <article className="card-surface rounded-xl shadow-sm hover:shadow-lg transition-all duration-300">
                 {article.featured_image && (
                   <div className="aspect-video overflow-hidden rounded-t-xl">
                     <img
@@ -90,24 +89,24 @@ export default function RelatedArticles({ currentArticle }) {
                     <Badge className={topicColors[article.topic] || "bg-gray-100 text-gray-800"}>
                       {article.topic?.charAt(0).toUpperCase() + article.topic?.slice(1)}
                     </Badge>
-                    <div className="flex items-center text-sm text-gray-500">
+                    <div className="flex items-center text-sm text-muted">
                       <Clock className="w-4 h-4 mr-1" />
                       {article.reading_time || 5} min
                     </div>
                   </div>
 
-                  <h3 className="text-lg font-bold text-gray-900 group-hover:text-blue-800 transition-colors line-clamp-2 font-serif mb-2">
+                  <h3 className="text-lg font-bold text-primary group-hover:text-accent transition-colors line-clamp-2 font-serif mb-2">
                     {article.title}
                   </h3>
 
                   {article.dek && (
-                    <p className="text-gray-600 text-sm leading-relaxed line-clamp-2 mb-4">
+                    <p className="text-secondary text-sm leading-relaxed line-clamp-2 mb-4">
                       {article.dek}
                     </p>
                   )}
 
-                  <div className="flex items-center text-sm text-gray-500">
-                    <span className="font-medium text-gray-900">{article.author_name}</span>
+                  <div className="flex items-center text-sm text-muted">
+                    <span className="font-medium text-primary">{article.author_name}</span>
                     <span className="mx-2">•</span>
                     <span>
                       {format(new Date(article.published_date || article.created_date), "d. MMM", { locale: nb })}
