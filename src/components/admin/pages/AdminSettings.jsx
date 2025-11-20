@@ -111,7 +111,7 @@ export default function AdminSettings({ user, currentLocale }) {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-8 sticky top-0 bg-paper-white dark:bg-slate-ink py-4 z-10">
+      <div className="flex justify-between items-center mb-8 sticky top-0 bg-primary py-4 z-10">
         <div>
           <h1 className="text-3xl font-bold text-primary">{t('admin.settings')}</h1>
           <p className="text-secondary mt-1">Manage your site's global configuration.</p>
@@ -146,7 +146,7 @@ export default function AdminSettings({ user, currentLocale }) {
                 <div className="space-y-2">
                     <Label>Logo</Label>
                     <div className="flex items-center gap-4">
-                        {settings.logo_url && <img src={settings.logo_url} alt="Logo" className="h-10 bg-gray-200 p-1 rounded"/>}
+                        {settings.logo_url && <img src={settings.logo_url} alt="Logo" className="h-10 bg-surface p-1 rounded"/>}
                         <input type="file" ref={logoInputRef} onChange={(e) => handleFileUpload(e.target.files[0], 'logo')} accept="image/*" className="hidden" />
                         <Button variant="outline" onClick={() => logoInputRef.current.click()} disabled={isUploadingLogo}>
                             {isUploadingLogo ? <Loader2 className="w-4 h-4 mr-2 animate-spin"/> : <Upload className="w-4 h-4 mr-2"/>}
@@ -157,7 +157,7 @@ export default function AdminSettings({ user, currentLocale }) {
                 <div className="space-y-2">
                     <Label>Favicon</Label>
                     <div className="flex items-center gap-4">
-                        {settings.favicon_url && <img src={settings.favicon_url} alt="Favicon" className="h-10 w-10 bg-gray-200 p-1 rounded"/>}
+                        {settings.favicon_url && <img src={settings.favicon_url} alt="Favicon" className="h-10 w-10 bg-surface p-1 rounded"/>}
                         <input type="file" ref={faviconInputRef} onChange={(e) => handleFileUpload(e.target.files[0], 'favicon')} accept="image/png, image/x-icon, image/svg+xml" className="hidden" />
                         <Button variant="outline" onClick={() => faviconInputRef.current.click()} disabled={isUploadingFavicon}>
                             {isUploadingFavicon ? <Loader2 className="w-4 h-4 mr-2 animate-spin"/> : <Upload className="w-4 h-4 mr-2"/>}

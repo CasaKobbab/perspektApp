@@ -35,9 +35,9 @@ export default function AdminLayout({ children, activePage, setActivePage, user,
   }
 
   return (
-    <div className="min-h-screen flex bg-paper-white dark:bg-slate-ink relative">
+    <div className="min-h-screen flex bg-primary relative">
       {/* Mobile Header */}
-      <div className="lg:hidden absolute top-0 left-0 right-0 h-16 bg-slate-ink text-paper-white flex items-center px-4 z-40">
+      <div className="lg:hidden absolute top-0 left-0 right-0 h-16 bg-surface border-b border-default text-primary flex items-center px-4 z-40">
         <button onClick={() => setIsMobileMenuOpen(true)} className="p-2 mr-2">
           <Menu className="w-6 h-6" />
         </button>
@@ -54,21 +54,21 @@ export default function AdminLayout({ children, activePage, setActivePage, user,
 
       {/* Sidebar */}
       <aside className={`
-        fixed inset-y-0 left-0 z-50 w-64 bg-slate-ink text-paper-white flex flex-col transition-transform duration-300 ease-in-out
+        fixed inset-y-0 left-0 z-50 w-64 bg-surface border-r border-default text-primary flex flex-col transition-transform duration-300 ease-in-out
         lg:relative lg:translate-x-0
         ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}
       `}>
-        <div className="p-4 border-b border-warm-sand flex justify-between items-center">
+        <div className="p-4 border-b border-default flex justify-between items-center">
           <Link to={createPageUrl("Home")} className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-nordic-sea to-laks rounded-lg flex items-center justify-center">
-              <span className="text-paper-white font-bold text-sm">P</span>
+            <div className="w-8 h-8 bg-gradient-to-br from-mint-green to-aqua-green rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-sm">P</span>
             </div>
             <div className="flex flex-col">
-              <span className="text-xl font-bold font-serif">Perspekt</span>
-              <span className="text-xs text-warm-sand">{t('admin.title')}</span>
+              <span className="text-xl font-bold font-serif text-primary">Perspekt</span>
+              <span className="text-xs text-secondary">{t('admin.title')}</span>
             </div>
           </Link>
-          <button onClick={() => setIsMobileMenuOpen(false)} className="lg:hidden p-1 text-warm-sand">
+          <button onClick={() => setIsMobileMenuOpen(false)} className="lg:hidden p-1 text-secondary hover:text-primary">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -84,8 +84,8 @@ export default function AdminLayout({ children, activePage, setActivePage, user,
                 }}
                 className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
                   activePage === item.slug
-                    ? "bg-nordic-sea text-paper-white"
-                    : "text-warm-sand hover:bg-nordic-sea hover:text-paper-white"
+                    ? "bg-accent text-text-on-accent"
+                    : "text-secondary hover:bg-secondary hover:text-primary"
                 }`}
               >
                 <item.icon className="w-4 h-4" />
@@ -95,12 +95,12 @@ export default function AdminLayout({ children, activePage, setActivePage, user,
           ))}
         </nav>
         
-        <div className="px-2 py-4 border-t border-warm-sand">
-          <Link to={createPageUrl("Home")} className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium text-warm-sand hover:bg-nordic-sea hover:text-paper-white transition-colors">
+        <div className="px-2 py-4 border-t border-default">
+          <Link to={createPageUrl("Home")} className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium text-secondary hover:bg-secondary hover:text-primary transition-colors">
             <Home className="w-4 h-4" />
             <span>{t('nav.backToSite')}</span>
           </Link>
-          <button onClick={handleLogout} className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium text-warm-sand hover:bg-nordic-sea hover:text-paper-white transition-colors">
+          <button onClick={handleLogout} className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium text-secondary hover:bg-secondary hover:text-primary transition-colors">
             <LogOut className="w-4 h-4" />
             <span>{t('nav.logout')}</span>
           </button>
@@ -108,7 +108,7 @@ export default function AdminLayout({ children, activePage, setActivePage, user,
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-6 lg:p-10 bg-paper-white dark:bg-slate-ink pt-20 lg:pt-10">
+      <main className="flex-1 p-6 lg:p-10 bg-primary pt-20 lg:pt-10">
         {children}
       </main>
     </div>

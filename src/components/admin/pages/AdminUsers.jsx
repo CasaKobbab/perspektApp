@@ -132,7 +132,7 @@ export default function AdminUsers({ user, currentLocale }) {
               </TableRow>
             ) : users.length > 0 ? (
               users.map((u) => (
-                <TableRow key={u.id} className="block md:table-row mb-4 md:mb-0 border border-theme md:border-b-0 rounded-lg md:rounded-none p-4 md:p-0 bg-white dark:bg-slate-ink md:bg-transparent hover:bg-warm-sand dark:hover:bg-slate-ink shadow-sm md:shadow-none">
+                <TableRow key={u.id} className="block md:table-row mb-4 md:mb-0 border border-theme md:border-b-0 rounded-lg md:rounded-none p-4 md:p-0 card-surface md:bg-transparent hover:bg-secondary/50 shadow-sm md:shadow-none">
                   <TableCell className="flex justify-between items-center md:table-cell py-2 md:py-4 border-b border-theme md:border-b-0 font-medium text-primary">
                     <span className="md:hidden text-secondary font-normal">{t('admin.fullName')}</span>
                     {u.full_name}
@@ -189,7 +189,7 @@ export default function AdminUsers({ user, currentLocale }) {
                         <DropdownMenuContent align="end" className="card-surface">
                           <DropdownMenuItem 
                             onClick={() => handleEdit(u)}
-                            className="text-secondary hover:text-primary hover:bg-warm-sand dark:hover:bg-slate-ink"
+                            className="text-secondary hover:text-primary hover:bg-secondary/50"
                           >
                             <Edit className="w-4 h-4 mr-2" />
                             {t('admin.editUser')}

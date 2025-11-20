@@ -240,7 +240,7 @@ export default function AdminVideos({ user, currentLocale }) {
               </TableRow>
             ) : videos.length > 0 ? (
               videos.map((video) => (
-                <TableRow key={video.id} className="block md:table-row mb-4 md:mb-0 border border-theme md:border-b-0 rounded-lg md:rounded-none p-4 md:p-0 bg-white dark:bg-slate-ink md:bg-transparent hover:bg-warm-sand dark:hover:bg-slate-ink shadow-sm md:shadow-none">
+                <TableRow key={video.id} className="block md:table-row mb-4 md:mb-0 border border-theme md:border-b-0 rounded-lg md:rounded-none p-4 md:p-0 card-surface md:bg-transparent hover:bg-secondary/50 shadow-sm md:shadow-none">
                   <TableCell className="flex justify-between items-center md:table-cell py-2 md:py-4 border-b border-theme md:border-b-0 font-medium text-primary">
                     <span className="md:hidden text-secondary font-normal">{t('admin.title')}</span>
                     {video.title}
@@ -315,20 +315,20 @@ export default function AdminVideos({ user, currentLocale }) {
                         <DropdownMenuContent align="end" className="card-surface">
                           <DropdownMenuItem 
                             onClick={() => window.open(video.video_url, '_blank')}
-                            className="text-secondary hover:text-primary hover:bg-warm-sand dark:hover:bg-slate-ink"
-                          >
+                            className="text-secondary hover:text-primary hover:bg-secondary/50"
+                            >
                             <Play className="w-4 h-4 mr-2" />
                             {currentLocale === 'nb' ? 'Se video' : 'Watch Video'}
-                          </DropdownMenuItem>
-                          {canEdit && (
+                            </DropdownMenuItem>
+                            {canEdit && (
                             <DropdownMenuItem 
                               onClick={() => handleOpenModal(video)}
-                              className="text-secondary hover:text-primary hover:bg-warm-sand dark:hover:bg-slate-ink"
+                              className="text-secondary hover:text-primary hover:bg-secondary/50"
                             >
                               <Edit className="w-4 h-4 mr-2" />
                               {t('common.edit')}
                             </DropdownMenuItem>
-                          )}
+                            )}
                           {canDelete && (
                             <DropdownMenuItem 
                               onClick={() => handleDelete(video.id)} 
@@ -433,12 +433,12 @@ export default function AdminVideos({ user, currentLocale }) {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="bg-surface border-default">
-                      <SelectItem value="news" className="text-primary hover:bg-warm-sand dark:hover:bg-slate-ink">{t('topics.news')}</SelectItem>
-                      <SelectItem value="opinion" className="text-primary hover:bg-warm-sand dark:hover:bg-slate-ink">{t('topics.opinion')}</SelectItem>
-                      <SelectItem value="culture" className="text-primary hover:bg-warm-sand dark:hover:bg-slate-ink">{t('topics.culture')}</SelectItem>
-                      <SelectItem value="technology" className="text-primary hover:bg-warm-sand dark:hover:bg-slate-ink">{t('topics.technology')}</SelectItem>
-                      <SelectItem value="economy" className="text-primary hover:bg-warm-sand dark:hover:bg-slate-ink">{t('topics.economy')}</SelectItem>
-                      <SelectItem value="sports" className="text-primary hover:bg-warm-sand dark:hover:bg-slate-ink">{t('topics.sports')}</SelectItem>
+                      <SelectItem value="news" className="text-primary hover:bg-secondary/50">{t('topics.news')}</SelectItem>
+                      <SelectItem value="opinion" className="text-primary hover:bg-secondary/50">{t('topics.opinion')}</SelectItem>
+                      <SelectItem value="culture" className="text-primary hover:bg-secondary/50">{t('topics.culture')}</SelectItem>
+                      <SelectItem value="technology" className="text-primary hover:bg-secondary/50">{t('topics.technology')}</SelectItem>
+                      <SelectItem value="economy" className="text-primary hover:bg-secondary/50">{t('topics.economy')}</SelectItem>
+                      <SelectItem value="sports" className="text-primary hover:bg-secondary/50">{t('topics.sports')}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -452,9 +452,9 @@ export default function AdminVideos({ user, currentLocale }) {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="bg-surface border-default">
-                      <SelectItem value="draft" className="text-primary hover:bg-warm-sand dark:hover:bg-slate-ink">{t('common.draft')}</SelectItem>
-                      <SelectItem value="published" className="text-primary hover:bg-warm-sand dark:hover:bg-slate-ink">{t('common.published')}</SelectItem>
-                      <SelectItem value="archived" className="text-primary hover:bg-warm-sand dark:hover:bg-slate-ink">{t('common.archived')}</SelectItem>
+                      <SelectItem value="draft" className="text-primary hover:bg-secondary/50">{t('common.draft')}</SelectItem>
+                      <SelectItem value="published" className="text-primary hover:bg-secondary/50">{t('common.published')}</SelectItem>
+                      <SelectItem value="archived" className="text-primary hover:bg-secondary/50">{t('common.archived')}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -466,8 +466,8 @@ export default function AdminVideos({ user, currentLocale }) {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="bg-surface border-default">
-                      <SelectItem value="nb" className="text-primary hover:bg-warm-sand dark:hover:bg-slate-ink">Norsk</SelectItem>
-                      <SelectItem value="en" className="text-primary hover:bg-warm-sand dark:hover:bg-slate-ink">English</SelectItem>
+                      <SelectItem value="nb" className="text-primary hover:bg-secondary/50">Norsk</SelectItem>
+                      <SelectItem value="en" className="text-primary hover:bg-secondary/50">English</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
