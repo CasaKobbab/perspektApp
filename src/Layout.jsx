@@ -268,11 +268,18 @@ function LayoutContent({ children, currentPageName }) {
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <Link to="/Home" className="flex items-center space-x-3 group">
-              <img 
-                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c87ff5923f3448855aec56/00de75986_GeneratedImageNovember032025-3_46PM.png" 
-                alt="Perspekt Logo" 
-                className="w-8 h-8 rounded-lg transition-transform group-hover:scale-105" 
-              />
+              <div className="relative w-8 h-8">
+                <img 
+                  src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c87ff5923f3448855aec56/6279cd9dc_perspektfavicon.png" 
+                  alt="Perspekt Logo" 
+                  className="w-8 h-8 rounded-lg transition-transform group-hover:scale-105 block dark:hidden" 
+                />
+                <img 
+                  src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c87ff5923f3448855aec56/6c1690234_faviconperspektblack.png" 
+                  alt="Perspekt Logo" 
+                  className="w-8 h-8 rounded-lg transition-transform group-hover:scale-105 hidden dark:block" 
+                />
+              </div>
               <span className="text-2xl font-bold gradient-text hidden md:block">Perspekt</span>
             </Link>
 
@@ -425,11 +432,18 @@ function LayoutContent({ children, currentPageName }) {
           <div className="grid md:grid-cols-4 gap-8">
             <div className="md:col-span-2">
               <div className="flex items-center space-x-3 mb-4">
-                <img 
-                  src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c87ff5923f3448855aec56/00de75986_GeneratedImageNovember032025-3_46PM.png" 
-                  alt="Perspekt Logo" 
-                  className="w-8 h-8 rounded-lg" 
-                />
+                <div className="relative w-8 h-8">
+                  <img 
+                    src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c87ff5923f3448855aec56/6279cd9dc_perspektfavicon.png" 
+                    alt="Perspekt Logo" 
+                    className="w-8 h-8 rounded-lg block dark:hidden" 
+                  />
+                  <img 
+                    src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c87ff5923f3448855aec56/6c1690234_faviconperspektblack.png" 
+                    alt="Perspekt Logo" 
+                    className="w-8 h-8 rounded-lg hidden dark:block" 
+                  />
+                </div>
                 <span className="text-xl font-bold gradient-text">Perspekt</span>
               </div>
               <p className="text-secondary mb-6 max-w-md">
