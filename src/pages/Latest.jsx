@@ -118,7 +118,7 @@ export default function Latest() {
                   placeholder={t('nav.search')}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 bg-warm-sand dark:bg-slate-ink border-theme text-primary"
+                  className="pl-10 bg-primary border-default text-primary"
                 />
               </div>
             </div>
