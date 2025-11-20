@@ -18,8 +18,12 @@ export default function AdminSettings({ user, currentLocale }) {
   
   const logoInputRef = useRef(null);
   const faviconInputRef = useRef(null);
+  const heroLightInputRef = useRef(null);
+  const heroDarkInputRef = useRef(null);
   const [isUploadingLogo, setIsUploadingLogo] = useState(false);
   const [isUploadingFavicon, setIsUploadingFavicon] = useState(false);
+  const [isUploadingHeroLight, setIsUploadingHeroLight] = useState(false);
+  const [isUploadingHeroDark, setIsUploadingHeroDark] = useState(false);
 
   useEffect(() => {
     const loadSettings = async () => {
@@ -51,16 +55,22 @@ export default function AdminSettings({ user, currentLocale }) {
     if (!file) return;
     if (type === 'logo') setIsUploadingLogo(true);
     if (type === 'favicon') setIsUploadingFavicon(true);
+    if (type === 'hero_light') setIsUploadingHeroLight(true);
+    if (type === 'hero_dark') setIsUploadingHeroDark(true);
 
     try {
       const { file_url } = await UploadFile({ file });
       if (type === 'logo') handleInputChange('logo_url', file_url);
       if (type === 'favicon') handleInputChange('favicon_url', file_url);
+      if (type === 'hero_light') handleInputChange('hero_image_light', file_url);
+      if (type === 'hero_dark') handleInputChange('hero_image_dark', file_url);
     } catch (error) {
       console.error(`Error uploading ${type}:`, error);
     } finally {
       if (type === 'logo') setIsUploadingLogo(false);
       if (type === 'favicon') setIsUploadingFavicon(false);
+      if (type === 'hero_light') setIsUploadingHeroLight(false);
+      if (type === 'hero_dark') setIsUploadingHeroDark(false);
     }
   };
   
@@ -123,6 +133,48 @@ export default function AdminSettings({ user, currentLocale }) {
       </div>
 
       <div className="space-y-8">
+        {/* Hero Configuration */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Hero Configuration</CardTitle>
+            <CardDescription>Manage the main images for the landing page hero section.</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="space-y-4">
+                <Label>Light Theme Image (Day Mode)</Label>
+                <div className="border-2 border-dashed rounded-lg p-4 flex flex-col items-center justify-center gap-4 min-h-[200px] bg-white">
+                   {settings.hero_image_light ? (
+                     <img src={settings.hero_image_light} alt="Hero Light" className="w-full h-auto max-h-[150px] object-cover rounded shadow-sm" />
+                   ) : (
+                     <div className="text-center text-gray-400 p-4">No image set</div>
+                   )}
+                   <input type="file" ref={heroLightInputRef} onChange={(e) => handleFileUpload(e.target.files[0], 'hero_light')} accept="image/*" className="hidden" />
+                   <Button variant="outline" onClick={() => heroLightInputRef.current.click()} disabled={isUploadingHeroLight} className="w-full">
+                      {isUploadingHeroLight ? <Loader2 className="w-4 h-4 mr-2 animate-spin"/> : <Upload className="w-4 h-4 mr-2"/>}
+                      Upload Light Image
+                   </Button>
+                </div>
+              </div>
+              <div className="space-y-4">
+                <Label>Dark Theme Image (Night Mode)</Label>
+                <div className="border-2 border-dashed rounded-lg p-4 flex flex-col items-center justify-center gap-4 min-h-[200px] bg-slate-900">
+                   {settings.hero_image_dark ? (
+                     <img src={settings.hero_image_dark} alt="Hero Dark" className="w-full h-auto max-h-[150px] object-cover rounded shadow-sm" />
+                   ) : (
+                     <div className="text-center text-gray-500 p-4">No image set</div>
+                   )}
+                   <input type="file" ref={heroDarkInputRef} onChange={(e) => handleFileUpload(e.target.files[0], 'hero_dark')} accept="image/*" className="hidden" />
+                   <Button variant="outline" onClick={() => heroDarkInputRef.current.click()} disabled={isUploadingHeroDark} className="w-full bg-slate-800 text-white hover:bg-slate-700 border-slate-700">
+                      {isUploadingHeroDark ? <Loader2 className="w-4 h-4 mr-2 animate-spin"/> : <Upload className="w-4 h-4 mr-2"/>}
+                      Upload Dark Image
+                   </Button>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* General Site Information */}
         <Card>
           <CardHeader>

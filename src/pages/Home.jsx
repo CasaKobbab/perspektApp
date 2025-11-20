@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Article, User } from "@/entities/all";
 import { Video } from "@/entities/Video";
+import { SiteSettings } from "@/entities/SiteSettings";
 import { Link } from "react-router-dom";
 import { useTranslation } from "@/components/i18n/translations";
 import { Clock, ArrowRight, Star, TrendingUp } from "lucide-react";
@@ -23,6 +24,7 @@ export default function Home() {
   const [articles, setArticles] = useState([]);
   const [videos, setVideos] = useState([]);
   const [featuredArticles, setFeaturedArticles] = useState([]);
+  const [siteSettings, setSiteSettings] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -71,11 +73,15 @@ export default function Home() {
 
         // Fetch current user
         const currentUser = await User.me().catch(() => null);
+        
+        // Fetch site settings
+        const settings = await SiteSettings.list().then(res => res[0] || null).catch(() => null);
 
         setArticles(allArticles);
         setVideos(allVideos);
         setFeaturedArticles(allArticles.filter((article) => article.featured).slice(0, 3));
         setUser(currentUser);
+        setSiteSettings(settings);
         
         console.log('Loaded videos:', allVideos);
       } catch (error) {
