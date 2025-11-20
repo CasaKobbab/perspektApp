@@ -107,7 +107,7 @@ export default function Latest() {
         </div>
 
         {/* Filters */}
-        <div className="bg-white dark:bg-slate-ink rounded-lg shadow-sm p-6 mb-8">
+        <div className="card-surface rounded-lg p-6 mb-8">
           <div className="flex flex-col md:flex-row gap-4">
             {/* Search */}
             <div className="flex-1">
