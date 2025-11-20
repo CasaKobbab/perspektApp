@@ -113,7 +113,7 @@ export default function AdminUsers({ user, currentLocale }) {
 
       <div className="card-surface rounded-lg">
         <Table>
-          <TableHeader>
+          <TableHeader className="hidden md:table-header-group">
             <TableRow className="border-theme">
               <TableHead className="text-primary">{t('admin.fullName')}</TableHead>
               <TableHead className="text-primary">{t('admin.email')}</TableHead>
@@ -132,44 +132,78 @@ export default function AdminUsers({ user, currentLocale }) {
               </TableRow>
             ) : users.length > 0 ? (
               users.map((u) => (
-                <TableRow key={u.id} className="border-theme hover:bg-warm-sand dark:hover:bg-slate-ink">
-                  <TableCell className="font-medium text-primary">{u.full_name}</TableCell>
-                  <TableCell className="text-secondary">{u.email}</TableCell>
-                  <TableCell>
+                <TableRow key={u.id} className="block md:table-row mb-4 md:mb-0 border border-theme md:border-b-0 rounded-lg md:rounded-none p-4 md:p-0 bg-white dark:bg-slate-ink md:bg-transparent hover:bg-warm-sand dark:hover:bg-slate-ink shadow-sm md:shadow-none">
+                  <TableCell className="flex justify-between items-center md:table-cell py-2 md:py-4 border-b border-theme md:border-b-0 font-medium text-primary">
+                    <span className="md:hidden text-secondary font-normal">{t('admin.fullName')}</span>
+                    {u.full_name}
+                  </TableCell>
+                  <TableCell className="flex justify-between items-center md:table-cell py-2 md:py-4 border-b border-theme md:border-b-0 text-secondary break-all">
+                    <span className="md:hidden text-secondary font-normal shrink-0 mr-4">{t('admin.email')}</span>
+                    {u.email}
+                  </TableCell>
+                  <TableCell className="flex justify-between items-center md:table-cell py-2 md:py-4 border-b border-theme md:border-b-0">
+                    <span className="md:hidden text-secondary font-normal">{t('admin.role')}</span>
                     <Badge className={roleColors[u.role]}>{u.role}</Badge>
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="flex justify-between items-center md:table-cell py-2 md:py-4 border-b border-theme md:border-b-0">
+                    <span className="md:hidden text-secondary font-normal">{t('admin.subscriptionStatus')}</span>
                     <Badge className={subscriptionColors[u.subscription_status]}>
                       {t(`user.${u.subscription_status}`)}
                     </Badge>
                   </TableCell>
-                  <TableCell className="text-secondary">
+                  <TableCell className="flex justify-between items-center md:table-cell py-2 md:py-4 border-b border-theme md:border-b-0 text-secondary">
+                    <span className="md:hidden text-secondary font-normal">{t('admin.registeredOn')}</span>
                     {format(new Date(u.created_date), "d. MMM yyyy", { locale: getLocaleForDateFns(currentLocale) })}
                   </TableCell>
-                  <TableCell className="text-right">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" className="text-secondary hover:text-primary" disabled={u.id === user.id}>
-                          <MoreHorizontal className="w-4 h-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="card-surface">
-                        <DropdownMenuItem 
-                          onClick={() => handleEdit(u)}
-                          className="text-secondary hover:text-primary hover:bg-warm-sand dark:hover:bg-slate-ink"
-                        >
-                          <Edit className="w-4 h-4 mr-2" />
-                          {t('admin.editUser')}
-                        </DropdownMenuItem>
-                        <DropdownMenuItem 
-                          onClick={() => handleDelete(u.id)} 
-                          className="text-red-600 hover:bg-red-50 dark:hover:bg-red-900"
-                        >
-                          <Trash2 className="w-4 h-4 mr-2" />
-                          {t('common.delete')}
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                  <TableCell className="block md:table-cell py-2 md:py-4 md:text-right">
+                    {/* Mobile Actions */}
+                    <div className="md:hidden flex flex-col gap-2 mt-2">
+                      <Button 
+                        variant="outline" 
+                        onClick={() => handleEdit(u)}
+                        className="w-full justify-start"
+                        disabled={u.id === user.id}
+                      >
+                        <Edit className="w-4 h-4 mr-2" />
+                        {t('admin.editUser')}
+                      </Button>
+                      <Button 
+                        variant="destructive" 
+                        onClick={() => handleDelete(u.id)}
+                        className="w-full justify-start"
+                        disabled={u.id === user.id}
+                      >
+                        <Trash2 className="w-4 h-4 mr-2" />
+                        {t('common.delete')}
+                      </Button>
+                    </div>
+
+                    {/* Desktop Actions */}
+                    <div className="hidden md:block">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" size="icon" className="text-secondary hover:text-primary" disabled={u.id === user.id}>
+                            <MoreHorizontal className="w-4 h-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end" className="card-surface">
+                          <DropdownMenuItem 
+                            onClick={() => handleEdit(u)}
+                            className="text-secondary hover:text-primary hover:bg-warm-sand dark:hover:bg-slate-ink"
+                          >
+                            <Edit className="w-4 h-4 mr-2" />
+                            {t('admin.editUser')}
+                          </DropdownMenuItem>
+                          <DropdownMenuItem 
+                            onClick={() => handleDelete(u.id)} 
+                            className="text-red-600 hover:bg-red-50 dark:hover:bg-red-900"
+                          >
+                            <Trash2 className="w-4 h-4 mr-2" />
+                            {t('common.delete')}
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))
