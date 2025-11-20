@@ -9,7 +9,8 @@ import AdminTopics from "../components/admin/pages/AdminTopics";
 import AdminAuthors from "../components/admin/pages/AdminAuthors";
 import AdminSettings from "../components/admin/pages/AdminSettings";
 import AdminVideos from "../components/admin/pages/AdminVideos"; // New import
-import { ShieldAlert, FileText, Video, Users, BookOpen, UserRound, Settings } from "lucide-react"; // Added new icons
+import AdminBanners from "../components/admin/pages/AdminBanners";
+import { ShieldAlert, FileText, Video, Users, BookOpen, UserRound, Settings, Image as ImageIcon } from "lucide-react"; // Added new icons
 import { Button } from "@/components/ui/button";
 
 export default function Admin() {
@@ -59,6 +60,8 @@ export default function Admin() {
         return <AdminArticles user={user} currentLocale={currentLocale} />;
       case "videos": // New case for videos
         return <AdminVideos user={user} currentLocale={currentLocale} />;
+      case "banners":
+        return <AdminBanners user={user} currentLocale={currentLocale} />;
       case "users":
         return <AdminUsers user={user} currentLocale={currentLocale} />;
       case "topics":
@@ -109,6 +112,14 @@ export default function Admin() {
               <BookOpen className="w-12 h-12 text-accent mb-4" />
               <h2 className="text-2xl font-bold mb-2 text-primary">{t('admin.topicManagement')}</h2>
               <p className="text-secondary">{t('admin.topicManagementDesc')}</p>
+            </div>
+
+            <div
+              onClick={() => setActivePage('banners')}
+              className="card-surface p-6 rounded-lg cursor-pointer hover:shadow-lg transition-shadow border-2 border-transparent hover:border-accent">
+              <ImageIcon className="w-12 h-12 text-accent mb-4" />
+              <h2 className="text-2xl font-bold mb-2 text-primary">Banner Management</h2>
+              <p className="text-secondary">Manage homepage partners slider.</p>
             </div>
 
             <div
