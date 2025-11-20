@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Article, User } from "@/entities/all";
 import { Badge } from "@/components/ui/badge";
@@ -182,7 +181,7 @@ export default function ArticlePage() {
 
   return (
     <>
-      <article className="bg-white">
+      <article className="bg-primary min-h-screen">
         {/* Article Header */}
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <Button
@@ -213,12 +212,12 @@ export default function ArticlePage() {
               }
             </div>
 
-            <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 font-serif leading-tight mb-6">
+            <h1 className="text-4xl lg:text-5xl font-bold text-primary font-serif leading-tight mb-6">
               {article.title}
             </h1>
 
             {article.dek &&
-            <p className="text-xl text-gray-600 leading-relaxed mb-8">
+            <p className="text-xl text-secondary leading-relaxed mb-8">
                 {article.dek}
               </p>
             }
@@ -234,9 +233,9 @@ export default function ArticlePage() {
                 </Link>
                 <div>
                   <Link to={createPageUrl(`Author?slug=${author?.slug}`)}> {/* Wrapped author name with Link */}
-                    <p className="font-semibold text-gray-900 hover:text-blue-600">{article.author_name}</p> {/* Added hover effect */}
+                    <p className="font-semibold text-primary hover:text-accent">{article.author_name}</p> {/* Added hover effect */}
                   </Link>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-secondary">
                     {format(new Date(article.published_date || article.created_date), "d. MMMM yyyy, HH:mm", { locale: getLocaleForDateFns(currentLocale) })}
                   </p>
                 </div>
@@ -284,10 +283,10 @@ export default function ArticlePage() {
 
         {/* Article Content */}
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-          <div className="prose prose-lg max-w-none">
+          <div className="prose prose-lg dark:prose-invert max-w-none text-primary">
             {canRead ?
             <div
-              className="text-gray-800 leading-relaxed"
+              className="text-primary leading-relaxed"
               dangerouslySetInnerHTML={{
                 __html: article.body?.replace(/\n/g, '<br />')
               }} /> :
@@ -295,13 +294,13 @@ export default function ArticlePage() {
 
             <div className="relative">
                 <div
-                className="text-gray-800 leading-relaxed mb-8"
+                className="text-primary leading-relaxed mb-8"
                 dangerouslySetInnerHTML={{
                   __html: article.excerpt || article.body?.substring(0, 1500) + '...'
                 }} />
 
                 
-                <div className="bg-gradient-to-t from-white to-transparent absolute inset-x-0 bottom-0 h-32 pointer-events-none" />
+                <div className="bg-gradient-to-t from-paper-white dark:from-slate-ink to-transparent absolute inset-x-0 bottom-0 h-32 pointer-events-none" />
                 
                 <Card className="bg-blue-50 border-blue-200 text-center p-8 mt-16">
                   <CardContent>
