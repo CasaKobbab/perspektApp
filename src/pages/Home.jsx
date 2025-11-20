@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { useTheme } from "@/components/theme/ThemeProvider";
 
 import ArticleCard from "../components/home/ArticleCard";
 import FeaturedSection from "../components/home/FeaturedSection";
@@ -17,7 +16,6 @@ import NewsletterSignup from "../components/home/NewsletterSignup";
 import LatestVideos from "../components/home/LatestVideos";
 
 export default function Home() {
-  const { theme } = useTheme();
   const [currentLocale, setCurrentLocale] = useState('nb');
   const { t } = useTranslation(currentLocale);
   const [user, setUser] = useState(null);
@@ -120,23 +118,21 @@ export default function Home() {
         `}
       </style>
       {/* Hero Section */}
-      <section className="relative overflow-hidden text-primary">
+      <section className="relative overflow-hidden bg-gradient-to-br from-nordic-sea via-slate-ink to-nordic-sea text-paper-white">
         <div
-          className="absolute inset-0 bg-cover bg-center z-0"
+          className="absolute inset-0 bg-no-repeat bg-center opacity-5"
           style={{
-            backgroundImage: `url(${theme === 'dark' 
-              ? 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c87ff5923f3448855aec56/629917b0d_GeneratedImageNovember202025-4_06PM.png' 
-              : 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c87ff5923f3448855aec56/b3acead6d_GeneratedImageNovember202025-4_01PM.png'})`,
+            backgroundImage: 'url(https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c87ff5923f3448855aec56/5b1079ffe_IBSTuwaygKBsfuzb7Ls7W.jpg)',
             animation: 'slow-zoom 40s infinite alternate ease-in-out'
           }}
         />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
           <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-primary mb-6 font-serif lg:text-6xl leading-tight">
+            <h1 className="text-[#a59e9c] mb-6 font-serif lg:text-6xl leading-tight">
               {t('home.title')}
-              <span className="bg-gradient-to-r from-mint-green to-aqua-green bg-clip-text text-transparent"> {t('home.titleHighlight')}</span>
+              <span className="bg-gradient-to-r from-warm-sand to-laks bg-clip-text text-transparent"> {t('home.titleHighlight')}</span>
             </h1>
-            <p className="text-xl lg:text-2xl text-secondary mb-8 leading-relaxed">
+            <p className="text-xl lg:text-2xl text-warm-sand mb-8 leading-relaxed">
               {t('home.subtitle')}
             </p>
             
