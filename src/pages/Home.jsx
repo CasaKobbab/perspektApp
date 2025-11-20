@@ -118,32 +118,22 @@ export default function Home() {
         `}
       </style>
       {/* Hero Section */}
-      <section className="relative overflow-hidden min-h-[85vh] flex items-center justify-center">
-        {/* Light Mode Background */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center z-0 dark:hidden transition-opacity duration-300"
-          style={{ backgroundImage: 'url(https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c87ff5923f3448855aec56/9fa10a590_GeneratedImageNovember202025-4_06PM.png)' }}
-        />
-        {/* Dark Mode Background */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center z-0 hidden dark:block transition-opacity duration-300"
-          style={{ backgroundImage: 'url(https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c87ff5923f3448855aec56/f16872292_GeneratedImageNovember202025-4_01PM.png)' }}
-        />
-
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 text-center w-full">
-          <div className="max-w-4xl mx-auto">
-            <h1 className="text-primary mb-6 font-serif text-4xl lg:text-6xl leading-tight drop-shadow-md font-bold">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-24">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Left Column: Text & CTA */}
+          <div className="text-center lg:text-left order-1">
+            <h1 className="text-primary mb-6 font-serif text-4xl lg:text-6xl leading-tight font-bold">
               {t('home.title')}
-              <span className="text-accent drop-shadow-md"> {t('home.titleHighlight')}</span>
+              <span className="text-accent lg:block lg:mt-2"> {t('home.titleHighlight')}</span>
             </h1>
-            <p className="text-xl lg:text-2xl text-primary/90 mb-10 leading-relaxed drop-shadow-md font-medium">
+            <p className="text-xl text-secondary mb-8 leading-relaxed font-medium">
               {t('home.subtitle')}
             </p>
 
             {!user ? (
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <Link to="/Subscribe">
-                  <Button size="lg" className="bg-accent text-white hover:bg-accent/90 font-semibold px-8 shadow-lg h-12 text-lg border-none">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center">
+                <Link to="/Subscribe" className="w-full sm:w-auto">
+                  <Button size="lg" className="bg-accent text-white hover:bg-accent/90 font-semibold px-8 shadow-lg h-12 text-lg border-none w-full">
                     {t('home.startSubscription')}
                     <ArrowRight className="ml-2 w-5 h-5" />
                   </Button>
@@ -151,23 +141,37 @@ export default function Home() {
                 <Button
                   variant="outline"
                   size="lg"
-                  className="border-2 border-primary text-primary bg-transparent hover:bg-primary hover:text-white px-8 shadow-lg h-12 text-lg transition-colors"
+                  className="border-2 border-primary text-primary bg-transparent hover:bg-primary hover:text-white px-8 shadow-lg h-12 text-lg transition-colors w-full sm:w-auto"
                   onClick={async () => await User.login()}
                 >
                   {t('nav.login')}
                 </Button>
               </div>
             ) : (
-              <div className="max-w-md mx-auto">
-                <p className="text-primary text-xl mb-6 drop-shadow-md font-semibold">{t('home.welcomeBack')}, {user.full_name}!</p>
-                <Link to="/Latest">
-                  <Button className="bg-accent text-white font-bold px-8 py-4 h-auto text-lg rounded-lg hover:bg-accent/90 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+              <div className="max-w-md mx-auto lg:mx-0">
+                <p className="text-primary text-xl mb-6 font-semibold">{t('home.welcomeBack')}, {user.full_name}!</p>
+                <Link to="/Latest" className="w-full sm:w-auto block">
+                  <Button className="bg-accent text-white font-bold px-8 py-4 h-auto text-lg rounded-lg hover:bg-accent/90 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 w-full sm:w-auto">
                     {t('home.readLatestArticles')}
                     <ArrowRight className="ml-2 w-5 h-5" />
                   </Button>
                 </Link>
               </div>
             )}
+          </div>
+
+          {/* Right Column: Image */}
+          <div className="order-2 relative">
+            <img 
+              src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c87ff5923f3448855aec56/9fa10a590_GeneratedImageNovember202025-4_06PM.png" 
+              alt="Perspekt Light Theme" 
+              className="w-full h-auto rounded-2xl shadow-xl dark:hidden"
+            />
+            <img 
+              src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c87ff5923f3448855aec56/f16872292_GeneratedImageNovember202025-4_01PM.png" 
+              alt="Perspekt Dark Theme" 
+              className="w-full h-auto rounded-2xl shadow-xl hidden dark:block"
+            />
           </div>
         </div>
       </section>
