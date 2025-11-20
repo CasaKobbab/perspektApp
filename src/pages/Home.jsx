@@ -124,7 +124,7 @@ export default function Home() {
           <div className="text-center lg:text-left order-1">
             <h1 className="text-primary mb-6 font-serif text-4xl lg:text-6xl leading-tight font-bold">
               {t('home.title')}
-              <span className="text-accent lg:block lg:mt-2"> {t('home.titleHighlight')}</span>
+              <span className="uppercase gradient-text lg:block lg:mt-2"> {t('home.titleHighlight')}</span>
             </h1>
             <p className="text-xl text-secondary mb-8 leading-relaxed font-medium">
               {t('home.subtitle')}
