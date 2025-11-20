@@ -10,12 +10,15 @@ import {
   Edit3,
   LogOut,
   Home,
+  Menu,
+  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { User as UserEntity } from "@/entities/User";
 
 export default function AdminLayout({ children, activePage, setActivePage, user, currentLocale }) {
   const { t } = useTranslation(currentLocale);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   
   const navigationItems = [
     { name: t('admin.articles'), slug: "articles", icon: FileText, roles: ["admin", "editor"] },
@@ -32,25 +35,53 @@ export default function AdminLayout({ children, activePage, setActivePage, user,
   }
 
   return (
-    <div className="min-h-screen flex bg-paper-white dark:bg-slate-ink">
+    <div className="min-h-screen flex bg-paper-white dark:bg-slate-ink relative">
+      {/* Mobile Header */}
+      <div className="lg:hidden absolute top-0 left-0 right-0 h-16 bg-slate-ink text-paper-white flex items-center px-4 z-40">
+        <button onClick={() => setIsMobileMenuOpen(true)} className="p-2 mr-2">
+          <Menu className="w-6 h-6" />
+        </button>
+        <span className="text-lg font-bold font-serif">Perspekt Admin</span>
+      </div>
+
+      {/* Overlay */}
+      {isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
-      <aside className="w-64 bg-slate-ink text-paper-white flex flex-col">
-        <div className="p-4 border-b border-warm-sand">
+      <aside className={`
+        fixed inset-y-0 left-0 z-50 w-64 bg-slate-ink text-paper-white flex flex-col transition-transform duration-300 ease-in-out
+        lg:relative lg:translate-x-0
+        ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}
+      `}>
+        <div className="p-4 border-b border-warm-sand flex justify-between items-center">
           <Link to={createPageUrl("Home")} className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-gradient-to-br from-nordic-sea to-laks rounded-lg flex items-center justify-center">
               <span className="text-paper-white font-bold text-sm">P</span>
             </div>
-            <span className="text-xl font-bold font-serif">Perspekt</span>
+            <div className="flex flex-col">
+              <span className="text-xl font-bold font-serif">Perspekt</span>
+              <span className="text-xs text-warm-sand">{t('admin.title')}</span>
+            </div>
           </Link>
-          <p className="text-xs text-warm-sand mt-1">{t('admin.title')}</p>
+          <button onClick={() => setIsMobileMenuOpen(false)} className="lg:hidden p-1 text-warm-sand">
+            <X className="w-5 h-5" />
+          </button>
         </div>
 
-        <nav className="flex-1 px-2 py-4 space-y-2">
+        <nav className="flex-1 px-2 py-4 space-y-2 overflow-y-auto">
           {navigationItems.map((item) => (
             item.roles.includes(user.role) && (
               <button
                 key={item.name}
-                onClick={() => setActivePage(item.slug)}
+                onClick={() => {
+                  setActivePage(item.slug);
+                  setIsMobileMenuOpen(false);
+                }}
                 className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
                   activePage === item.slug
                     ? "bg-nordic-sea text-paper-white"
@@ -77,7 +108,7 @@ export default function AdminLayout({ children, activePage, setActivePage, user,
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-6 lg:p-10 bg-paper-white dark:bg-slate-ink">
+      <main className="flex-1 p-6 lg:p-10 bg-paper-white dark:bg-slate-ink pt-20 lg:pt-10">
         {children}
       </main>
     </div>
