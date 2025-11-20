@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from "@/components/i18n/translations";
 import { Topic } from '@/entities/Topic';
@@ -82,7 +81,7 @@ export default function AdminTopics({ user, currentLocale }) {
 
       <div className="card-surface rounded-lg">
         <Table>
-          <TableHeader>
+          <TableHeader className="hidden md:table-header-group">
             <TableRow className="border-theme">
               <TableHead className="text-primary">Name</TableHead>
               <TableHead className="text-primary">Slug</TableHead>
@@ -99,23 +98,51 @@ export default function AdminTopics({ user, currentLocale }) {
               </TableRow>
             ) : topics.length > 0 ? (
               topics.map((topic) => (
-                <TableRow key={topic.id} className="border-theme hover:bg-warm-sand dark:hover:bg-slate-ink">
-                  <TableCell className="font-medium text-primary">
+                <TableRow key={topic.id} className="block md:table-row mb-4 md:mb-0 border border-theme md:border-b-0 rounded-lg md:rounded-none p-4 md:p-0 bg-white dark:bg-slate-ink md:bg-transparent hover:bg-warm-sand dark:hover:bg-slate-ink shadow-sm md:shadow-none">
+                  <TableCell className="flex justify-between items-center md:table-cell py-2 md:py-4 border-b border-theme md:border-b-0 font-medium text-primary">
+                    <span className="md:hidden text-secondary font-normal">Name</span>
                     <Badge className={topic.color_class}>{topic.name}</Badge>
                   </TableCell>
-                  <TableCell className="text-secondary font-mono text-sm">{topic.slug}</TableCell>
-                  <TableCell>
+                  <TableCell className="flex justify-between items-center md:table-cell py-2 md:py-4 border-b border-theme md:border-b-0 text-secondary font-mono text-sm">
+                    <span className="md:hidden text-secondary font-normal font-sans">Slug</span>
+                    {topic.slug}
+                  </TableCell>
+                  <TableCell className="flex justify-between items-center md:table-cell py-2 md:py-4 border-b border-theme md:border-b-0">
+                    <span className="md:hidden text-secondary font-normal">Status</span>
                     <Badge variant={topic.is_active ? 'default' : 'outline'} className={topic.is_active ? 'bg-green-200 text-green-800' : 'border-theme'}>
                       {topic.is_active ? 'Active' : 'Hidden'}
                     </Badge>
                   </TableCell>
-                  <TableCell className="text-right">
-                    <Button variant="ghost" size="icon" onClick={() => handleEdit(topic)} className="text-secondary hover:text-primary">
-                      <Edit className="w-4 h-4" />
-                    </Button>
-                    <Button variant="ghost" size="icon" onClick={() => handleDelete(topic.id)} className="text-red-500 hover:text-red-700">
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
+                  <TableCell className="block md:table-cell py-2 md:py-4 md:text-right">
+                    {/* Mobile Actions */}
+                    <div className="md:hidden flex flex-col gap-2 mt-2">
+                      <Button 
+                        variant="outline" 
+                        onClick={() => handleEdit(topic)}
+                        className="w-full justify-start"
+                      >
+                        <Edit className="w-4 h-4 mr-2" />
+                        Edit
+                      </Button>
+                      <Button 
+                        variant="destructive" 
+                        onClick={() => handleDelete(topic.id)}
+                        className="w-full justify-start"
+                      >
+                        <Trash2 className="w-4 h-4 mr-2" />
+                        Delete
+                      </Button>
+                    </div>
+
+                    {/* Desktop Actions */}
+                    <div className="hidden md:block">
+                      <Button variant="ghost" size="icon" onClick={() => handleEdit(topic)} className="text-secondary hover:text-primary">
+                        <Edit className="w-4 h-4" />
+                      </Button>
+                      <Button variant="ghost" size="icon" onClick={() => handleDelete(topic.id)} className="text-red-500 hover:text-red-700">
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))
