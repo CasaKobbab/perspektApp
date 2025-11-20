@@ -126,7 +126,7 @@ export default function AdminSettings({ user, currentLocale }) {
           <h1 className="text-3xl font-bold text-primary">{t('admin.settings')}</h1>
           <p className="text-secondary mt-1">Manage your site's global configuration.</p>
         </div>
-        <Button onClick={handleSave} disabled={isSaving} className="w-full md:w-auto h-11">
+        <Button onClick={handleSave} disabled={isSaving} className="w-full md:w-auto h-11 bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500 text-white font-semibold hover:from-emerald-600 hover:via-teal-500 hover:to-cyan-600 shadow-md hover:shadow-lg transition-all duration-300">
           {isSaving && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
           {t('common.save')}
         </Button>
