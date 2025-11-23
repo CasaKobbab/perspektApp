@@ -450,13 +450,49 @@ export default function AdminArticleEditor() {
 
             <div className="md:col-span-2">
               <Label htmlFor="featured_image" className="font-semibold text-primary">{t('admin.featuredImage')}</Label>
-              <Input
-                id="featured_image"
-                name="featured_image"
-                value={article.featured_image}
-                onChange={handleInputChange}
-                className="bg-surface border-default text-primary"
-              />
+              <div className="mt-2">
+                {article.featured_image ? (
+                  <div className="relative group">
+                    <img
+                      src={article.featured_image}
+                      alt="Featured"
+                      className="w-full h-64 object-cover rounded-lg border border-default"
+                    />
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
+                      <Button
+                        type="button"
+                        variant="destructive"
+                        onClick={handleRemoveImage}
+                        className="flex items-center gap-2"
+                      >
+                        <X className="w-4 h-4" />
+                        {t('admin.removeImage')}
+                      </Button>
+                    </div>
+                  </div>
+                ) : (
+                  <div
+                    className={`h-40 border-2 border-dashed border-default rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-teal-500 transition-colors bg-surface ${isUploadingImage ? 'opacity-50 pointer-events-none' : ''}`}
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      className="hidden"
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                    />
+                    {isUploadingImage ? (
+                      <Loader2 className="w-8 h-8 text-teal-500 animate-spin mb-2" />
+                    ) : (
+                      <Upload className="w-8 h-8 text-secondary mb-2" />
+                    )}
+                    <p className="text-sm text-secondary font-medium">
+                      {isUploadingImage ? t('admin.uploading') : t('admin.dragDropHint')}
+                    </p>
+                  </div>
+                )}
+              </div>
             </div>
             <div className="md:col-span-2">
               <Label htmlFor="image_alt" className="font-semibold text-primary">{t('admin.imageAlt')}</Label>
