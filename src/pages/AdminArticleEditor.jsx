@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Article } from "@/entities/Article"; // Specific import for Article
@@ -19,7 +18,7 @@ import {
   SelectValue
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { ArrowLeft, Save, Loader2 } from "lucide-react"; // NEW: Import Loader2 for saving state
+import { ArrowLeft, Save, Loader2, Upload, X } from "lucide-react"; // NEW: Import Loader2 for saving state
 import { UploadFile } from "@/integrations/Core"; // NEW: Import UploadFile integration
 
 // Simple UUID generator function
@@ -69,6 +68,8 @@ export default function AdminArticleEditor() {
   });
   const [isFetching, setIsFetching] = useState(true); // Renamed from isLoading for initial fetch
   const [isSaving, setIsSaving] = useState(false); // NEW: For save operation
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
+  const fileInputRef = React.useRef(null);
   const [currentUser, setCurrentUser] = useState(null); // Renamed from user in outline to currentUser for consistency
   const [authors, setAuthors] = useState([]); // NEW: State to store author profiles
   const articleId = new URLSearchParams(location.search).get("id");
@@ -151,6 +152,26 @@ export default function AdminArticleEditor() {
     loadInitialData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [articleId, currentLocale]);
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setIsUploadingImage(true);
+    try {
+      const { file_url } = await UploadFile({ file });
+      setArticle((prev) => ({ ...prev, featured_image: file_url }));
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      alert(t('admin.saveError'));
+    } finally {
+      setIsUploadingImage(false);
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setArticle((prev) => ({ ...prev, featured_image: "" }));
+  };
 
   // NEW: Custom handler for the Quill editor's image button
   const imageHandler = React.useCallback(() => {

@@ -1,5 +1,3 @@
-
-
 // Translation resources and i18n logic
 const translations = {
   nb: {
@@ -245,7 +243,11 @@ const translations = {
       originalArticle: "Original artikkel ID (for oversettelser)",
       createTranslation: "Opprett oversettelse",
       selectAuthor: "Velg forfatter",
-      noAuthor: "Ingen forfatter"
+      noAuthor: "Ingen forfatter",
+      uploadImage: "Last opp bilde",
+      removeImage: "Fjern bilde",
+      uploading: "Laster opp...",
+      dragDropHint: "Klikk for å laste opp eller dra og slipp filen her"
     },
     // Account Page
     account: {
@@ -551,7 +553,11 @@ const translations = {
       originalArticle: "Original Article ID (for translations)",
       createTranslation: "Create translation",
       selectAuthor: "Select author",
-      noAuthor: "No author"
+      noAuthor: "No author",
+      uploadImage: "Upload Image",
+      removeImage: "Remove Image",
+      uploading: "Uploading...",
+      dragDropHint: "Click to upload or drag and drop"
     },
     // Account Page
     account: {
