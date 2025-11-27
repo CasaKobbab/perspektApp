@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/components/i18n/translations';
+import { base44 } from "@/api/base44Client";
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -13,24 +14,44 @@ export default function AccountSubscription({ user, t }) {
       benefits: [t('account.freeBenefit1'), t('account.freeBenefit2')],
       color: "bg-gray-200 text-gray-800"
     },
-    subscriber: {
+    active: {
       name: t('user.subscriber'),
       benefits: [t('subscribe.monthlyFeature1'), t('subscribe.monthlyFeature2'), t('subscribe.monthlyFeature3')],
+      color: "bg-emerald-200 text-emerald-800"
+    },
+    trialing: {
+      name: "Trial",
+      benefits: [t('subscribe.monthlyFeature1')],
       color: "bg-blue-200 text-blue-800"
     },
-    premium: {
-      name: t('user.premium'),
-      benefits: [t('subscribe.yearlyFeature1'), t('subscribe.yearlyFeature2'), t('subscribe.yearlyFeature3'), t('subscribe.yearlyFeature4')],
-      color: "bg-indigo-200 text-indigo-800"
+    past_due: {
+      name: "Past Due",
+      benefits: [],
+      color: "bg-red-200 text-red-800"
+    },
+    canceled: {
+      name: "Canceled",
+      benefits: [t('account.freeBenefit1')],
+      color: "bg-gray-200 text-gray-800"
     }
   };
+  
+  // Map legacy status to new stripe status if needed
+  let status = user.subscription_status || 'free';
+  if (status === 'subscriber' || status === 'premium') status = 'active';
 
-  const currentPlan = planDetails[user.subscription_status] || planDetails.free;
+  const currentPlan = planDetails[status] || planDetails.free;
 
-  const handleManageSubscription = () => {
-    // In a real app, this would redirect to a Stripe customer portal
-    // For now, we can link to the subscribe page or show a modal
-    alert(t('account.manageSubscriptionComingSoon'));
+  const handleManageSubscription = async () => {
+    try {
+      const { url } = await base44.functions.invoke('createStripePortal');
+      if (url) {
+        window.location.href = url;
+      }
+    } catch (error) {
+      console.error("Failed to open portal:", error);
+      alert("Could not open subscription portal.");
+    }
   };
 
   return (

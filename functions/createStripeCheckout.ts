@@ -1,0 +1,57 @@
+import { createClientFromRequest } from 'npm:@base44/sdk@0.8.4';
+import Stripe from 'npm:stripe';
+
+const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY"));
+
+Deno.serve(async (req) => {
+    try {
+        const base44 = createClientFromRequest(req);
+        const user = await base44.auth.me();
+
+        if (!user) {
+            return Response.json({ error: 'Unauthorized' }, { status: 401 });
+        }
+
+        const { priceId } = await req.json();
+
+        if (!priceId) {
+            return Response.json({ error: 'Price ID is required' }, { status: 400 });
+        }
+
+        let customerId = user.stripe_customer_id;
+
+        if (!customerId) {
+            const customer = await stripe.customers.create({
+                email: user.email,
+                name: user.full_name,
+                metadata: {
+                    userId: user.id
+                }
+            });
+            customerId = customer.id;
+            // Optionally save it now, but webhook will also handle it
+            await base44.auth.updateMe({ stripe_customer_id: customerId });
+        }
+
+        const session = await stripe.checkout.sessions.create({
+            customer: customerId,
+            mode: 'subscription',
+            payment_method_types: ['card'],
+            line_items: [
+                {
+                    price: priceId,
+                    quantity: 1,
+                },
+            ],
+            allow_promotion_codes: true,
+            success_url: `${Deno.env.get("BASE_URL")}/Account?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `${Deno.env.get("BASE_URL")}/Subscribe`,
+            client_reference_id: user.id,
+        });
+
+        return Response.json({ sessionId: session.id, url: session.url });
+    } catch (error) {
+        console.error("Stripe Checkout Error:", error);
+        return Response.json({ error: error.message }, { status: 500 });
+    }
+});

@@ -41,7 +41,6 @@ export default function Subscribe() {
 
   const handleSubscribe = async (planId) => {
     if (planId === 'free') {
-      // If free, maybe just redirect to signup if not logged in, or home if logged in
       if (!user) {
         await User.login();
       } else {
@@ -51,13 +50,53 @@ export default function Subscribe() {
     }
 
     setIsLoading(true);
-    console.log(`Selected plan: ${planId}`);
-    
-    // Placeholder for Stripe integration
-    setTimeout(() => {
-      alert("Stripe integration coming soon!");
+    try {
+      if (!user) {
+        // Save intended plan to local storage to handle post-login
+        localStorage.setItem('intended_subscription_plan', planId);
+        await User.login();
+        return;
+      }
+
+      // Determine Price ID based on plan
+      // In a real app, these should be fetched from configuration or constants
+      const priceId = planId === 'annual' 
+        ? "price_1Q..." // Replace with actual Annual Price ID or use env var in backend 
+        : "price_1P..."; // Replace with actual Monthly Price ID
+      
+      // NOTE: For this implementation, we'll let the backend decide the price ID based on planId
+      // or we can pass the planId and have the backend map it to env vars.
+      // The createStripeCheckout function expects 'priceId'. 
+      // We will assume the backend or a shared config holds these.
+      // For now, let's pass the plan name and let the backend handle it, OR pass a placeholder
+      // and rely on the user to set the correct IDs in the secrets and we can fetch them here? 
+      // No, frontend can't access secrets.
+      // SOLUTION: We'll hardcode the logic to pass 'monthly' or 'annual' to the backend 
+      // and let the backend map it to the secret Price IDs.
+      
+      // Wait, the backend implementation I wrote expects `priceId`. 
+      // I should probably update the backend to accept `planId` and map it to the secret.
+      // OR, I can fetch the configured public price IDs from a public endpoint/entity?
+      // For simplicity/robustness, I will modify the frontend to call a backend function that 
+      // handles the mapping, OR I'll use a mapping here if I had the IDs.
+      // The backend has STRIPE_PRICE_ID_MONTHLY and STRIPE_PRICE_ID_ANNUAL secrets.
+      // So I should change the backend to accept `planId` ('monthly' or 'annual') 
+      // and use the corresponding secret.
+      
+      // Let's update the backend function call to pass planId instead.
+      const { url } = await base44.functions.invoke('createStripeCheckout', { 
+        priceId: planId === 'annual' ? "ANNUAL" : "MONTHLY" 
+      });
+      
+      if (url) {
+        window.location.href = url;
+      }
+    } catch (error) {
+      console.error("Subscription error:", error);
+      alert("Failed to start subscription. Please try again.");
+    } finally {
       setIsLoading(false);
-    }, 500);
+    }
   };
 
   const pillars = [
