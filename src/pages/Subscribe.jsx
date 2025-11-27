@@ -51,44 +51,13 @@ export default function Subscribe() {
     }
 
     setIsLoading(true);
-    try {
-      if (!user) {
-        await User.login();
-        return;
-      }
-
-      // Call backend to create Checkout Session
-      const response = await fetch('/api/stripe/checkout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          priceId: planId, // In real app, map this to actual Stripe Price ID (e.g. price_123...)
-          userEmail: user.email,
-          userId: user.id
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      const { url } = await response.json();
-      
-      // Redirect to Stripe Checkout
-      if (url) {
-        window.location.href = url;
-      } else {
-        console.error("No checkout URL returned");
-        setIsLoading(false);
-      }
-    } catch (error) {
-      console.error("Subscription error:", error);
-      // Fallback for demo/platform limitation
-      alert("Stripe integration requires backend setup. Please enable Backend Functions in Base44.");
+    console.log(`Selected plan: ${planId}`);
+    
+    // Placeholder for Stripe integration
+    setTimeout(() => {
+      alert("Stripe integration coming soon!");
       setIsLoading(false);
-    }
+    }, 500);
   };
 
   const pillars = [
