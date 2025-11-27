@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { SiteSettings } from '@/entities/SiteSettings';
 import { UploadFile } from '@/integrations/Core';
+import { base44 } from "@/api/base44Client";
 import { useTranslation } from "@/components/i18n/translations";
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -24,6 +25,9 @@ export default function AdminSettings({ user, currentLocale }) {
   const [isUploadingFavicon, setIsUploadingFavicon] = useState(false);
   const [isUploadingHeroLight, setIsUploadingHeroLight] = useState(false);
   const [isUploadingHeroDark, setIsUploadingHeroDark] = useState(false);
+  
+  const [stripeSetupOutput, setStripeSetupOutput] = useState(null);
+  const [isRunningSetup, setIsRunningSetup] = useState(false);
 
   useEffect(() => {
     const loadSettings = async () => {
@@ -300,9 +304,41 @@ export default function AdminSettings({ user, currentLocale }) {
         <Card>
             <CardHeader>
                 <CardTitle>Subscription & Monetization</CardTitle>
+                <CardDescription>Manage Stripe integration and pricing.</CardDescription>
             </CardHeader>
-            <CardContent>
-                <p className="text-secondary">This section will house settings for pricing tiers, payment provider integrations (like Stripe), and currency defaults. These features require backend integration and will become available once configured at the platform level.</p>
+            <CardContent className="space-y-4">
+                <p className="text-secondary text-sm mb-4">
+                    Use the button below to automatically create the required Products, Prices, Coupons, and Webhooks in your Stripe account. 
+                    After running, copy the output environment variables to your dashboard settings.
+                </p>
+                <Button 
+                    variant="outline" 
+                    onClick={async () => {
+                        setIsRunningSetup(true);
+                        try {
+                            const res = await base44.functions.invoke('setupStripe');
+                            setStripeSetupOutput(res.env_vars);
+                            if (res.logs) console.log(res.logs);
+                        } catch (e) {
+                            console.error(e);
+                            alert("Setup failed: " + e.message);
+                        }
+                        setIsRunningSetup(false);
+                    }}
+                    disabled={isRunningSetup}
+                >
+                    {isRunningSetup && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+                    Run Stripe Setup Script
+                </Button>
+
+                {stripeSetupOutput && (
+                    <div className="mt-4 p-4 bg-slate-100 dark:bg-slate-800 rounded-md overflow-x-auto">
+                        <h4 className="text-sm font-semibold mb-2">Copy these to your Environment Variables:</h4>
+                        <pre className="text-xs font-mono select-all whitespace-pre-wrap break-all">
+                            {stripeSetupOutput}
+                        </pre>
+                    </div>
+                )}
             </CardContent>
         </Card>
 

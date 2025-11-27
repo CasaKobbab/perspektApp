@@ -40,6 +40,13 @@ Deno.serve(async (req) => {
             await base44.auth.updateMe({ stripe_customer_id: customerId });
         }
 
+        const discounts = [];
+        if (inputId === 'ANNUAL' && Deno.env.get("STRIPE_COUPON_ANNUAL")) {
+            discounts.push({ coupon: Deno.env.get("STRIPE_COUPON_ANNUAL") });
+        } else if (inputId === 'MONTHLY' && Deno.env.get("STRIPE_COUPON_MONTHLY")) {
+            discounts.push({ coupon: Deno.env.get("STRIPE_COUPON_MONTHLY") });
+        }
+
         const session = await stripe.checkout.sessions.create({
             customer: customerId,
             mode: 'subscription',
@@ -50,6 +57,7 @@ Deno.serve(async (req) => {
                     quantity: 1,
                 },
             ],
+            discounts: discounts.length > 0 ? discounts : undefined,
             allow_promotion_codes: true,
             success_url: `${Deno.env.get("BASE_URL")}/Account?session_id={CHECKOUT_SESSION_ID}`,
             cancel_url: `${Deno.env.get("BASE_URL")}/Subscribe`,
