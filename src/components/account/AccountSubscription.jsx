@@ -27,10 +27,29 @@ export default function AccountSubscription({ user, t }) {
 
   const currentPlan = planDetails[user.subscription_status] || planDetails.free;
 
-  const handleManageSubscription = () => {
-    // In a real app, this would redirect to a Stripe customer portal
-    // For now, we can link to the subscribe page or show a modal
-    alert(t('account.manageSubscriptionComingSoon'));
+  const handleManageSubscription = async () => {
+    try {
+      const response = await fetch('/api/stripe/portal', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: user.id
+        }),
+      });
+
+      if (response.ok) {
+        const { url } = await response.json();
+        if (url) window.location.href = url;
+      } else {
+        console.error("Failed to create portal session");
+        alert(t('account.manageSubscriptionComingSoon'));
+      }
+    } catch (error) {
+      console.error("Error accessing billing portal:", error);
+      alert("Stripe integration requires backend setup.");
+    }
   };
 
   return (
