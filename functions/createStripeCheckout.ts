@@ -12,10 +12,17 @@ Deno.serve(async (req) => {
             return Response.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
-        const { priceId } = await req.json();
+        const { priceId: inputId } = await req.json();
+
+        let priceId;
+        if (inputId === 'ANNUAL') {
+            priceId = Deno.env.get("STRIPE_PRICE_ID_ANNUAL");
+        } else {
+            priceId = Deno.env.get("STRIPE_PRICE_ID_MONTHLY");
+        }
 
         if (!priceId) {
-            return Response.json({ error: 'Price ID is required' }, { status: 400 });
+            return Response.json({ error: 'Price configuration missing' }, { status: 500 });
         }
 
         let customerId = user.stripe_customer_id;
