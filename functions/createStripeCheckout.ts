@@ -55,6 +55,12 @@ Deno.serve(async (req) => {
             discounts.push({ coupon: couponId });
         }
 
+        // Robust Origin Resolver
+        const envUrl = Deno.env.get("BASE_URL") || Deno.env.get("NEXT_PUBLIC_BASE_URL");
+        const origin = (envUrl || "https://perspekt.no").replace(/\/$/, "");
+        
+        console.log(`Checkout Origin used: ${origin}`);
+
         const session = await stripe.checkout.sessions.create({
             customer: customerId,
             mode: 'subscription',
@@ -67,8 +73,8 @@ Deno.serve(async (req) => {
             ],
             discounts: discounts.length > 0 ? discounts : undefined,
             allow_promotion_codes: true,
-            success_url: `${Deno.env.get("BASE_URL")}/Account?session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: `${Deno.env.get("BASE_URL")}/Subscribe`,
+            success_url: `${origin}/Account?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `${origin}/Subscribe?canceled=true`,
             client_reference_id: user.id,
         });
 
