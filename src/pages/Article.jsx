@@ -200,7 +200,7 @@ export default function ArticlePage() {
                   {t(getTopicKey(article.topic))}
                 </Badge>
               </Link>
-              <div className="flex items-center text-sm text-gray-500">
+              <div className="flex items-center text-sm text-muted">
                 <Clock className="w-4 h-4 mr-1" />
                 {article.reading_time || 5} {t('common.readingTime')}
               </div>
@@ -275,7 +275,7 @@ export default function ArticlePage() {
               className="w-full h-64 md:h-96 object-cover rounded-xl" />
 
               {article.image_alt &&
-            <p className="text-sm text-gray-500 mt-2 italic">{article.image_alt}</p>
+            <p className="text-sm text-muted mt-2 italic">{article.image_alt}</p>
             }
             </div>
           }
@@ -302,31 +302,34 @@ export default function ArticlePage() {
                 
                 <div className="bg-gradient-to-t from-paper-white dark:from-slate-ink to-transparent absolute inset-x-0 bottom-0 h-32 pointer-events-none" />
                 
-                <Card className="bg-blue-50 border-blue-200 text-center p-8 mt-16">
+                <Card className="card-surface text-center p-8 mt-16 border-accent/20 shadow-lg">
                   <CardContent>
-                    <Lock className="w-12 h-12 text-blue-600 mx-auto mb-4" />
-                    <h3 className="text-xl font-bold text-gray-900 mb-4">
+                    <div className="bg-accent/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <Lock className="w-8 h-8 text-accent" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-body mb-4 font-serif">
                       {article.access_level === 'premium' ?
                     t('article.premiumContent') :
                     t('article.limitedAccess')
                     }
                     </h3>
-                    <p className="text-gray-600 mb-6">
+                    <p className="text-secondary mb-8 text-lg">
                       {article.access_level === 'premium' ?
                     t('article.premiumDescription') :
                     t('article.limitedDescription')
                     }
                     </p>
-                    <div className="flex gap-4 justify-center">
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
                       <Link to={createPageUrl("Subscribe")}>
-                        <Button className="bg-blue-600 hover:bg-blue-700">
+                        <Button className="btn-gradient text-white border-none shadow-md px-8 py-6 h-auto text-lg font-semibold">
                           {t('article.subscribeNow')}
                         </Button>
                       </Link>
                       {!user &&
                     <Button
                       variant="outline"
-                      onClick={async () => await User.login()}>
+                      onClick={async () => await User.login()}
+                      className="border-default text-body hover:bg-secondary px-8 py-6 h-auto text-lg font-semibold">
 
                           {t('nav.login')}
                         </Button>
@@ -342,15 +345,15 @@ export default function ArticlePage() {
         {/* Author Bio Box */}
         {canRead && author &&
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-                <div className="card-surface p-8 rounded-lg mt-16">
+                <div className="card-surface p-8 rounded-lg mt-16 border border-default shadow-sm">
                     <div className="flex flex-col sm:flex-row items-center text-center sm:text-left">
-                        <img src={author.avatar_url || 'https://via.placeholder.com/96'} alt={author.name} className="w-24 h-24 rounded-full mr-0 sm:mr-6 mb-4 sm:mb-0 object-cover flex-shrink-0" />
+                        <img src={author.avatar_url || 'https://via.placeholder.com/96'} alt={author.name} className="w-24 h-24 rounded-full mr-0 sm:mr-6 mb-4 sm:mb-0 object-cover flex-shrink-0 shadow-sm border border-default" />
                         <div>
-                            <p className="text-sm font-semibold uppercase text-gray-500">{t('authors.writtenBy')}</p>
-                            <h3 className="text-2xl font-bold text-slate-300 mb-2 font-serif">{author.name}</h3>
-                            <p className="text-slate-100 mb-4">{author.bio}</p>
+                            <p className="text-sm font-semibold uppercase text-accent mb-2">{t('authors.writtenBy')}</p>
+                            <h3 className="text-2xl font-bold text-body mb-2 font-serif">{author.name}</h3>
+                            <p className="text-secondary mb-4">{author.bio}</p>
                             <Link to={createPageUrl(`Author?slug=${author.slug}`)}>
-                                <Button variant="link" className="text-red-400 p-0 text-sm font-medium underline-offset-4 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:underline h-auto hover:text-blue-800">{t('authors.viewAllArticles')} →</Button>
+                                <Button variant="link" className="text-accent hover:text-accent-hover p-0 h-auto font-medium text-base hover:no-underline">{t('authors.viewAllArticles')} →</Button>
                             </Link>
                         </div>
                     </div>
