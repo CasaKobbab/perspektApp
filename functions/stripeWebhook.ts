@@ -47,7 +47,7 @@ Deno.serve(async (req) => {
                         stripe_price_id: priceId,
                         subscription_status: subscription.status,
                         subscription_plan: plan,
-                        subscription_end_date: new Date(subscription.current_period_end * 1000).toISOString()
+                        subscription_end_date: (subscription.current_period_end ? new Date(subscription.current_period_end * 1000).toISOString() : new Date().toISOString())
                     });
                 }
                 break;
@@ -66,7 +66,7 @@ Deno.serve(async (req) => {
                     const user = users[0];
                     await base44.asServiceRole.entities.User.update(user.id, {
                         subscription_status: subscription.status,
-                        subscription_end_date: new Date(subscription.current_period_end * 1000).toISOString(),
+                        subscription_end_date: (subscription.current_period_end ? new Date(subscription.current_period_end * 1000).toISOString() : new Date().toISOString()),
                         stripe_price_id: subscription.items.data[0].price.id
                     });
                 }
