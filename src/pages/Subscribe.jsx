@@ -58,12 +58,16 @@ export default function Subscribe() {
         return;
       }
 
-      const { url } = await base44.functions.invoke('createStripeCheckout', { 
+      const { data } = await base44.functions.invoke('createStripeCheckout', { 
         priceId: planId === 'annual' ? "ANNUAL" : "MONTHLY" 
       });
+
+      console.log("Checkout Session Created:", data);
       
-      if (url) {
-        window.location.href = url;
+      if (data?.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error("Failed to retrieve checkout URL");
       }
     } catch (error) {
       console.error("Subscription error:", error);
