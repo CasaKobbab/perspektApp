@@ -28,6 +28,8 @@ Deno.serve(async (req) => {
                 const subscriptionId = session.subscription;
                 const customerId = session.customer;
 
+                console.log(`Processing checkout for userId: ${userId}, customerId: ${customerId}, subscriptionId: ${subscriptionId}`);
+
                 if (userId) {
                     // Fetch subscription to get status and end date
                     const subscription = await stripe.subscriptions.retrieve(subscriptionId);
@@ -36,6 +38,8 @@ Deno.serve(async (req) => {
                     // Ideally, this should be robust, but for now we'll infer from the event if possible or just update status
                     const priceId = subscription.items.data[0].price.id;
                     const plan = priceId === Deno.env.get("STRIPE_PRICE_ID_ANNUAL") ? 'yearly' : 'monthly';
+                    
+                    console.log(`Determined plan: ${plan}, priceId: ${priceId}`);
 
                     await base44.asServiceRole.entities.User.update(userId, {
                         stripe_customer_id: customerId,
@@ -75,6 +79,6 @@ Deno.serve(async (req) => {
         return Response.json({ received: true });
     } catch (err) {
         console.error("Webhook handler error:", err);
-        return Response.json({ error: "Webhook handler failed" }, { status: 500 });
+        return Response.json({ error: err.message, stack: err.stack }, { status: 500 });
     }
 });
