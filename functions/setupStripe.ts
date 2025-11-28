@@ -16,6 +16,7 @@ Deno.serve(async (req) => {
         const addLog = (msg) => log.push(msg);
 
         // 1. Monthly Product & Price
+        // 199 NOK / Month
         let monthlyProduct = (await stripe.products.search({ query: "name:'Perspekt Monthly'" })).data[0];
         if (!monthlyProduct) {
             monthlyProduct = await stripe.products.create({ name: 'Perspekt Monthly', description: 'Monthly subscription to Perspekt' });
@@ -33,7 +34,24 @@ Deno.serve(async (req) => {
             addLog('Created Price: 199 NOK / Month');
         }
 
-        // 2. Annual Product & Price
+        // 2. Coupon: 3 Months Intro (100 NOK off, repeating 3 months)
+        let monthlyCoupon = null;
+        try {
+            monthlyCoupon = await stripe.coupons.retrieve('intro_monthly_3m');
+        } catch (e) {
+            monthlyCoupon = await stripe.coupons.create({
+                id: 'intro_monthly_3m',
+                name: '3 Months Intro',
+                amount_off: 10000,
+                currency: 'nok',
+                duration: 'repeating',
+                duration_in_months: 3
+            });
+            addLog('Created Coupon: 3 Months Intro');
+        }
+
+        // 3. Annual Product & Price
+        // 2388 NOK / Year
         let annualProduct = (await stripe.products.search({ query: "name:'Perspekt Annual'" })).data[0];
         if (!annualProduct) {
             annualProduct = await stripe.products.create({ name: 'Perspekt Annual', description: 'Annual subscription to Perspekt' });
@@ -51,37 +69,22 @@ Deno.serve(async (req) => {
             addLog('Created Price: 2388 NOK / Year');
         }
 
-        // 3. Coupons
-        let monthlyCoupon = null;
-        try {
-            monthlyCoupon = await stripe.coupons.retrieve('intro_monthly_3m');
-        } catch (e) {
-            monthlyCoupon = await stripe.coupons.create({
-                id: 'intro_monthly_3m',
-                name: 'Intro Offer Monthly',
-                amount_off: 10000,
-                currency: 'nok',
-                duration: 'repeating',
-                duration_in_months: 3
-            });
-            addLog('Created Coupon: Intro Monthly');
-        }
-
+        // 4. Coupon: First Year Special (1200 NOK off, once)
         let annualCoupon = null;
         try {
             annualCoupon = await stripe.coupons.retrieve('intro_annual_1y');
         } catch (e) {
             annualCoupon = await stripe.coupons.create({
                 id: 'intro_annual_1y',
-                name: 'Intro Offer Annual',
+                name: 'First Year Special',
                 amount_off: 120000,
                 currency: 'nok',
                 duration: 'once'
             });
-            addLog('Created Coupon: Intro Annual');
+            addLog('Created Coupon: First Year Special');
         }
 
-        // 4. Webhook
+        // 5. Webhook
         const baseUrl = Deno.env.get("BASE_URL") || 'http://localhost:3000';
         const webhookUrl = `${baseUrl}/api/functions/stripeWebhook`;
         

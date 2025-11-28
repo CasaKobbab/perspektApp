@@ -12,13 +12,23 @@ Deno.serve(async (req) => {
             return Response.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
-        const { priceId: inputId } = await req.json();
+        const { priceId: inputId, couponId: inputCouponId } = await req.json();
 
         let priceId;
+        let couponId = inputCouponId || null;
+
+        // Resolve Price ID
         if (inputId === 'ANNUAL') {
             priceId = Deno.env.get("STRIPE_PRICE_ID_ANNUAL");
-        } else {
+            // Apply default coupon if no specific coupon was passed
+            if (!couponId) couponId = Deno.env.get("STRIPE_COUPON_ANNUAL");
+        } else if (inputId === 'MONTHLY') {
             priceId = Deno.env.get("STRIPE_PRICE_ID_MONTHLY");
+            // Apply default coupon if no specific coupon was passed
+            if (!couponId) couponId = Deno.env.get("STRIPE_COUPON_MONTHLY");
+        } else {
+            // Allow passing a direct Stripe Price ID
+            priceId = inputId;
         }
 
         if (!priceId) {
@@ -36,15 +46,13 @@ Deno.serve(async (req) => {
                 }
             });
             customerId = customer.id;
-            // Optionally save it now, but webhook will also handle it
+            // Update user with new customer ID
             await base44.auth.updateMe({ stripe_customer_id: customerId });
         }
 
         const discounts = [];
-        if (inputId === 'ANNUAL' && Deno.env.get("STRIPE_COUPON_ANNUAL")) {
-            discounts.push({ coupon: Deno.env.get("STRIPE_COUPON_ANNUAL") });
-        } else if (inputId === 'MONTHLY' && Deno.env.get("STRIPE_COUPON_MONTHLY")) {
-            discounts.push({ coupon: Deno.env.get("STRIPE_COUPON_MONTHLY") });
+        if (couponId) {
+            discounts.push({ coupon: couponId });
         }
 
         const session = await stripe.checkout.sessions.create({
