@@ -16,9 +16,13 @@ Deno.serve(async (req) => {
             return Response.json({ error: 'No billing account found' }, { status: 400 });
         }
 
+        // Robust Origin Resolver
+        const envUrl = Deno.env.get("BASE_URL") || Deno.env.get("NEXT_PUBLIC_BASE_URL");
+        const origin = (envUrl || "https://perspekt.no").replace(/\/$/, "");
+
         const session = await stripe.billingPortal.sessions.create({
             customer: user.stripe_customer_id,
-            return_url: `${Deno.env.get("BASE_URL")}/Account`,
+            return_url: `${origin}/Account`,
         });
 
         return Response.json({ url: session.url });

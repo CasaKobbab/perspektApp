@@ -144,6 +144,11 @@ const translations = {
       commonFeature2: "Ingen reklame",
       commonFeature3: "Kommenter på artikler",
       
+      monthlyFeature1: "Full tilgang til alle artikler",
+      monthlyFeature2: "Ingen reklame",
+      monthlyFeature3: "Kommenter på artikler",
+      monthlyFeature4: "Eksklusive nyhetsbrev",
+      
       mostPopular: "Mest populær",
       bestValue: "Mest for pengene",
       selectPlan: "Velg plan",
@@ -452,6 +457,11 @@ const translations = {
       commonFeature1: "Full access to all articles",
       commonFeature2: "No ads",
       commonFeature3: "Comment on articles",
+      
+      monthlyFeature1: "Full access to all articles",
+      monthlyFeature2: "No ads",
+      monthlyFeature3: "Comment on articles",
+      monthlyFeature4: "Exclusive newsletters",
       
       mostPopular: "Most Popular",
       bestValue: "Best Value",

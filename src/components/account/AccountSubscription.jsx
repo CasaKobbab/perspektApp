@@ -16,7 +16,7 @@ export default function AccountSubscription({ user, t }) {
     },
     active: {
       name: t('user.subscriber'),
-      benefits: [t('subscribe.monthlyFeature1'), t('subscribe.monthlyFeature2'), t('subscribe.monthlyFeature3')],
+      benefits: [t('subscribe.monthlyFeature1'), t('subscribe.monthlyFeature2'), t('subscribe.monthlyFeature3'), t('subscribe.monthlyFeature4')],
       color: "bg-emerald-200 text-emerald-800"
     },
     trialing: {
@@ -44,13 +44,19 @@ export default function AccountSubscription({ user, t }) {
 
   const handleManageSubscription = async () => {
     try {
-      const { url } = await base44.functions.invoke('createStripePortal');
-      if (url) {
-        window.location.href = url;
+      const { data } = await base44.functions.invoke('createStripePortal');
+      
+      if (data?.error) {
+        alert(`Error: ${data.error}`);
+        return;
+      }
+
+      if (data?.url) {
+        window.location.href = data.url;
       }
     } catch (error) {
       console.error("Failed to open portal:", error);
-      alert("Could not open subscription portal.");
+      alert(`Could not open subscription portal: ${error.message}`);
     }
   };
 
