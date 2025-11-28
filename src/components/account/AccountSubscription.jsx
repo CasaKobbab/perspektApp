@@ -56,13 +56,13 @@ export default function AccountSubscription({ user, t }) {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-primary mb-6">{t('account.tabs.subscription')}</h2>
+      <h2 className="text-2xl font-bold text-body mb-6">{t('account.tabs.subscription')}</h2>
       
-      <Card className="bg-warm-sand/30 dark:bg-slate-ink/30 border-theme">
+      <Card className="bg-surface border-default shadow-sm">
         <CardHeader>
           <div className="flex justify-between items-start">
             <div>
-              <CardTitle className="text-primary">{t('account.currentPlan')}</CardTitle>
+              <CardTitle className="text-body">{t('account.currentPlan')}</CardTitle>
               <p className="text-secondary mt-1">{t('account.planDetails')}</p>
             </div>
             <Badge className={currentPlan.color}>{currentPlan.name}</Badge>
@@ -72,18 +72,18 @@ export default function AccountSubscription({ user, t }) {
           <ul className="space-y-3 mb-6">
             {currentPlan.benefits.map((benefit, index) => (
               <li key={index} className="flex items-start">
-                <Check className="w-5 h-5 text-green-500 mr-3 flex-shrink-0 mt-0.5" />
-                <span className="text-primary">{benefit}</span>
+                <Check className="w-5 h-5 text-accent mr-3 flex-shrink-0 mt-0.5" />
+                <span className="text-body">{benefit}</span>
               </li>
             ))}
           </ul>
           
           <div className="flex flex-wrap gap-4">
             <Link to={createPageUrl("Subscribe")}>
-              <Button className="btn-primary">{t('account.viewPlans')}</Button>
+              <Button className="btn-gradient text-white border-none shadow-md">{t('account.viewPlans')}</Button>
             </Link>
             {user.subscription_status !== 'free' && (
-              <Button variant="outline" onClick={handleManageSubscription}>{t('account.manageSubscription')}</Button>
+              <Button variant="outline" onClick={handleManageSubscription} className="text-body border-default hover:bg-secondary">{t('account.manageSubscription')}</Button>
             )}
           </div>
           <p className="text-xs text-muted mt-4">{t('account.billingInfoNote')}</p>

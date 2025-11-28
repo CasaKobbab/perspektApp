@@ -41,8 +41,8 @@ export default function AccountPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-paper-white dark:bg-slate-ink">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-nordic-sea"></div>
+      <div className="min-h-screen flex items-center justify-center bg-primary">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent"></div>
       </div>
     );
   }
@@ -56,17 +56,17 @@ export default function AccountPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-paper-white dark:bg-slate-ink">
+    <div className="min-h-screen bg-primary">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <header className="mb-10">
-          <h1 className="text-4xl font-bold text-primary font-serif mb-2">{t('account.title')}</h1>
+          <h1 className="text-4xl font-bold text-body font-serif mb-2">{t('account.title')}</h1>
           <p className="text-secondary text-lg">{t('account.subtitle', { name: user.full_name })}</p>
         </header>
 
         <Tabs defaultValue="info" className="flex flex-col md:flex-row gap-10">
           <TabsList className="flex flex-row md:flex-col items-start h-auto md:w-1/5 bg-transparent p-0">
             {tabs.map(tab => (
-              <TabsTrigger key={tab.value} value={tab.value} className="w-full justify-start text-secondary hover:text-primary data-[state=active]:bg-warm-sand/50 dark:data-[state=active]:bg-slate-ink/50 data-[state=active]:text-primary data-[state=active]:shadow-sm px-4 py-2 text-left">
+              <TabsTrigger key={tab.value} value={tab.value} className="w-full justify-start text-secondary hover:text-body data-[state=active]:bg-accent/10 data-[state=active]:text-body data-[state=active]:font-medium data-[state=active]:shadow-sm px-4 py-2 text-left transition-colors rounded-lg">
                 <tab.icon className="w-4 h-4 mr-3" />
                 <span>{t(tab.label)}</span>
               </TabsTrigger>

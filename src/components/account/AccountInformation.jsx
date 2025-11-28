@@ -49,34 +49,34 @@ export default function AccountInformation({ user, t, onUpdate }) {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-primary mb-6">{t('account.tabs.info')}</h2>
+      <h2 className="text-2xl font-bold text-body mb-6">{t('account.tabs.info')}</h2>
       <div className="space-y-6">
         <div className="flex items-center gap-6">
           <div className="relative">
-            <img src={formData.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.full_name)}&background=random`} alt="Avatar" className="w-24 h-24 rounded-full object-cover" />
+            <img src={formData.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.full_name)}&background=random`} alt="Avatar" className="w-24 h-24 rounded-full object-cover shadow-sm" />
             {isUploading && <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-full"><Loader2 className="w-6 h-6 animate-spin text-white" /></div>}
           </div>
           <input type="file" ref={fileInputRef} onChange={handleFileChange} accept="image/*" className="hidden" />
-          <Button variant="outline" onClick={() => fileInputRef.current.click()} disabled={isUploading}>{t('account.changeAvatar')}</Button>
+          <Button variant="outline" onClick={() => fileInputRef.current.click()} disabled={isUploading} className="text-body border-default hover:bg-secondary">{t('account.changeAvatar')}</Button>
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="full_name" className="text-primary">{t('account.fullName')}</Label>
-          <Input id="full_name" name="full_name" value={formData.full_name} onChange={handleInputChange} className="max-w-md bg-paper-white dark:bg-slate-ink" />
+          <Label htmlFor="full_name" className="text-body">{t('account.fullName')}</Label>
+          <Input id="full_name" name="full_name" value={formData.full_name} onChange={handleInputChange} className="max-w-md bg-surface border-default text-body focus:border-accent" />
         </div>
         
         <div className="space-y-2">
-          <Label htmlFor="email" className="text-primary">{t('account.email')}</Label>
-          <Input id="email" name="email" value={user.email} disabled className="max-w-md bg-warm-sand dark:bg-slate-ink/50" />
+          <Label htmlFor="email" className="text-body">{t('account.email')}</Label>
+          <Input id="email" name="email" value={user.email} disabled className="max-w-md bg-secondary text-muted border-default" />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="phone_number" className="text-primary">{t('account.phoneNumber')}</Label>
-          <Input id="phone_number" name="phone_number" value={formData.phone_number} onChange={handleInputChange} placeholder={t('account.phoneNumberPlaceholder')} className="max-w-md bg-paper-white dark:bg-slate-ink" />
+          <Label htmlFor="phone_number" className="text-body">{t('account.phoneNumber')}</Label>
+          <Input id="phone_number" name="phone_number" value={formData.phone_number} onChange={handleInputChange} placeholder={t('account.phoneNumberPlaceholder')} className="max-w-md bg-surface border-default text-body focus:border-accent" />
         </div>
 
         <div className="pt-4">
-          <Button onClick={handleSave} disabled={isSaving}>
+          <Button onClick={handleSave} disabled={isSaving} className="btn-gradient text-white border-none">
             {isSaving && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
             {t('common.save')}
           </Button>

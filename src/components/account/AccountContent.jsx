@@ -42,13 +42,15 @@ export default function AccountContent({ user, t }) {
 
   if (user.subscription_status === 'free') {
     return (
-      <div className="text-center">
-        <Bookmark className="w-12 h-12 text-nordic-sea mx-auto mb-4" />
-        <h2 className="text-2xl font-bold text-primary mb-2">{t('account.savedArticlesForSubscribers')}</h2>
-        <p className="text-secondary mb-6 max-w-md mx-auto">{t('account.savedArticlesDesc')}</p>
+      <div className="text-center py-8">
+        <div className="bg-accent/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+          <Bookmark className="w-10 h-10 text-accent" />
+        </div>
+        <h2 className="text-2xl font-bold text-body mb-3">{t('account.savedArticlesForSubscribers')}</h2>
+        <p className="text-secondary mb-8 max-w-md mx-auto text-lg">{t('account.savedArticlesDesc')}</p>
         <Link to={createPageUrl('Subscribe')}>
-            <Button className="btn-primary">
-                {t('account.upgradeNow')} <ArrowRight className="w-4 h-4 ml-2" />
+            <Button className="btn-gradient text-white border-none shadow-md px-8 py-6 text-lg h-auto">
+                {t('account.upgradeNow')} <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
         </Link>
       </div>
@@ -57,10 +59,10 @@ export default function AccountContent({ user, t }) {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-primary mb-6">{t('account.tabs.content')}</h2>
+      <h2 className="text-2xl font-bold text-body mb-6">{t('account.tabs.content')}</h2>
       
       {isLoading ? (
-        <p>{t('common.loading')}</p>
+        <p className="text-secondary">{t('common.loading')}</p>
       ) : savedArticles.length > 0 ? (
         <div className="grid md:grid-cols-2 gap-6">
           {savedArticles.map(article => (
@@ -68,12 +70,12 @@ export default function AccountContent({ user, t }) {
           ))}
         </div>
       ) : (
-        <div className="text-center border-2 border-dashed border-theme rounded-xl p-8">
-          <Newspaper className="w-12 h-12 text-muted mx-auto mb-4" />
-          <h3 className="text-xl font-semibold text-primary mb-2">{t('account.noSavedArticles')}</h3>
-          <p className="text-secondary mb-6">{t('account.noSavedArticlesDesc')}</p>
+        <div className="text-center border-2 border-dashed border-default rounded-xl p-12">
+          <Newspaper className="w-16 h-16 text-muted mx-auto mb-6" />
+          <h3 className="text-xl font-semibold text-body mb-3">{t('account.noSavedArticles')}</h3>
+          <p className="text-secondary mb-8 text-lg">{t('account.noSavedArticlesDesc')}</p>
           <Link to={createPageUrl('Latest')}>
-            <Button variant="outline">{t('account.exploreArticles')}</Button>
+            <Button variant="outline" className="text-body border-default hover:bg-secondary">{t('account.exploreArticles')}</Button>
           </Link>
         </div>
       )}
