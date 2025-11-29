@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Article, User } from "@/entities/all";
+import { base44 } from "@/api/base44Client";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -58,10 +59,14 @@ export default function ArticlePage() {
 
       setIsLoading(true);
       try {
-        const [articleData, currentUser] = await Promise.all([
-        Article.filter({ id: articleId }, null, 1).then((results) => results[0]),
-        User.me().catch(() => null)]
-        );
+        // Use server-side function to fetch article with redaction logic
+        const [articleResponse, currentUser] = await Promise.all([
+          base44.functions.invoke('getArticle', { id: articleId }),
+          User.me().catch(() => null)
+        ]);
+
+        const articleData = articleResponse.data?.article;
+        const isRestricted = articleResponse.data?.is_restricted;
 
         if (!articleData) {
           navigate(createPageUrl("Home"));
@@ -83,7 +88,11 @@ export default function ArticlePage() {
         setArticle(articleData);
         setUser(currentUser);
 
-        const canReadArticle = checkAccess(articleData, currentUser);
+        // Determine client-side access (combining server restriction + local metered logic)
+        const canReadServer = !isRestricted;
+        const meteredAllowed = checkMeteredAccess(articleData, currentUser);
+        
+        const canReadArticle = canReadServer && meteredAllowed;
         setCanRead(canReadArticle);
 
         if (!canReadArticle && articleData.access_level !== 'free') {
@@ -116,11 +125,14 @@ export default function ArticlePage() {
     loadArticle();
   }, [currentLocale, navigate]);
 
-  const checkAccess = (article, user) => {
-    if (article.access_level === 'free') return true;
-    if (user?.subscription_status === 'subscriber' || user?.subscription_status === 'premium') return true;
-    if (article.access_level === 'metered' && (!user || (user.articles_read || 0) < 3)) return true;
-    return false;
+  const checkMeteredAccess = (article, user) => {
+    // Logic for metered articles (server passes full body, client enforces count)
+    if (article.access_level === 'metered') {
+      if (user?.subscription_status === 'subscriber' || user?.subscription_status === 'premium' || user?.subscription_status === 'active') return true;
+      if (!user || (user.articles_read || 0) < 3) return true;
+      return false;
+    }
+    return true; // For free or premium, server 'isRestricted' flag handles it, so we return true here
   };
 
   const handleShare = async (platform) => {
