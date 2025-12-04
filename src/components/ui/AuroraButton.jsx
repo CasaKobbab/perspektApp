@@ -1,15 +1,37 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 
 export const AuroraButton = ({ children, className, onClick, ...props }) => {
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  function handleMouseMove({ currentTarget, clientX, clientY }) {
+    const { left, top } = currentTarget.getBoundingClientRect();
+    mouseX.set(clientX - left);
+    mouseY.set(clientY - top);
+  }
+
   return (
     <motion.button
       className={`relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5 ${className || ""}`}
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
       onClick={onClick}
+      onMouseMove={handleMouseMove}
       {...props}
     >
+      {/* Spotlight Border */}
+      <motion.div
+        className="absolute inset-0 rounded-lg z-50 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        style={{
+          background: useMotionTemplate`radial-gradient(120px circle at ${mouseX}px ${mouseY}px, rgba(82, 227, 164, 1), transparent 80%)`,
+          mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+          WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+          maskComposite: "exclude",
+          WebkitMaskComposite: "xor",
+          padding: "1.5px",
+        }}
+      />
       {/* Base Background - Dark for better aurora contrast */}
       <div className="absolute inset-0 bg-slate-900" />
 
