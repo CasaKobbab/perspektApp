@@ -82,7 +82,8 @@ export default function Home() {
 
         setArticles(allArticles);
         setVideos(allVideos);
-        setFeaturedArticles(allArticles.filter((article) => article.featured).slice(0, 3));
+        const featured = allArticles.filter((article) => article.featured);
+        setFeaturedArticles(featured.length > 0 ? featured.slice(0, 3) : allArticles.slice(0, 3));
         setUser(currentUser);
         setSiteSettings(settings);
         
