@@ -94,7 +94,7 @@ function LayoutContent({ children, currentPageName }) {
   return (
     <div className="min-h-screen bg-primary text-body transition-colors duration-300">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
         
         :root {
           /* Light theme colors */
