@@ -16,6 +16,7 @@ import TopicNavigation from "../components/home/TopicNavigation";
 import NewsletterSignup from "../components/home/NewsletterSignup";
 import LatestVideos from "../components/home/LatestVideos";
 import ImageMarquee from "../components/home/ImageMarquee";
+import TextFlip3D from "@/components/ui/TextFlip3D";
 
 export default function Home() {
   const [currentLocale, setCurrentLocale] = useState('nb');
@@ -135,7 +136,11 @@ export default function Home() {
           <div className="text-center lg:text-left order-1">
             <h1 className="text-primary mb-6 font-serif text-4xl lg:text-6xl leading-tight font-bold">
               {t('home.title')}
-              <span className="uppercase gradient-text lg:block lg:mt-2"> {t('home.titleHighlight')}</span>
+              {/* Space added before component to maintain layout flow */}
+              {" "}
+              <TextFlip3D className="uppercase gradient-text lg:block lg:mt-2">
+                {t('home.titleHighlight')}
+              </TextFlip3D>
             </h1>
             <p className="text-xl text-secondary mb-8 leading-relaxed font-medium">
               {t('home.subtitle')}
