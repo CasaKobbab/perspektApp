@@ -13,7 +13,7 @@ export default function FeaturedSection({ articles, topicColors }) {
   const sideFeatured = articles.slice(1, 3);
 
   return (
-    <section className="bg-surface border-b border-default transition-colors duration-300">
+    <section className="relative bg-white/30 dark:bg-black/30 backdrop-blur-xl border-b border-white/20 dark:border-white/10 shadow-lg transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="flex items-center mb-8">
           <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-500 via-teal-400 to-cyan-500 flex items-center justify-center mr-3 shadow-md">
