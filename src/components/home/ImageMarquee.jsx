@@ -64,7 +64,7 @@ export default function ImageMarquee() {
 
   return (
     <div 
-      className="w-full border-b border-default h-20 relative overflow-hidden z-10 select-none group"
+      className="w-full border-b border-default h-[88px] relative overflow-hidden z-10 select-none group"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
