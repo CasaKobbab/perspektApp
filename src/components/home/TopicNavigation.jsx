@@ -74,7 +74,7 @@ export default function TopicNavigation() {
   ];
 
   return (
-    <section className="bg-surface border-b border-default transition-colors duration-300">
+    <section className="bg-white/10 dark:bg-black/10 backdrop-blur-md border-b border-white/20 dark:border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)] transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="hidden md:flex overflow-x-auto py-4 space-x-8 scrollbar-hide">
           {topics.map((topic) => (
