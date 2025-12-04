@@ -17,6 +17,7 @@ import NewsletterSignup from "../components/home/NewsletterSignup";
 import LatestVideos from "../components/home/LatestVideos";
 import ImageMarquee from "../components/home/ImageMarquee";
 import { AuroraButton } from "../components/ui/AuroraButton";
+import { SpotlightBackground } from "../components/ui/SpotlightBackground";
 
 export default function Home() {
   const [currentLocale, setCurrentLocale] = useState('nb');
@@ -112,7 +113,9 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-paper-white dark:bg-slate-ink transition-colors duration-300">
+    <div className="min-h-screen bg-paper-white dark:bg-slate-ink transition-colors duration-300 relative overflow-hidden">
+      <SpotlightBackground />
+      <div className="relative z-10">
       <style>
         {`
             @keyframes slow-zoom {
@@ -266,6 +269,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      </div>
     </div>
   );
 }
