@@ -11,7 +11,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
 import ArticleCard from "../components/home/ArticleCard";
-import FlipText from "@/components/ui/FlipText";
 import FeaturedSection from "../components/home/FeaturedSection";
 import TopicNavigation from "../components/home/TopicNavigation";
 import NewsletterSignup from "../components/home/NewsletterSignup";
@@ -136,12 +135,8 @@ export default function Home() {
           <div className="text-center lg:text-left order-1">
             <h1 className="text-primary mb-6 font-serif text-4xl lg:text-6xl leading-tight font-bold">
               {t('home.title')}
-              <span className="block lg:mt-2">
-                <FlipText className="uppercase gradient-text">
-                  {t('home.titleHighlight')}
-                </FlipText>
-              </span>
-              </h1>
+              <span className="uppercase gradient-text lg:block lg:mt-2"> {t('home.titleHighlight')}</span>
+            </h1>
             <p className="text-xl text-secondary mb-8 leading-relaxed font-medium">
               {t('home.subtitle')}
             </p>
