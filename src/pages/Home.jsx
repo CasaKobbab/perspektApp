@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import BreathingText from "@/components/ui/BreathingText";
 import { Article, User } from "@/entities/all";
 import { Video } from "@/entities/Video";
 import { SiteSettings } from "@/entities/SiteSettings";
@@ -133,10 +134,23 @@ export default function Home() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Column: Text & CTA */}
           <div className="text-center lg:text-left order-1">
-            <h1 className="text-primary mb-6 font-serif text-4xl lg:text-6xl leading-tight font-bold">
-              {t('home.title')}
-              <span className="uppercase gradient-text lg:block lg:mt-2"> {t('home.titleHighlight')}</span>
-            </h1>
+            <div className="text-primary mb-6 font-sans text-4xl lg:text-6xl leading-tight font-bold">
+              <BreathingText 
+                text={t('home.title')} 
+                fromWeight={700} 
+                toWeight={800} 
+                duration={1} 
+              />
+              <span className="lg:block lg:mt-2">
+                <BreathingText 
+                  text={" " + t('home.titleHighlight')} 
+                  className="uppercase gradient-text" 
+                  fromWeight={700} 
+                  toWeight={900}
+                  duration={0.8} 
+                />
+              </span>
+            </div>
             <p className="text-xl text-secondary mb-8 leading-relaxed font-medium">
               {t('home.subtitle')}
             </p>
