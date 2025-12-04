@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 import { createPageUrl, useTranslation } from "@/components/i18n/translations";
 import { 
   Newspaper, 
@@ -9,6 +10,41 @@ import {
   TrendingUp, 
   Trophy 
 } from "lucide-react";
+
+function TopicItem({ topic, t }) {
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  function handleMouseMove({ currentTarget, clientX, clientY }) {
+    const { left, top } = currentTarget.getBoundingClientRect();
+    mouseX.set(clientX - left);
+    mouseY.set(clientY - top);
+  }
+
+  return (
+    <Link
+      to={createPageUrl(`Topics?filter=${topic.slug}`)}
+      className={`relative flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 whitespace-nowrap ${topic.color} group overflow-hidden`}
+      onMouseMove={handleMouseMove}
+    >
+      <motion.div
+        className="absolute inset-0 rounded-xl z-10 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        style={{
+          background: useMotionTemplate`radial-gradient(150px circle at ${mouseX}px ${mouseY}px, rgba(79, 195, 160, 0.6), transparent 80%)`,
+          mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+          WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+          maskComposite: "exclude",
+          WebkitMaskComposite: "xor",
+          padding: "2px",
+        }}
+      />
+      <topic.icon className="w-5 h-5 text-secondary group-hover:scale-110 transition-transform relative z-20" />
+      <span className="font-medium text-primary group-hover:font-semibold relative z-20">
+        {t(`topics.${topic.slug}`)}
+      </span>
+    </Link>
+  );
+}
 
 export default function TopicNavigation() {
   const [currentLocale, setCurrentLocale] = useState('nb');
@@ -42,16 +78,7 @@ export default function TopicNavigation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="hidden md:flex overflow-x-auto py-4 space-x-8 scrollbar-hide">
           {topics.map((topic) => (
-            <Link
-              key={topic.slug}
-              to={createPageUrl(`Topics?filter=${topic.slug}`)}
-              className={`flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 whitespace-nowrap ${topic.color} group`}
-            >
-              <topic.icon className="w-5 h-5 text-secondary group-hover:scale-110 transition-transform" />
-              <span className="font-medium text-primary group-hover:font-semibold">
-                {t(`topics.${topic.slug}`)}
-              </span>
-            </Link>
+            <TopicItem key={topic.slug} topic={topic} t={t} />
           ))}
         </div>
       </div>
