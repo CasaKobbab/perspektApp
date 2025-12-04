@@ -150,28 +150,33 @@ export default function Subscribe() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-slate-900 font-sans">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-950 font-sans relative overflow-hidden selection:bg-emerald-100 selection:text-emerald-900">
       
+      {/* Background Blobs */}
+      <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-full mix-blend-multiply filter blur-[100px] opacity-20 animate-blob z-0" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-full mix-blend-multiply filter blur-[100px] opacity-20 animate-blob animation-delay-2000 z-0" />
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.8)_0%,_transparent_100%)] dark:bg-[radial-gradient(circle_at_center,_rgba(0,0,0,0.2)_0%,_transparent_100%)] pointer-events-none z-0" />
+
       {/* Hero / Value Prop Section */}
-      <div className="bg-white dark:bg-slate-800 py-16 border-b border-gray-200 dark:border-gray-700">
+      <div className="relative z-10 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-cyan-600 dark:from-emerald-400 dark:to-cyan-400 drop-shadow-sm">
             {t('subscribe.whySubscribe')}
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-12">
+          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-16 leading-relaxed">
             {t('subscribe.subtitle')}
           </p>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
             {pillars.map((pillar, index) => (
-              <div key={index} className="flex flex-col items-center">
-                <div className={`w-16 h-16 rounded-full flex items-center justify-center mb-4 ${pillar.bg}`}>
-                  <pillar.icon className={`w-8 h-8 ${pillar.color}`} />
+              <div key={index} className="group flex flex-col items-center bg-white/40 dark:bg-black/20 backdrop-blur-md border border-white/30 dark:border-white/10 rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-white to-gray-50 dark:from-slate-800 dark:to-slate-900 shadow-inner flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <pillar.icon className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
                   {pillar.title}
                 </h3>
-                <p className="text-gray-600 dark:text-gray-400 max-w-xs mx-auto">
+                <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed max-w-xs mx-auto">
                   {pillar.desc}
                 </p>
               </div>
@@ -181,21 +186,21 @@ export default function Subscribe() {
       </div>
 
       {/* Pricing Grid */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 relative z-10">
         <div className="grid lg:grid-cols-3 gap-8 items-start">
           
           {plans.map((plan) => (
             <Card 
               key={plan.id} 
-              className={`relative flex flex-col h-full transition-all duration-300 ${
+              className={`relative flex flex-col h-full transition-all duration-300 backdrop-blur-xl ${
                 plan.highlight 
-                  ? "border-teal-500 dark:border-teal-500 shadow-xl scale-105 z-10 border-2" 
-                  : "border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md"
-              } ${plan.type === 'free' ? 'bg-gray-50/50 dark:bg-slate-800/50' : 'bg-white dark:bg-slate-800'}`}
+                  ? "bg-white/60 dark:bg-slate-900/60 border-emerald-500/50 dark:border-emerald-400/50 shadow-[0_0_40px_-10px_rgba(16,185,129,0.3)] scale-105 z-10 border-[1.5px]" 
+                  : "bg-white/40 dark:bg-slate-900/40 border-white/20 dark:border-white/10 shadow-lg hover:shadow-xl z-0"
+              }`}
             >
               {plan.highlight && (
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <Badge className="bg-teal-600 hover:bg-teal-700 text-white px-4 py-1 text-sm uppercase tracking-wide">
+                  <Badge className="bg-gradient-to-r from-emerald-500 to-cyan-500 text-white px-4 py-1 text-sm uppercase tracking-wide border-0 shadow-lg">
                     {plan.badge}
                   </Badge>
                 </div>
@@ -207,29 +212,29 @@ export default function Subscribe() {
                 </h3>
               </CardHeader>
 
-              <CardContent className="flex-1 flex flex-col pt-4">
+              <CardContent className="flex-1 flex flex-col pt-6">
                 
                 {/* Price Section */}
-                <div className="text-center mb-6">
+                <div className="text-center mb-8">
                   {plan.type === 'free' ? (
-                    <div className="text-4xl font-bold text-gray-400">{plan.displayPrice}</div>
+                    <div className="text-4xl font-bold text-gray-400/80">{plan.displayPrice}</div>
                   ) : (
                     <div>
                       <div className="flex items-baseline justify-center gap-1">
-                        <span className="text-4xl font-extrabold text-gray-900 dark:text-white">
+                        <span className={`text-4xl font-extrabold ${plan.highlight ? 'text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-cyan-600 dark:from-emerald-400 dark:to-cyan-400' : 'text-gray-900 dark:text-white'}`}>
                           {plan.displayPrice}
                         </span>
                       </div>
                       {plan.introDuration && (
-                        <p className="text-teal-600 dark:text-teal-400 font-medium text-sm mt-1">
+                        <p className="text-emerald-600 dark:text-emerald-400 font-medium text-sm mt-1">
                           {plan.introDuration}
                         </p>
                       )}
                       {plan.mathLabel && (
-                        <p className="text-gray-400 text-xs mt-1">{plan.mathLabel}</p>
+                        <p className="text-muted-foreground text-xs mt-1">{plan.mathLabel}</p>
                       )}
                       {plan.regularPriceLabel && (
-                        <p className="text-gray-500 dark:text-gray-400 text-sm mt-3 pt-3 border-t border-gray-100 dark:border-gray-700">
+                        <p className="text-muted-foreground text-sm mt-4 pt-4 border-t border-gray-200/50 dark:border-gray-700/50">
                           {plan.regularPriceLabel}
                         </p>
                       )}
@@ -238,13 +243,13 @@ export default function Subscribe() {
                 </div>
 
                 {/* Features */}
-                <ul className="space-y-3 mb-8 flex-1">
+                <ul className="space-y-4 mb-8 flex-1">
                   {plan.features.map((feature, idx) => (
                     <li key={idx} className="flex items-start gap-3 text-sm">
-                      <div className={`mt-0.5 rounded-full p-0.5 ${plan.highlight ? 'bg-teal-100 text-teal-700' : 'bg-gray-100 text-gray-500'}`}>
+                      <div className={`mt-0.5 rounded-full p-1 ${plan.highlight ? 'bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400' : 'bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400'}`}>
                         <Check className="w-3 h-3" />
                       </div>
-                      <span className="text-gray-600 dark:text-gray-300">{feature}</span>
+                      <span className="text-gray-700 dark:text-gray-300 font-medium">{feature}</span>
                     </li>
                   ))}
                 </ul>
@@ -253,13 +258,12 @@ export default function Subscribe() {
                 <Button 
                   onClick={() => handleSubscribe(plan.id)}
                   disabled={isLoading}
-                  variant={plan.buttonVariant === 'outline' ? 'outline' : 'default'}
-                  className={`w-full py-6 text-lg ${
-                    plan.buttonVariant === 'gradient' 
-                      ? 'bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-600 hover:via-teal-600 hover:to-cyan-600 text-white border-0 shadow-lg hover:shadow-xl transition-all' 
+                  className={`w-full py-6 text-lg font-bold shadow-md transition-all duration-300 ${
+                    plan.buttonVariant === 'gradient' || plan.highlight
+                      ? 'bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-white border-0 shadow-emerald-500/25 hover:shadow-emerald-500/40 hover:-translate-y-0.5' 
                       : plan.buttonVariant === 'default' 
-                        ? 'bg-gray-900 hover:bg-gray-800 text-white' 
-                        : ''
+                        ? 'bg-slate-800 hover:bg-slate-700 dark:bg-white dark:hover:bg-gray-200 text-white dark:text-slate-900' 
+                        : 'bg-white/50 hover:bg-white/80 dark:bg-transparent dark:hover:bg-white/10 border-2 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white'
                   }`}
                 >
                   {isLoading ? (
