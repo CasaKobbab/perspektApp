@@ -17,7 +17,6 @@ import NewsletterSignup from "../components/home/NewsletterSignup";
 import LatestVideos from "../components/home/LatestVideos";
 import ImageMarquee from "../components/home/ImageMarquee";
 import { AuroraButton } from "../components/ui/AuroraButton";
-import { VelocityPrismBackground } from "../components/ui/VelocityPrismBackground";
 
 export default function Home() {
   const [currentLocale, setCurrentLocale] = useState('nb');
@@ -198,21 +197,20 @@ export default function Home() {
       )}
 
       {/* Latest Articles Grid with 3 columns */}
-      <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 overflow-hidden">
-        <VelocityPrismBackground />
-        <div className="relative z-10 text-center mb-12">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-primary font-serif mb-2">{t('home.latestArticles')}</h2>
           <p className="text-secondary">{t('home.latestSubtitle')}</p>
         </div>
 
         <div className="grid lg:grid-cols-12 gap-8">
           {/* Latest Videos - Left Column */}
-          <div className="lg:col-span-3 relative z-10">
+          <div className="lg:col-span-3">
             <LatestVideos videos={videos} topicColors={topicColors} />
           </div>
 
           {/* Main Content - Center Column */}
-          <div className="lg:col-span-6 relative z-10">
+          <div className="lg:col-span-6">
             <div className="space-y-8">
               {articles.slice(0, 6).map((article) => (
                 <ArticleCard
@@ -226,7 +224,7 @@ export default function Home() {
           </div>
 
           {/* Sidebar - Right Column */}
-          <div className="lg:col-span-3 space-y-8 relative z-10">
+          <div className="lg:col-span-3 space-y-8">
             {/* Newsletter Signup */}
             <NewsletterSignup user={user} />
 
