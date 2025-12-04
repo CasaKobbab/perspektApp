@@ -1,17 +1,12 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 import { useTranslation, createPageUrl, getTopicKey } from "@/components/i18n/translations";
 import { Clock, Lock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
 import { nb, enUS } from "date-fns/locale";
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 }
-};
 
 export default function ArticleCard({ article, topicColors, user, showImage = true }) {
   const [currentLocale, setCurrentLocale] = React.useState('nb');
@@ -44,10 +39,7 @@ export default function ArticleCard({ article, topicColors, user, showImage = tr
   };
 
   return (
-    <motion.article 
-      variants={itemVariants}
-      className="card-surface rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group border border-default"
-    >
+    <article className="card-surface rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group border border-default">
       <div className="p-6">
         <div className="flex items-center gap-4 mb-4 flex-wrap">
           <Link to={createPageUrl(`Topics?filter=${article.topic}`)}>
@@ -118,6 +110,6 @@ export default function ArticleCard({ article, topicColors, user, showImage = tr
           )}
         </div>
       </div>
-    </motion.article>
+    </article>
   );
 }

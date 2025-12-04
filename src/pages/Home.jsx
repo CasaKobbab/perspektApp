@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import { Article, User } from "@/entities/all";
 import { Video } from "@/entities/Video";
 import { SiteSettings } from "@/entities/SiteSettings";
@@ -218,16 +217,7 @@ export default function Home() {
 
           {/* Main Content - Center Column */}
           <div className="lg:col-span-6">
-            <motion.div 
-              className="space-y-8"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-50px" }}
-              variants={{
-                hidden: {},
-                visible: { transition: { staggerChildren: 0.1 } }
-              }}
-            >
+            <div className="space-y-8">
               {articles.slice(0, 6).map((article) => (
                 <ArticleCard
                   key={article.id}
@@ -236,7 +226,7 @@ export default function Home() {
                   user={user}
                 />
               ))}
-            </motion.div>
+            </div>
           </div>
 
           {/* Sidebar - Right Column */}
