@@ -16,6 +16,7 @@ import TopicNavigation from "../components/home/TopicNavigation";
 import NewsletterSignup from "../components/home/NewsletterSignup";
 import LatestVideos from "../components/home/LatestVideos";
 import ImageMarquee from "../components/home/ImageMarquee";
+import AuroraBackground from "../components/ui/AuroraBackground";
 
 export default function Home() {
   const [currentLocale, setCurrentLocale] = useState('nb');
@@ -129,8 +130,9 @@ export default function Home() {
             <ImageMarquee />
 
             {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-24">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <AuroraBackground className="py-12 lg:py-24">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Column: Text & CTA */}
           <div className="text-center lg:text-left order-1">
             <h1 className="text-primary mb-6 font-serif text-4xl lg:text-6xl leading-tight font-bold">
@@ -184,10 +186,10 @@ export default function Home() {
               className="w-full h-full object-cover rounded-2xl shadow-xl hidden dark:block"
             />
           </div>
-        </div>
-      </section>
+          </div>
+          </AuroraBackground>
 
-      {/* Topic Navigation */}
+          {/* Topic Navigation */}
       <TopicNavigation />
 
       {/* Featured Articles */}
