@@ -16,6 +16,7 @@ import TopicNavigation from "../components/home/TopicNavigation";
 import NewsletterSignup from "../components/home/NewsletterSignup";
 import LatestVideos from "../components/home/LatestVideos";
 import ImageMarquee from "../components/home/ImageMarquee";
+import { AuroraButton } from "../components/ui/AuroraButton";
 
 export default function Home() {
   const [currentLocale, setCurrentLocale] = useState('nb');
@@ -162,10 +163,10 @@ export default function Home() {
               <div className="max-w-md mx-auto lg:mx-0">
                 <p className="text-primary text-xl mb-6 font-semibold">{t('home.welcomeBack')}, {user.full_name}!</p>
                 <Link to="/Latest" className="w-full sm:w-auto block">
-                  <Button className="bg-accent text-white font-bold px-8 py-4 h-auto text-lg rounded-lg hover:bg-accent/90 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 w-full sm:w-auto">
+                  <AuroraButton className="w-full sm:w-auto px-8 py-4 h-auto text-lg text-white font-bold">
                     {t('home.readLatestArticles')}
-                    <ArrowRight className="ml-2 w-5 h-5" />
-                  </Button>
+                    <ArrowRight className="ml-2 w-5 h-5 inline-block" />
+                  </AuroraButton>
                 </Link>
               </div>
             )}
