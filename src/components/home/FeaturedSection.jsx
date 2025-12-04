@@ -6,7 +6,7 @@ import { Clock, Star } from "lucide-react";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 
-export default function FeaturedSection({ articles, topicColors }) {
+export default function FeaturedSection({ articles, topicColors, t }) {
   if (articles.length === 0) return null;
 
   const mainFeatured = articles[0];
@@ -19,7 +19,7 @@ export default function FeaturedSection({ articles, topicColors }) {
           <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-500 via-teal-400 to-cyan-500 flex items-center justify-center mr-3 shadow-md">
             <Star className="w-5 h-5 text-white" fill="currentColor" />
           </div>
-          <h2 className="text-2xl font-bold text-primary font-serif">Fremhevet</h2>
+          <h2 className="text-2xl font-bold text-primary font-serif">{t ? t('home.featured') : 'Fremhevet'}</h2>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8">

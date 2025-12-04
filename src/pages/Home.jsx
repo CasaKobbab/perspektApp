@@ -199,7 +199,7 @@ export default function Home() {
 
       {/* Featured Articles */}
       {featuredArticles.length > 0 && (
-        <FeaturedSection articles={featuredArticles} topicColors={topicColors} />
+        <FeaturedSection articles={featuredArticles} topicColors={topicColors} t={t} />
       )}
 
       {/* Latest Articles Grid with 3 columns */}
