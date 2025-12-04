@@ -187,7 +187,8 @@ export default function Home() {
             />
           </div>
           </div>
-          </AuroraBackground>
+        </div>
+      </AuroraBackground>
 
           {/* Topic Navigation */}
       <TopicNavigation />
