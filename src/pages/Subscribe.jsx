@@ -150,8 +150,12 @@ export default function Subscribe() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-slate-900 font-sans">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-900 font-sans relative overflow-hidden">
       
+      {/* Ambient Background Blobs */}
+      <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-emerald-400/20 dark:bg-emerald-400/10 rounded-full blur-3xl -z-10 pointer-events-none mix-blend-multiply dark:mix-blend-screen animate-pulse" />
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/20 dark:bg-cyan-500/10 rounded-full blur-3xl -z-10 pointer-events-none mix-blend-multiply dark:mix-blend-screen animate-pulse delay-1000" />
+
       {/* Hero / Value Prop Section */}
       <div className="bg-white dark:bg-slate-800 py-16 border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -187,22 +191,26 @@ export default function Subscribe() {
           {plans.map((plan) => (
             <Card 
               key={plan.id} 
-              className={`relative flex flex-col h-full transition-all duration-300 ${
+              className={`relative flex flex-col h-full transition-all duration-300 hover:-translate-y-1 backdrop-blur-md ${
                 plan.highlight 
-                  ? "border-teal-500 dark:border-teal-500 shadow-xl scale-105 z-10 border-2" 
-                  : "border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md"
-              } ${plan.type === 'free' ? 'bg-gray-50/50 dark:bg-slate-800/50' : 'bg-white dark:bg-slate-800'}`}
+                  ? "bg-white/70 dark:bg-black/50 ring-2 ring-teal-500/50 shadow-[0_0_40px_-10px_rgba(20,184,166,0.3)] scale-105 z-10" 
+                  : "bg-white/60 dark:bg-black/40 border border-white/40 dark:border-white/10 shadow-xl"
+              }`}
             >
               {plan.highlight && (
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <Badge className="bg-teal-600 hover:bg-teal-700 text-white px-4 py-1 text-sm uppercase tracking-wide">
+                  <Badge className="bg-gradient-to-r from-emerald-500 to-cyan-500 text-white px-4 py-1 text-sm uppercase tracking-wide border-none shadow-lg">
                     {plan.badge}
                   </Badge>
                 </div>
               )}
 
               <CardHeader className="text-center pb-2">
-                <h3 className={`text-xl font-bold ${plan.type === 'free' ? 'text-gray-500' : 'text-gray-900 dark:text-white'}`}>
+                <h3 className={`text-xl font-bold ${
+                  plan.type === 'free' 
+                    ? 'text-gray-500' 
+                    : 'bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 to-cyan-600 dark:from-emerald-400 dark:to-cyan-400'
+                }`}>
                   {plan.name}
                 </h3>
               </CardHeader>
@@ -241,10 +249,10 @@ export default function Subscribe() {
                 <ul className="space-y-3 mb-8 flex-1">
                   {plan.features.map((feature, idx) => (
                     <li key={idx} className="flex items-start gap-3 text-sm">
-                      <div className={`mt-0.5 rounded-full p-0.5 ${plan.highlight ? 'bg-teal-100 text-teal-700' : 'bg-gray-100 text-gray-500'}`}>
+                      <div className="mt-0.5 rounded-full p-0.5 bg-teal-100/50 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400">
                         <Check className="w-3 h-3" />
                       </div>
-                      <span className="text-gray-600 dark:text-gray-300">{feature}</span>
+                      <span className="text-gray-700 dark:text-gray-200 font-medium">{feature}</span>
                     </li>
                   ))}
                 </ul>
@@ -254,12 +262,12 @@ export default function Subscribe() {
                   onClick={() => handleSubscribe(plan.id)}
                   disabled={isLoading}
                   variant={plan.buttonVariant === 'outline' ? 'outline' : 'default'}
-                  className={`w-full py-6 text-lg ${
+                  className={`w-full py-6 text-lg font-semibold transition-all duration-300 ${
                     plan.buttonVariant === 'gradient' 
-                      ? 'bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-600 hover:via-teal-600 hover:to-cyan-600 text-white border-0 shadow-lg hover:shadow-xl transition-all' 
+                      ? 'bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-600 hover:via-teal-600 hover:to-cyan-600 text-white border-0 shadow-lg hover:shadow-emerald-500/25' 
                       : plan.buttonVariant === 'default' 
-                        ? 'bg-gray-900 hover:bg-gray-800 text-white' 
-                        : ''
+                        ? 'bg-slate-900 hover:bg-slate-800 text-white shadow-lg hover:shadow-slate-900/25' 
+                        : 'border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800'
                   }`}
                 >
                   {isLoading ? (
