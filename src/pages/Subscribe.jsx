@@ -150,7 +150,7 @@ export default function Subscribe() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-slate-950 font-sans relative overflow-hidden selection:bg-emerald-100 selection:text-emerald-900">
+    <div className="min-h-screen bg-gray-50 dark:bg-black font-sans relative overflow-hidden selection:bg-emerald-100 selection:text-emerald-900">
       
       {/* Background Blobs */}
       <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-full mix-blend-multiply filter blur-[100px] opacity-20 animate-blob z-0" />
