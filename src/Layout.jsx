@@ -485,10 +485,10 @@ function LayoutContent({ children, currentPageName }) {
               © 2025 Perspekt. {t('footer.rights')}
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <a href={`/${currentLocale}/privacy`} className="text-secondary hover:text-body text-sm transition-colors">
+              <a href="#" className="text-secondary hover:text-body text-sm transition-colors">
                 {t('footer.privacy')}
               </a>
-              <a href={`/${currentLocale}/terms`} className="text-secondary hover:text-body text-sm transition-colors">
+              <a href="#" className="text-secondary hover:text-body text-sm transition-colors">
                 {t('footer.terms')}
               </a>
               <a href="#" className="text-secondary hover:text-body text-sm transition-colors">
