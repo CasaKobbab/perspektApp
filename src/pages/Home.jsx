@@ -53,16 +53,30 @@ export default function Home() {
         // Fetch articles with locale filter
         const allArticles = await Article.filter({ status: 'published', locale: currentLocale }, '-published_date', 20);
         
-        // Fetch videos - first try with locale, if empty try without locale filter
+        // Fetch videos - get locale specific ones first, then fill with general ones
         let allVideos = [];
         try {
-          allVideos = await Video.filter({ status: 'published', locale: currentLocale }, '-published_date', 4);
+          const limit = 4;
+          // First try to get videos for current locale
+          let localizedVideos = await Video.filter({ status: 'published', locale: currentLocale }, '-published_date', limit);
+          if (!localizedVideos) localizedVideos = [];
           
-          // If no videos found for current locale, try fetching all published videos
-          if (!allVideos || allVideos.length === 0) {
-            console.log(`No videos found for locale: ${currentLocale}, fetching all published videos`);
-            allVideos = await Video.filter({ status: 'published' }, '-published_date', 4);
+          // If we don't have enough videos, fetch general ones to fill the gap
+          if (localizedVideos.length < limit) {
+            const generalVideos = await Video.filter({ status: 'published' }, '-published_date', limit);
+            
+            // Create a map of existing video IDs to avoid duplicates
+            const existingIds = new Set(localizedVideos.map(v => v.id));
+            
+            // Add general videos that aren't already in the list until we reach the limit
+            for (const video of (generalVideos || [])) {
+              if (!existingIds.has(video.id) && localizedVideos.length < limit) {
+                localizedVideos.push(video);
+                existingIds.add(video.id);
+              }
+            }
           }
+          allVideos = localizedVideos;
         } catch (videoError) {
           console.error('Error loading videos:', videoError);
           // Try fetching all published videos as fallback
