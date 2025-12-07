@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useTranslation, LOCALE_LABELS, createPageUrl } from "@/components/i18n/translations";
+import { useTranslation, LOCALE_LABELS } from "@/components/i18n/translations";
 import { ThemeProvider, useTheme } from "@/components/theme/ThemeProvider";
 import {
   Home,
@@ -485,12 +485,12 @@ function LayoutContent({ children, currentPageName }) {
               © 2025 Perspekt. {t('footer.rights')}
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <Link to={currentLocale === 'nb' ? '/Privacy' : `/${currentLocale}/Privacy`} className="text-secondary hover:text-body text-sm transition-colors">
+              <a href="#" className="text-secondary hover:text-body text-sm transition-colors">
                 {t('footer.privacy')}
-              </Link>
-              <Link to={currentLocale === 'nb' ? '/Terms' : `/${currentLocale}/Terms`} className="text-secondary hover:text-body text-sm transition-colors">
+              </a>
+              <a href="#" className="text-secondary hover:text-body text-sm transition-colors">
                 {t('footer.terms')}
-              </Link>
+              </a>
               <a href="#" className="text-secondary hover:text-body text-sm transition-colors">
                 {t('footer.contact')}
               </a>
