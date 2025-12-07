@@ -48,19 +48,39 @@ export default function Terms() {
       privacy: [
         {
           title: "1. Behandlingsansvarlig",
-          body: "Perspekt AS er behandlingsansvarlig for personopplysningene vi samler inn. Vi tar ditt personvern på alvor og følger gjeldende norsk lovgivning, inkludert personopplysningsloven og GDPR."
+          body: "Perspekt AS (heretter \"Perspective Media AS\") er behandlingsansvarlig for personopplysningene vi samler inn. Vi tar ditt personvern på alvor og følger gjeldende norsk lovgivning, inkludert personopplysningsloven og GDPR."
         },
         {
           title: "2. Hvilke opplysninger samler vi inn?",
           body: "Konto-informasjon: Navn, e-postadresse og passord (kryptert) når du registrerer deg.\nBetalingsinformasjon: Vi lagrer ikke kortnummer selv. Transaksjoner behandles sikkert via vår betalingspartner, Stripe. Vi lagrer kun en referanse (token) til betalingsmetoden.\nBruksmønster: Informasjon om hvordan du bruker nettstedet (f.eks. leste artikler) for å forbedre brukeropplevelsen og gi relevante anbefalinger."
         },
         {
-          title: "3. Formålet med behandlingen",
-          body: "Vi bruker opplysningene til å:\n- Levere tjenestene du abonnerer på (tilgang til pluss-innhold).\n- Administrere kundeforholdet og betalinger.\n- Sende deg nyhetsbrev og relevant informasjon (du kan når som helst melde deg av)."
+          title: "3. Kontaktinformasjon og samtykke",
+          body: "Når du fyller ut skjemaer på nettsiden vår, lagres informasjonen din i vårt CRM-system. Ved å sende inn skjema, laste ned innhold eller signere, samtykker du til at vi kan kontakte deg via telefon, SMS og e-post i forbindelse med det du har gjort på nettsiden.\n\nVi kan også kontakte deg og tilpasse kommunikasjonen vår når vi har en berettiget interesse, for eksempel når:\n- du har vist interesse for innhold eller tjenester\n- du har lastet ned eller samhandlet med noe på nettstedet\n- du har tidligere vært i kontakt med oss"
         },
         {
-          title: "4. Dine rettigheter",
-          body: "Du har rett til innsyn i egne opplysninger, rett til å få uriktige opplysninger korrigert, og i visse tilfeller rett til å få opplysningene slettet (\"retten til å bli glemt\"). Kontakt oss på personvern@perspekt.no for henvendelser."
+          title: "4. Markedsføring og målrettet annonsering",
+          body: "Vi bruker informasjonskapsler og digitale spor for å:\n- forbedre brukeropplevelsen\n- vise relevante annonser (retargeting)\n- kontakte deg hvis du har vist interesse gjennom handlinger på nettstedet\n\nDette betyr at vi kan kjøre annonser mot deg i kanaler som Meta (Facebook/Instagram) og Google hvis du har besøkt nettstedet vårt eller utført handlinger som viser berettiget interesse."
+        },
+        {
+          title: "5. Informasjonskapsler og analyseverktøy",
+          body: "Vi bruker følgende verktøy på perspektivemedia.no:\n- Google Analytics – innsikt og trafikkstatistikk\n- Facebook Pixel og Google Pixel – for kampanjeoptimalisering og retargeting\n- Cookies – for å gi deg en bedre opplevelse og forstå hvordan nettstedet brukes\n\nDu kan deaktivere eller begrense informasjonskapsler i nettleseren din. Hvis du er logget inn med en Google-konto, kan Google samle inn ytterligere data i henhold til deres vilkår."
+        },
+        {
+          title: "6. Utlevering av personopplysninger til tredjeparter",
+          body: "Perspective Media AS deler ikke personopplysninger med andre enn:\n- nødvendige tekniske og administrative underleverandører\n- offentlige myndigheter når loven krever det\n- betalingsleverandører (Stripe) når du gjennomfører kjøp\n- databehandlere som bistår oss med kommunikasjon og drift"
+        },
+        {
+          title: "7. Mailchimp",
+          body: "Vi bruker Mailchimp til:\n- lagring av e-postadresser\n- utsending av nyhetsbrev og kampanjer\n- automatiserte e-postkampanjer\n\nMailchimp behandler personopplysninger på våre vegne i samsvar med GDPR og bruker standard personvernbestemmelser (SCC) ved overføring av data til USA.\nAll overføring av personopplysninger er kryptert med SSL."
+        },
+        {
+          title: "8. Dine rettigheter",
+          body: "Du har rett til:\n- innsyn i informasjon vi lagrer om deg\n- be om retting eller sletting\n- protestere mot behandling\n- trekke tilbake samtykke\n- be om begrenset behandling\n- be om dataportabilitet der det er relevant\n\nKontakt oss via e-post eller telefon hvis du ønsker å benytte dine rettigheter. Vi svarer så raskt som mulig og senest innen 30 dager.\nFor sensitive forespørsler kan vi be deg om å bekrefte identiteten din."
+        },
+        {
+          title: "9. Klage",
+          body: "Hvis du mener at vår behandling av personopplysninger ikke er i tråd med regelverket, kan du klage til Datatilsynet."
         }
       ]
     },
@@ -95,19 +115,39 @@ export default function Terms() {
       privacy: [
         {
           title: "1. Data Controller",
-          body: "Perspekt AS is the data controller for the personal data we collect. We take your privacy seriously and comply with applicable Norwegian laws, including the Personal Data Act and GDPR."
+          body: "Perspekt AS (hereinafter \"Perspective Media AS\") is the data controller for the personal data we collect. We take your privacy seriously and comply with applicable Norwegian laws, including the Personal Data Act and GDPR."
         },
         {
           title: "2. What Information Do We Collect?",
           body: "Account Information: Name, email address, and encrypted password upon registration.\nPayment Information: We do not store credit card numbers directly. Transactions are securely handled by our payment partner, Stripe. We only store a reference (token) to the payment method.\nUsage Data: Information on how you use the site (e.g., articles read) to improve user experience and provide recommendations."
         },
         {
-          title: "3. Purpose of Processing",
-          body: "We use this data to:\n- Deliver the services you subscribe to (premium content access).\n- Manage customer relationships and payments.\n- Send newsletters and relevant updates (you can opt-out at any time)."
+          title: "3. Contact Information and Consent",
+          body: "When you fill out forms on our website, your information is stored in our CRM system. By submitting a form, downloading content or signing, you agree that we may contact you by phone, SMS and email in connection with what you have done on the website.\n\nWe may also contact you and tailor our communications to you when we have a legitimate interest, for example when:\n- you have shown interest in content or services\n- you have downloaded or interacted with something on the website\n- you have previously been in contact with us"
         },
         {
-          title: "4. Your Rights",
-          body: "You have the right to access your data, correct inaccuracies, and in certain cases, request deletion (\"the right to be forgotten\"). Contact us at personvern@perspekt.no for requests."
+          title: "4. Marketing and targeted advertising",
+          body: "We use cookies and digital traces to:\n- improve the user experience\n- show relevant ads (retargeting)\n- contact you if you have shown interest through actions on the website\n\nThis means that we can run ads against you in channels such as Meta (Facebook/Instagram) and Google if you have visited our website or taken actions that show legitimate interest."
+        },
+        {
+          title: "5. Cookies and analysis tools",
+          body: "We use the following tools on perspektivemedia.no:\n- Google Analytics – insights and traffic statistics\n- Facebook Pixel and Google Pixel – for campaign optimization and retargeting\n- Cookies – to give you a better experience and understand how the website is used\n\nYou can disable or limit cookies in your browser. If you are logged in with a Google account, Google may collect additional data in accordance with its terms."
+        },
+        {
+          title: "6. Disclosure of personal data to third parties",
+          body: "Perspective Media AS does not share personal data with anyone other than:\n- necessary technical and administrative subcontractors\n- public authorities when required by law\n- payment providers (Stripe) when you make purchases\n- data processors who assist us with communication and operations"
+        },
+        {
+          title: "7. Mailchimp",
+          body: "We use Mailchimp for:\n- storing email addresses\n- sending newsletters and campaigns\n- automated email campaigns\n\nMailchimp processes personal data on our behalf in accordance with the GDPR and uses Standard Contractual Clauses (SCC) when transferring data to the USA.\nAll transfers of personal data are encrypted with SSL."
+        },
+        {
+          title: "8. Your Rights",
+          body: "You have the right to:\n- access information we store about you\n- request rectification or erasure\n- object to processing\n- withdraw consent\n- request restricted processing\n- request data portability where relevant\n\nContact us by email or phone if you wish to exercise your rights. We will respond as quickly as possible and within 30 days.\nFor sensitive requests, we may ask you to confirm your identity."
+        },
+        {
+          title: "9. Complaint",
+          body: "If you believe that our processing of personal data is not in line with the regulations, you can complain to the Norwegian Data Protection Authority (Datatilsynet)."
         }
       ]
     }
