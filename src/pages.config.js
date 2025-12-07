@@ -10,6 +10,7 @@ import Author from './pages/Author';
 import Account from './pages/Account';
 import Terms from './pages/Terms';
 import Contact from './pages/Contact';
+import VideoPage from './pages/VideoPage';
 import __Layout from './Layout.jsx';
 
 
@@ -26,6 +27,7 @@ export const PAGES = {
     "Account": Account,
     "Terms": Terms,
     "Contact": Contact,
+    "VideoPage": VideoPage,
 }
 
 export const pagesConfig = {

@@ -334,6 +334,12 @@ const translations = {
       successTitle: "Melding sendt!",
       successMessage: "Takk for at du tok kontakt. Vi kommer tilbake til deg innen kort tid.",
       sendNew: "Send ny melding"
+    },
+    // Video Page
+    video: {
+      videoNotFound: "Videoen ble ikke funnet.",
+      goToHomepage: "Gå til forsiden",
+      publishedOn: "Publisert den"
     }
   },
   en: {
@@ -670,6 +676,12 @@ const translations = {
       successTitle: "Message sent!",
       successMessage: "Thanks for reaching out. We'll get back to you shortly.",
       sendNew: "Send another message"
+    },
+    // Video Page
+    video: {
+      videoNotFound: "Video not found.",
+      goToHomepage: "Go to homepage",
+      publishedOn: "Published on"
     }
   }
 };
