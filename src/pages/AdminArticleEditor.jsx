@@ -245,6 +245,21 @@ export default function AdminArticleEditor() {
     setArticle((prev) => ({ ...prev, [field]: value }));
   };
 
+  // Helper to format date for input (YYYY-MM-DDTHH:mm)
+  const formatDateForInput = (dateString) => {
+    if (!dateString) return "";
+    // Check if it already looks like the input format
+    if (dateString.length === 16 && dateString.indexOf('T') === 10) return dateString;
+    
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return "";
+    
+    // Adjust to local time for input display
+    const offset = date.getTimezoneOffset() * 60000;
+    const localDate = new Date(date.getTime() - offset);
+    return localDate.toISOString().slice(0, 16);
+  };
+
   // NEW: Handler for Author profile selection
   const handleAuthorChange = (authorId) => {
     if (authorId === "no-author") {
@@ -269,14 +284,21 @@ export default function AdminArticleEditor() {
   };
 
 
-  const handleSubmit = async (e) => {// Renamed from handleSave to handleSubmit
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSaving(true); // Start saving
+    setIsSaving(true);
 
     const articleData = { ...article };
-    if (!articleData.published_date && articleData.status === 'published') {
+
+    if (articleData.published_date) {
+      // Use provided date (ensure it's ISO formatted)
+      articleData.published_date = new Date(articleData.published_date).toISOString();
+    } else if (articleData.status === 'published' && !articleData.published_date) {
+      // First time publishing (or cleared date) -> use current time
+      // This covers: Draft -> Published (no date set) AND Published -> Cleared date -> Save
       articleData.published_date = new Date().toISOString();
     }
+
     // Estimate reading time (words per minute)
     // Remove HTML tags from body for word count
     const plainTextBody = articleData.body.replace(/<[^>]+>/g, '');
@@ -424,6 +446,21 @@ export default function AdminArticleEditor() {
                 </SelectContent>
               </Select>
             </div>
+
+            {canPublish && (
+              <div>
+                <Label htmlFor="published_date" className="font-semibold text-primary">{t('admin.publishDate')}</Label>
+                <Input
+                  type="datetime-local"
+                  id="published_date"
+                  name="published_date"
+                  value={formatDateForInput(article.published_date)}
+                  onChange={(e) => handleSelectOrSwitchChange("published_date", e.target.value)}
+                  className="bg-surface border-default text-primary"
+                />
+                <p className="text-sm text-secondary mt-1">{t('admin.publishDateHint')}</p>
+              </div>
+            )}
 
             <div>
               <Label htmlFor="access_level" className="font-semibold text-primary">{t('admin.accessLevel')}</Label>
