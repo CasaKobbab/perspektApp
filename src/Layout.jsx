@@ -488,9 +488,9 @@ function LayoutContent({ children, currentPageName }) {
               <a href="#" className="text-secondary hover:text-body text-sm transition-colors">
                 {t('footer.privacy')}
               </a>
-              <a href="#" className="text-secondary hover:text-body text-sm transition-colors">
+              <Link to="/Terms" className="text-secondary hover:text-body text-sm transition-colors">
                 {t('footer.terms')}
-              </a>
+              </Link>
               <a href="#" className="text-secondary hover:text-body text-sm transition-colors">
                 {t('footer.contact')}
               </a>
