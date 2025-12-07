@@ -8,8 +8,6 @@ import Topics from './pages/Topics';
 import Authors from './pages/Authors';
 import Author from './pages/Author';
 import Account from './pages/Account';
-import privacy from './pages/privacy';
-import terms from './pages/terms';
 import __Layout from './Layout.jsx';
 
 
@@ -24,8 +22,6 @@ export const PAGES = {
     "Authors": Authors,
     "Author": Author,
     "Account": Account,
-    "privacy": privacy,
-    "terms": terms,
 }
 
 export const pagesConfig = {
