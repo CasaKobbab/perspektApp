@@ -9,6 +9,7 @@ import Authors from './pages/Authors';
 import Author from './pages/Author';
 import Account from './pages/Account';
 import Terms from './pages/Terms';
+import Contact from './pages/Contact';
 import __Layout from './Layout.jsx';
 
 
@@ -24,6 +25,7 @@ export const PAGES = {
     "Author": Author,
     "Account": Account,
     "Terms": Terms,
+    "Contact": Contact,
 }
 
 export const pagesConfig = {

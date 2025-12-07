@@ -314,6 +314,26 @@ const translations = {
       terms: "Vilkår",
       contact: "Kontakt",
       rights: "Alle rettigheter forbeholdt."
+    },
+    // Contact Page
+    contact: {
+      title: "Kontakt Oss",
+      subtitle: "Har du spørsmål eller tilbakemeldinger? Vi vil gjerne høre fra deg.",
+      emailLabel: "Send oss en e-post",
+      addressLabel: "Besøksadresse",
+      formTitle: "Send en melding",
+      formDesc: "Fyll ut skjemaet nedenfor, så svarer vi deg så snart som mulig.",
+      name: "Navn",
+      namePlaceholder: "Ditt navn",
+      email: "E-post",
+      emailPlaceholder: "din@epost.no",
+      message: "Melding",
+      messagePlaceholder: "Hva har du på hjertet?",
+      send: "Send melding",
+      sending: "Sender...",
+      successTitle: "Melding sendt!",
+      successMessage: "Takk for at du tok kontakt. Vi kommer tilbake til deg innen kort tid.",
+      sendNew: "Send ny melding"
     }
   },
   en: {
@@ -630,6 +650,26 @@ const translations = {
       terms: "Terms",
       contact: "Contact",
       rights: "All rights reserved."
+    },
+    // Contact Page
+    contact: {
+      title: "Contact Us",
+      subtitle: "Have questions or feedback? We'd love to hear from you.",
+      emailLabel: "Send us an email",
+      addressLabel: "Office Address",
+      formTitle: "Send a message",
+      formDesc: "Fill out the form below and we'll get back to you as soon as possible.",
+      name: "Name",
+      namePlaceholder: "Your name",
+      email: "Email",
+      emailPlaceholder: "your@email.com",
+      message: "Message",
+      messagePlaceholder: "How can we help?",
+      send: "Send message",
+      sending: "Sending...",
+      successTitle: "Message sent!",
+      successMessage: "Thanks for reaching out. We'll get back to you shortly.",
+      sendNew: "Send another message"
     }
   }
 };
