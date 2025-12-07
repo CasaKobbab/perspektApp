@@ -52,19 +52,20 @@ export default function AdminArticleEditor() {
     dek: "",
     body: "",
     excerpt: "",
-    author_profile_id: "", // NEW: Field for author profile ID
-    author_name: "", // Kept, likely for denormalized display or fallback
-    author_avatar_url: "", // NEW: Field for author avatar URL
-    topic: "news", // Use language-agnostic slug
+    author_profile_id: "",
+    author_name: "",
+    author_avatar_url: "",
+    topic: "news",
     tags: [],
     featured_image: "",
     image_alt: "",
     status: "draft",
     access_level: "free",
     featured: false,
-    locale: currentLocale, // Default to current locale
-    translation_group_id: generateUUID(), // Generate a new UUID for new articles
-    original_article_id: null
+    locale: currentLocale,
+    translation_group_id: generateUUID(),
+    original_article_id: null,
+    published_date: "" // NEW: Initialize published_date
   });
   const [isFetching, setIsFetching] = useState(true); // Renamed from isLoading for initial fetch
   const [isSaving, setIsSaving] = useState(false); // NEW: For save operation
@@ -106,7 +107,8 @@ export default function AdminArticleEditor() {
               translation_group_id: existingArticle.translation_group_id || generateUUID(),
               author_profile_id: existingArticle.author_profile_id || "",
               author_name: existingArticle.author_name || "",
-              author_avatar_url: existingArticle.author_avatar_url || ""
+              author_avatar_url: existingArticle.author_avatar_url || "",
+              published_date: existingArticle.published_date || "" // Ensure published_date is loaded
             });
           }
         } else {
@@ -129,7 +131,8 @@ export default function AdminArticleEditor() {
             featured: false,
             locale: currentLocale,
             translation_group_id: generateUUID(),
-            original_article_id: null
+            original_article_id: null,
+            published_date: "" // Ensure published_date is initialized
           };
 
           if (user.author_profile_id) {

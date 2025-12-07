@@ -251,7 +251,9 @@ const translations = {
       uploadImage: "Last opp bilde",
       removeImage: "Fjern bilde",
       uploading: "Laster opp...",
-      dragDropHint: "Klikk for å laste opp eller dra og slipp filen her"
+      dragDropHint: "Klikk for å laste opp eller dra og slipp filen her",
+      publishDate: "Publiseringsdato (Valgfritt)",
+      publishDateHint: "La stå tom for å bruke nåværende tidspunkt."
     },
     // Account Page
     account: {
@@ -565,7 +567,9 @@ const translations = {
       uploadImage: "Upload Image",
       removeImage: "Remove Image",
       uploading: "Uploading...",
-      dragDropHint: "Click to upload or drag and drop"
+      dragDropHint: "Click to upload or drag and drop",
+      publishDate: "Published Date (Optional)",
+      publishDateHint: "Leave blank to use current time."
     },
     // Account Page
     account: {
