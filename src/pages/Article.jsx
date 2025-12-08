@@ -46,6 +46,7 @@ export default function ArticlePage() {
   const [isLoading, setIsLoading] = useState(true);
   const [showPaywall, setShowPaywall] = useState(false);
   const [canRead, setCanRead] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
 
   useEffect(() => {
     const loadArticle = async () => {
@@ -87,6 +88,10 @@ export default function ArticlePage() {
 
         setArticle(articleData);
         setUser(currentUser);
+
+        if (currentUser && currentUser.saved_article_ids && currentUser.saved_article_ids.includes(articleData.id)) {
+          setIsSaved(true);
+        }
 
         // Determine client-side access (combining server restriction + local metered logic)
         const canReadServer = !isRestricted;
@@ -153,6 +158,30 @@ export default function ArticlePage() {
     }
   };
 
+  const handleBookmark = async () => {
+    if (!user) {
+      await User.login();
+      return;
+    }
+
+    const currentSavedIds = user.saved_article_ids || [];
+    let newSavedIds;
+
+    if (isSaved) {
+      newSavedIds = currentSavedIds.filter(id => id !== article.id);
+    } else {
+      newSavedIds = [...currentSavedIds, article.id];
+    }
+
+    try {
+      await User.updateMyUserData({ saved_article_ids: newSavedIds });
+      setUser({ ...user, saved_article_ids: newSavedIds });
+      setIsSaved(!isSaved);
+    } catch (error) {
+      console.error("Failed to update bookmark:", error);
+    }
+  };
+
   const topicColors = {
     news: "bg-red-100 text-red-800",
     opinion: "bg-blue-100 text-blue-800",
@@ -216,6 +245,16 @@ export default function ArticlePage() {
                 <Clock className="w-4 h-4 mr-1" />
                 {article.reading_time || 5} {t('common.readingTime')}
               </div>
+              
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleBookmark}
+                className={`ml-2 p-0 h-auto hover:bg-transparent ${isSaved ? 'text-accent' : 'text-muted hover:text-accent'} transition-all duration-300 transform active:scale-95`}
+              >
+                <Bookmark className={`w-5 h-5 ${isSaved ? 'fill-current' : ''}`} />
+              </Button>
+
               {article.access_level !== 'free' &&
               <div className="flex items-center text-sm text-yellow-600">
                   <Lock className="w-4 h-4 mr-1" />
