@@ -13,7 +13,7 @@ export default function AccountSupport({ t }) {
         <div className="bg-surface border border-default rounded-xl p-6">
             <h3 className="text-lg font-semibold text-body mb-2">{t('account.contactSupport')}</h3>
             <p className="text-secondary mb-6">{t('account.contactSupportDesc')}</p>
-            <a href="mailto:support@perspektiv.example.com">
+            <a href="mailto:info@perspekt.no">
                 <Button variant="outline" className="text-body border-default hover:bg-secondary">{t('account.sendEmail')}</Button>
             </a>
         </div>
