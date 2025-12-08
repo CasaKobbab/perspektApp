@@ -140,89 +140,118 @@ export default function Topics() {
   // If no specific topic is selected, show all topics
   if (!selectedTopic) {
     return (
-      <div className="min-h-screen bg-paper-white dark:bg-slate-ink">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="mb-12">
-            <h1 className="text-4xl font-bold text-primary font-serif mb-4">{t('nav.topics')}</h1>
-            <p className="text-secondary text-lg">
+      <div className="min-h-screen bg-gray-50 dark:bg-black relative overflow-hidden transition-colors duration-300">
+        {/* Ambient Background Blobs */}
+        <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-[-10%] left-[-5%] w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none" />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="text-center mb-16">
+            <h1 className="text-5xl md:text-7xl font-bold font-serif mb-6 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-500 animate-in fade-in slide-in-from-bottom-4 duration-700">
+              {t('nav.topics')}
+            </h1>
+            <p className="text-gray-600 dark:text-gray-400 text-xl max-w-2xl mx-auto leading-relaxed animate-in fade-in slide-in-from-bottom-5 duration-700 delay-100">
               {t('topics.subtitle')}
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {topics.map((topic) =>
-            <Link
-              key={topic.slug}
-              to={createPageUrl(`Topics?filter=${topic.slug}`)}
-              className="group">
-
-                <div className={`${topic.bgColor} rounded-xl p-8 transition-all duration-200 hover:scale-105 hover:shadow-lg`}>
-                  <div className="flex items-center mb-4">
-                    <div className={`w-12 h-12 rounded-lg ${topic.color.replace('hover:', '')} flex items-center justify-center mr-4`}>
-                      <topic.icon className="w-6 h-6" />
-                    </div>
-                    <h2 className="text-slate-900 text-xl font-bold">{topic.name}</h2>
+            {topics.map((topic, index) => (
+              <Link
+                key={topic.slug}
+                to={createPageUrl(`Topics?filter=${topic.slug}`)}
+                className="group relative"
+              >
+                <div className="h-full bg-white/60 dark:bg-white/5 backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-3xl p-8 transition-all duration-300 ease-out hover:-translate-y-2 hover:scale-[1.02] hover:shadow-[0_20px_40px_-15px_rgba(20,184,166,0.3)] hover:border-teal-500/50 flex flex-col">
+                  
+                  {/* Icon */}
+                  <div className="mb-6 w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500/10 to-cyan-500/10 flex items-center justify-center group-hover:rotate-6 transition-transform duration-300">
+                    <topic.icon className="w-8 h-8 text-teal-600 dark:text-teal-400" />
                   </div>
-                  <p className="text-slate-900 mb-4">{topic.description}</p>
-                  <div className="flex items-center text-nordic-sea group-hover:text-slate-ink transition-colors">
-                    <span className="text-sky-800 mr-2 font-medium">
-                      {t('common.readArticles')}
-                    </span>
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+
+                  {/* Content */}
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-emerald-500 group-hover:to-cyan-500 transition-all">
+                    {topic.name}
+                  </h2>
+                  <p className="text-gray-600 dark:text-gray-400 mb-8 flex-grow leading-relaxed">
+                    {topic.description}
+                  </p>
+
+                  {/* Button/Link */}
+                  <div className="flex items-center text-teal-600 dark:text-teal-400 font-medium group-hover:translate-x-1 transition-transform">
+                    <span className="mr-2">{t('common.readArticles')}</span>
+                    <div className="w-8 h-8 rounded-full bg-teal-500/10 flex items-center justify-center group-hover:bg-teal-500 group-hover:text-white transition-colors">
+                        <ArrowRight className="w-4 h-4" />
+                    </div>
                   </div>
                 </div>
               </Link>
-            )}
+            ))}
           </div>
         </div>
       </div>);
-
   }
 
   // Show articles for selected topic
   const currentTopic = topics.find((t) => t.slug === selectedTopic);
 
   return (
-    <div className="min-h-screen bg-paper-white dark:bg-slate-ink">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-black relative overflow-hidden transition-colors duration-300">
+      {/* Ambient Background Blobs */}
+      <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[-10%] left-[-5%] w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none" />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center mb-4">
-            <Link to={createPageUrl("Topics")} className="text-secondary hover:text-primary mr-4">
-              ← {t('nav.topics')}
-            </Link>
-            <Badge className={topicColors[selectedTopic]}>
-              {currentTopic?.name}
-            </Badge>
+        <div className="mb-12">
+          <Link 
+            to={createPageUrl("Topics")} 
+            className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-emerald-500 mb-6 transition-colors"
+          >
+            <ArrowRight className="w-4 h-4 mr-2 rotate-180" />
+            {t('nav.topics')}
+          </Link>
+          
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                 <Badge variant="outline" className="border-emerald-500/30 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 backdrop-blur-md">
+                    {currentTopic?.name}
+                 </Badge>
+              </div>
+              <h1 className="text-4xl md:text-5xl font-bold font-serif mb-4 text-gray-900 dark:text-white">
+                {currentTopic?.name}
+              </h1>
+              <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl">
+                {currentTopic?.description}
+              </p>
+            </div>
           </div>
-          <h1 className="text-4xl font-bold text-primary font-serif mb-2">
-            {currentTopic?.name}
-          </h1>
-          <p className="text-secondary text-lg">{currentTopic?.description}</p>
         </div>
 
         {/* Articles Grid */}
         <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-8">
-          {articles.length > 0 ?
-          articles.map((article) =>
-          <ArticleCard
-            key={article.id}
-            article={article}
-            topicColors={topicColors}
-            user={user}
-            showImage={true} />
-
-          ) :
-
-          <div className="col-span-full text-center py-12">
-              <p className="text-secondary text-lg">{t('common.noArticlesFound')}</p>
-              <Link to={createPageUrl("Topics")} className="inline-block mt-4">
-                <Button variant="outline">
-                  ← {t('common.backToTopics')}
+          {articles.length > 0 ? (
+            articles.map((article) => (
+              <ArticleCard
+                key={article.id}
+                article={article}
+                topicColors={topicColors}
+                user={user}
+                showImage={true} 
+              />
+            ))
+          ) : (
+            <div className="col-span-full py-20 text-center bg-white/40 dark:bg-white/5 backdrop-blur-lg rounded-3xl border border-white/20">
+              <Newspaper className="w-16 h-16 mx-auto mb-4 text-gray-400" />
+              <p className="text-gray-600 dark:text-gray-400 text-lg mb-6">{t('common.noArticlesFound')}</p>
+              <Link to={createPageUrl("Topics")}>
+                <Button className="bg-emerald-600 hover:bg-emerald-700 text-white border-0 rounded-full px-8">
+                  {t('common.backToTopics')}
                 </Button>
               </Link>
             </div>
-          }
+          )}
         </div>
       </div>
     </div>);
