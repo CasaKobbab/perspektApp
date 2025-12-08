@@ -106,7 +106,7 @@ export default function Search() {
                 {t('nav.search')}: "{query}"
             </h1>
             <p className="text-gray-600 dark:text-gray-400">
-                {articles.length} {articles.length === 1 ? t('authors.articles').slice(0, -1) : t('authors.articles')} {t('common.noArticlesFound').replace('Ingen artikler funnet.', 'funnet')}
+                {articles.length} {t('authors.articles')} {t('common.found')}
             </p>
         </div>
 

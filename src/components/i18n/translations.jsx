@@ -19,6 +19,8 @@ const translations = {
     // Common
     common: {
       loading: "Laster...",
+      found: "funnet",
+      results: "Resultater",
       save: "Lagre",
       cancel: "Avbryt",
       delete: "Slett",
@@ -361,6 +363,8 @@ const translations = {
     // Common
     common: {
       loading: "Loading...",
+      found: "found",
+      results: "Results",
       save: "Save",
       cancel: "Cancel",
       delete: "Delete",
