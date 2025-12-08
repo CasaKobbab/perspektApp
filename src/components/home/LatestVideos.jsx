@@ -80,7 +80,7 @@ export default function LatestVideos({ videos, topicColors }) {
                     )}
                   </div>
                   
-                  <h4 className="font-semibold text-primary text-sm line-clamp-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-emerald-500 group-hover:to-cyan-500 transition-all">
+                  <h4 className="font-semibold text-primary text-sm line-clamp-2 group-hover:text-accent transition-colors">
                     {video.title}
                   </h4>
                   
