@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { AuthorProfile } from "@/entities/AuthorProfile";
 import { Article } from "@/entities/Article";
@@ -28,7 +27,7 @@ export default function AuthorsPage() {
       try {
         const [authorProfiles, allArticles] = await Promise.all([
           AuthorProfile.list("-created_date"),
-          Article.filter({ status: 'published', locale: currentLocale }, '-published_date', 1000)
+          Article.filter({ status: 'published' }, '-published_date', 1000)
         ]);
 
         const authorStats = authorProfiles.reduce((acc, author) => {
