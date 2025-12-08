@@ -11,6 +11,7 @@ import Account from './pages/Account';
 import Terms from './pages/Terms';
 import Contact from './pages/Contact';
 import VideoPage from './pages/VideoPage';
+import Search from './pages/Search';
 import __Layout from './Layout.jsx';
 
 
@@ -28,6 +29,7 @@ export const PAGES = {
     "Terms": Terms,
     "Contact": Contact,
     "VideoPage": VideoPage,
+    "Search": Search,
 }
 
 export const pagesConfig = {

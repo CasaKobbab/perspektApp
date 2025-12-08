@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useTranslation, LOCALE_LABELS } from "@/components/i18n/translations";
 import { ThemeProvider, useTheme } from "@/components/theme/ThemeProvider";
 import {
@@ -81,10 +81,13 @@ function LayoutContent({ children, currentPageName }) {
     window.dispatchEvent(new CustomEvent('localeChanged', { detail: newLocale }));
   };
 
+  const navigate = useNavigate();
+
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      window.location.href = `/Search?q=${encodeURIComponent(searchQuery)}`;
+      navigate(`/Search?q=${encodeURIComponent(searchQuery)}`);
+      setIsMenuOpen(false);
     }
   };
 
