@@ -253,27 +253,30 @@ export default function ArticlePage() {
                 </div>
               </div>
 
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-3">
                 <Button
-                  variant="outline"
+                  variant="ghost"
                   size="icon"
-                  onClick={() => handleShare('twitter')} className="bg-background text-slate-50 text-sm font-medium inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input hover:bg-accent hover:text-accent-foreground h-10 w-10">
-
-                  <Twitter className="w-4 h-4" />
+                  onClick={() => handleShare('twitter')}
+                  className="h-10 w-10 rounded-full border border-gray-200 dark:border-gray-700 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm text-gray-700 dark:text-gray-200 transition-all duration-300 hover:scale-110 hover:shadow-[0_0_15px_rgba(16,185,129,0.4)] hover:border-transparent hover:bg-gradient-to-r hover:from-emerald-400 hover:to-cyan-500 hover:text-white"
+                >
+                  <Twitter className="w-5 h-5" />
                 </Button>
                 <Button
-                  variant="outline"
+                  variant="ghost"
                   size="icon"
-                  onClick={() => handleShare('facebook')} className="bg-background text-slate-50 text-sm font-medium inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input hover:bg-accent hover:text-accent-foreground h-10 w-10">
-
-                  <Facebook className="w-4 h-4" />
+                  onClick={() => handleShare('facebook')}
+                  className="h-10 w-10 rounded-full border border-gray-200 dark:border-gray-700 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm text-gray-700 dark:text-gray-200 transition-all duration-300 hover:scale-110 hover:shadow-[0_0_15px_rgba(16,185,129,0.4)] hover:border-transparent hover:bg-gradient-to-r hover:from-emerald-400 hover:to-cyan-500 hover:text-white"
+                >
+                  <Facebook className="w-5 h-5" />
                 </Button>
                 <Button
-                  variant="outline"
+                  variant="ghost"
                   size="icon"
-                  onClick={() => handleShare('copy')} className="bg-background text-slate-50 text-sm font-medium inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input hover:bg-accent hover:text-accent-foreground h-10 w-10">
-
-                  <LinkIcon className="w-4 h-4" />
+                  onClick={() => handleShare('copy')}
+                  className="h-10 w-10 rounded-full border border-gray-200 dark:border-gray-700 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm text-gray-700 dark:text-gray-200 transition-all duration-300 hover:scale-110 hover:shadow-[0_0_15px_rgba(16,185,129,0.4)] hover:border-transparent hover:bg-gradient-to-r hover:from-emerald-400 hover:to-cyan-500 hover:text-white"
+                >
+                  <LinkIcon className="w-5 h-5" />
                 </Button>
               </div>
             </div>
