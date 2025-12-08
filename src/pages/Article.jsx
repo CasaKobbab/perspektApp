@@ -10,7 +10,6 @@ import {
   Bookmark,
   Lock,
   ArrowLeft,
-  Globe, // Added Globe import
   Twitter,
   Facebook,
   Linkedin, // Added Linkedin import
@@ -19,13 +18,7 @@ import {
 import { format } from "date-fns";
 import { nb, enUS } from "date-fns/locale";
 import { Link, useNavigate } from "react-router-dom";
-import { useTranslation, createPageUrl, getTopicKey, LOCALE_LABELS } from "@/components/i18n/translations";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { useTranslation, createPageUrl, getTopicKey } from "@/components/i18n/translations";
 
 import PaywallModal from "../components/article/PaywallModal";
 import RelatedArticles from "../components/article/RelatedArticles";
@@ -54,11 +47,6 @@ export default function ArticlePage() {
   const [showPaywall, setShowPaywall] = useState(false);
   const [canRead, setCanRead] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
-
-  // Translation state
-  const [translatedBody, setTranslatedBody] = useState(null);
-  const [isTranslating, setIsTranslating] = useState(false);
-  const [currentTranslationLocale, setCurrentTranslationLocale] = useState(null);
 
   useEffect(() => {
     const loadArticle = async () => {
@@ -194,41 +182,6 @@ export default function ArticlePage() {
     }
   };
 
-  const handleTranslateArticle = async (targetLocale) => {
-    if (targetLocale === null) {
-      // Revert to original
-      setTranslatedBody(null);
-      setCurrentTranslationLocale(null);
-      return;
-    }
-
-    if (!user) {
-        await User.login(); // Require login for this feature (uses LLM)
-        return;
-    }
-
-    setIsTranslating(true);
-    try {
-      const response = await base44.functions.invoke('translateArticle', {
-        text: article.body,
-        source_language: LOCALE_LABELS[article.locale] || 'Norwegian', // Simple mapping or fallback
-        target_language: LOCALE_LABELS[targetLocale]
-      });
-      
-      if (response.data && response.data.translatedText) {
-          setTranslatedBody(response.data.translatedText);
-          setCurrentTranslationLocale(targetLocale);
-      } else {
-          console.error("Translation failed: No text returned");
-          // Optionally show a toast here
-      }
-
-    } catch (error) {
-      console.error("Translation error:", error);
-    }
-    setIsTranslating(false);
-  };
-
   const topicColors = {
     news: "bg-red-100 text-red-800",
     opinion: "bg-blue-100 text-blue-800",
@@ -301,46 +254,6 @@ export default function ArticlePage() {
               >
                 <Bookmark className={`w-5 h-5 ${isSaved ? 'fill-current' : ''}`} />
               </Button>
-
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className={`ml-2 p-0 h-auto hover:bg-transparent ${currentTranslationLocale ? 'text-accent' : 'text-muted hover:text-accent'} transition-all duration-300 transform active:scale-95`}
-                    disabled={isTranslating}
-                  >
-                    <Globe className={`w-5 h-5 ${isTranslating ? 'animate-spin' : ''}`} />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                    {/* Original Language Option */}
-                   <DropdownMenuItem 
-                     onClick={() => handleTranslateArticle(null)}
-                     disabled={currentTranslationLocale === null}
-                     className={currentTranslationLocale === null ? "font-bold bg-accent/10" : ""}
-                   >
-                     {t('article.original')} ({LOCALE_LABELS[article.locale] || article.locale})
-                   </DropdownMenuItem>
-
-                   {/* Translate Options */}
-                   {Object.entries(LOCALE_LABELS).map(([key, label]) => {
-                       // Don't show option to translate to the article's original language (redundant with "Original")
-                       if (key === article.locale) return null;
-
-                       return (
-                        <DropdownMenuItem 
-                            key={key} 
-                            onClick={() => handleTranslateArticle(key)}
-                            disabled={currentTranslationLocale === key}
-                            className={currentTranslationLocale === key ? "font-bold bg-accent/10" : ""}
-                        >
-                            {label}
-                        </DropdownMenuItem>
-                       );
-                   })}
-                </DropdownMenuContent>
-              </DropdownMenu>
 
               {article.access_level !== 'free' &&
               <div className="flex items-center text-sm text-yellow-600">
@@ -427,9 +340,9 @@ export default function ArticlePage() {
           <div className="prose prose-lg dark:prose-invert max-w-none text-primary">
             {canRead ?
             <div
-              className={`text-primary leading-relaxed ${isTranslating ? 'opacity-50 blur-[1px] transition-all duration-300' : ''}`}
+              className="text-primary leading-relaxed"
               dangerouslySetInnerHTML={{
-                __html: (translatedBody || article.body)?.replace(/\n/g, '<br />')
+                __html: article.body?.replace(/\n/g, '<br />')
               }} /> :
 
 
@@ -437,7 +350,7 @@ export default function ArticlePage() {
                 <div
                 className="text-primary leading-relaxed mb-8"
                 dangerouslySetInnerHTML={{
-                  __html: (translatedBody ? (translatedBody.substring(0, 1500) + '...') : (article.excerpt || article.body?.substring(0, 1500) + '...'))
+                  __html: article.excerpt || article.body?.substring(0, 1500) + '...'
                 }} />
 
                 

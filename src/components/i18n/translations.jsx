@@ -109,11 +109,7 @@ const translations = {
       subscribeNow: "Abonner nå",
       subscribeToRead: "Abonner for å lese",
       articleNotFound: "Artikkelen ble ikke funnet.",
-      goToHomepage: "Gå til forsiden",
-      translate: "Oversett",
-      translating: "Oversetter...",
-      original: "Originalspråk",
-      translationError: "Kunne ikke oversette artikkelen."
+      goToHomepage: "Gå til forsiden"
     },
     // Subscribe page
     subscribe: {
@@ -457,11 +453,7 @@ const translations = {
       subscribeNow: "Subscribe now",
       subscribeToRead: "Subscribe to read",
       articleNotFound: "Article not found.",
-      goToHomepage: "Go to homepage",
-      translate: "Translate",
-      translating: "Translating...",
-      original: "Original Language",
-      translationError: "Could not translate article."
+      goToHomepage: "Go to homepage"
     },
     // Subscribe page
     subscribe: {
