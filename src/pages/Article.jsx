@@ -253,26 +253,29 @@ export default function ArticlePage() {
                 </div>
               </div>
 
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-3">
                 <Button
-                  variant="outline"
+                  variant="ghost"
                   size="icon"
-                  onClick={() => handleShare('twitter')} className="bg-background text-slate-50 text-sm font-medium inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input hover:bg-accent hover:text-accent-foreground h-10 w-10">
-
+                  onClick={() => handleShare('twitter')} 
+                  className="w-10 h-10 rounded-full bg-white dark:bg-slate-800 border border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:text-white hover:border-transparent hover:bg-gradient-to-r hover:from-emerald-500 hover:to-cyan-500 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-emerald-500/20"
+                >
                   <Twitter className="w-4 h-4" />
                 </Button>
                 <Button
-                  variant="outline"
+                  variant="ghost"
                   size="icon"
-                  onClick={() => handleShare('facebook')} className="bg-background text-slate-50 text-sm font-medium inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input hover:bg-accent hover:text-accent-foreground h-10 w-10">
-
+                  onClick={() => handleShare('facebook')} 
+                  className="w-10 h-10 rounded-full bg-white dark:bg-slate-800 border border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:text-white hover:border-transparent hover:bg-gradient-to-r hover:from-emerald-500 hover:to-cyan-500 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-emerald-500/20"
+                >
                   <Facebook className="w-4 h-4" />
                 </Button>
                 <Button
-                  variant="outline"
+                  variant="ghost"
                   size="icon"
-                  onClick={() => handleShare('copy')} className="bg-background text-slate-50 text-sm font-medium inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input hover:bg-accent hover:text-accent-foreground h-10 w-10">
-
+                  onClick={() => handleShare('copy')} 
+                  className="w-10 h-10 rounded-full bg-white dark:bg-slate-800 border border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:text-white hover:border-transparent hover:bg-gradient-to-r hover:from-emerald-500 hover:to-cyan-500 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-emerald-500/20"
+                >
                   <LinkIcon className="w-4 h-4" />
                 </Button>
               </div>
