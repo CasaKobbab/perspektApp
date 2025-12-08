@@ -60,6 +60,10 @@ function LayoutContent({ children, currentPageName }) {
     initializeLocale();
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   const changeLocale = async (newLocale) => {
     if (newLocale === currentLocale) return;
 
