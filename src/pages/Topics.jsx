@@ -1,7 +1,6 @@
-
 import React, { useState, useEffect } from "react";
 import { Article, User } from "@/entities/all";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useTranslation, createPageUrl } from "@/components/i18n/translations";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -24,6 +23,7 @@ export default function Topics() {
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedTopic, setSelectedTopic] = useState(null);
+  const location = useLocation();
 
   useEffect(() => {
     setCurrentLocale(localStorage.getItem('preferred_locale') || 'nb');
@@ -38,10 +38,10 @@ export default function Topics() {
 
   useEffect(() => {
     // Get filter from URL parameters
-    const urlParams = new URLSearchParams(window.location.search);
+    const urlParams = new URLSearchParams(location.search);
     const filter = urlParams.get('filter');
     setSelectedTopic(filter);
-  }, []);
+  }, [location.search]);
 
   useEffect(() => {
     const loadData = async () => {
