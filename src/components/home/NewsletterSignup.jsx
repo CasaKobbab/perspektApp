@@ -1,14 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Mail, CheckCircle } from "lucide-react";
 import { User } from "@/entities/User";
+import { useTranslation } from "@/components/i18n/translations";
 
 export default function NewsletterSignup({ user }) {
   const [email, setEmail] = useState("");
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentLocale, setCurrentLocale] = useState('nb');
+  const { t } = useTranslation(currentLocale);
+
+  useEffect(() => {
+    setCurrentLocale(localStorage.getItem('preferred_locale') || 'nb');
+    const handleLocaleChange = (event) => {
+      setCurrentLocale(event.detail);
+    };
+    window.addEventListener('localeChanged', handleLocaleChange);
+    return () => window.removeEventListener('localeChanged', handleLocaleChange);
+  }, []);
 
   const handleSubscribe = async (e) => {
     e.preventDefault();
@@ -32,9 +44,9 @@ export default function NewsletterSignup({ user }) {
       <Card className="bg-green-50 border-green-200">
         <CardContent className="p-6 text-center">
           <CheckCircle className="w-8 h-8 text-green-600 mx-auto mb-3" />
-          <h3 className="font-semibold text-green-900 mb-2">Takk!</h3>
+          <h3 className="font-semibold text-green-900 mb-2">{t('newsletter.thanks')}</h3>
           <p className="text-sm text-green-700">
-            Du er nå påmeldt vårt nyhetsbrev.
+            {t('newsletter.subscribed')}
           </p>
         </CardContent>
       </Card>);
@@ -46,9 +58,9 @@ export default function NewsletterSignup({ user }) {
       <CardContent className="p-6">
         <div className="text-center mb-4">
           <Mail className="w-8 h-8 text-blue-800 mx-auto mb-3" />
-          <h3 className="font-semibold text-gray-900 mb-2">Få vårt nyhetsbrev</h3>
+          <h3 className="font-semibold text-gray-900 mb-2">{t('newsletter.title')}</h3>
           <p className="text-sm text-gray-600">
-            Viktige nyheter og analyser direkte i innboksen din.
+            {t('newsletter.description')}
           </p>
         </div>
 
@@ -56,7 +68,7 @@ export default function NewsletterSignup({ user }) {
           {!user &&
           <Input
             type="email"
-            placeholder="Din e-postadresse"
+            placeholder={t('newsletter.placeholder')}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -68,12 +80,12 @@ export default function NewsletterSignup({ user }) {
 
             disabled={isLoading || !email && !user}>
 
-            {isLoading ? "Melder på..." : "Meld meg på"}
+            {isLoading ? t('newsletter.subscribing') : t('newsletter.subscribe')}
           </Button>
         </form>
         
         <p className="text-xs text-gray-500 mt-3 text-center">
-          Vi respekterer ditt personvern. Avmeld når som helst.
+          {t('newsletter.privacy')}
         </p>
       </CardContent>
     </Card>);
