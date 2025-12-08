@@ -1,31 +1,9 @@
 import React from 'react';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+
 import { Button } from '@/components/ui/button';
 
 export default function AccountSupport({ t }) {
-  const faqs = [
-    {
-      question: 'subscribe.cancelSubscription',
-      answer: 'subscribe.cancelSubscriptionAnswer'
-    },
-    {
-      question: 'subscribe.studentDiscount',
-      answer: 'subscribe.studentDiscountAnswer'
-    },
-    {
-      question: 'subscribe.shareSubscription',
-      answer: 'subscribe.shareSubscriptionAnswer'
-    },
-    {
-        question: 'account.faqChangePlan',
-        answer: 'account.faqChangePlanAnswer'
-    }
-  ];
+
 
   return (
     <div>
@@ -40,19 +18,7 @@ export default function AccountSupport({ t }) {
             </a>
         </div>
         
-        <div>
-            <h3 className="text-lg font-semibold text-body mb-4">{t('subscribe.faq')}</h3>
-            <Accordion type="single" collapsible className="w-full space-y-2">
-              {faqs.map((faq, index) => (
-                <AccordionItem key={index} value={`item-${index}`} className="border border-default rounded-lg px-4 bg-surface">
-                  <AccordionTrigger className="text-body text-left hover:no-underline hover:text-accent">{t(faq.question)}</AccordionTrigger>
-                  <AccordionContent className="text-secondary pt-2 pb-4">
-                    {t(faq.answer)}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-        </div>
+
       </div>
     </div>
   );
