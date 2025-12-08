@@ -174,7 +174,11 @@ export default function AuthorFormModal({ isOpen, onClose, author, onSave, curre
             <DialogClose asChild>
               <Button type="button" variant="outline">{t('common.cancel')}</Button>
             </DialogClose>
-            <Button type="submit" disabled={isSaving || isUploading}>
+            <Button 
+              type="submit" 
+              disabled={isSaving || isUploading}
+              className="bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-white border-0"
+            >
               {isSaving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               {t('admin.saveAuthor')}
             </Button>
