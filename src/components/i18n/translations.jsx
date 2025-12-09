@@ -176,7 +176,7 @@ const translations = {
     },
     // Admin
     admin: {
-      title: "Adminpanel",
+      title: "Admin Dashboard",
       articles: "Artikler",
       videos: "Videoer",
       users: "Brukere",
@@ -520,7 +520,7 @@ const translations = {
     },
     // Admin
     admin: {
-      title: "Admin Panel",
+      title: "Admin Dashboard",
       articles: "Articles",
       videos: "Videos",
       users: "Users",
