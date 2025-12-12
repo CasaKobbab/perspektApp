@@ -53,7 +53,7 @@ export default function Home() {
       try {
         // Fetch articles with locale filter
         const allArticles = await Article.filter({ status: 'published', locale: currentLocale }, '-published_date', 20);
-        
+
         // Fetch videos - get locale specific ones first, then fill with general ones
         let allVideos = [];
         try {
@@ -61,16 +61,16 @@ export default function Home() {
           // First try to get videos for current locale
           let localizedVideos = await Video.filter({ status: 'published', locale: currentLocale }, '-published_date', limit);
           if (!localizedVideos) localizedVideos = [];
-          
+
           // If we don't have enough videos, fetch general ones to fill the gap
           if (localizedVideos.length < limit) {
             const generalVideos = await Video.filter({ status: 'published' }, '-published_date', limit);
-            
+
             // Create a map of existing video IDs to avoid duplicates
-            const existingIds = new Set(localizedVideos.map(v => v.id));
-            
+            const existingIds = new Set(localizedVideos.map((v) => v.id));
+
             // Add general videos that aren't already in the list until we reach the limit
-            for (const video of (generalVideos || [])) {
+            for (const video of generalVideos || []) {
               if (!existingIds.has(video.id) && localizedVideos.length < limit) {
                 localizedVideos.push(video);
                 existingIds.add(video.id);
@@ -91,16 +91,16 @@ export default function Home() {
 
         // Fetch current user
         const currentUser = await User.me().catch(() => null);
-        
+
         // Fetch site settings
-        const settings = await SiteSettings.list().then(res => res[0] || null).catch(() => null);
+        const settings = await SiteSettings.list().then((res) => res[0] || null).catch(() => null);
 
         setArticles(allArticles);
         setVideos(allVideos);
         setFeaturedArticles(allArticles.filter((article) => article.featured).slice(0, 3));
         setUser(currentUser);
         setSiteSettings(settings);
-        
+
         console.log('Loaded videos:', allVideos);
       } catch (error) {
         console.error('Error loading data:', error);
@@ -124,8 +124,8 @@ export default function Home() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-paper-white dark:bg-slate-ink">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-nordic-sea"></div>
-      </div>
-    );
+      </div>);
+
   }
 
   return (
@@ -149,7 +149,7 @@ export default function Home() {
             <ImageMarquee />
 
             {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-24">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-23">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Column: Text & CTA */}
           <div className="text-center lg:text-left order-1">
@@ -161,7 +161,7 @@ export default function Home() {
               {t('home.subtitle')}
             </p>
 
-            {!user ? (
+            {!user ?
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center">
                 <Link to="/Subscribe" className="w-full sm:w-auto">
                   <Button size="lg" className="bg-accent text-white hover:bg-accent/90 font-semibold px-8 shadow-lg h-12 text-lg border-none w-full">
@@ -173,12 +173,12 @@ export default function Home() {
                   variant="outline"
                   size="lg"
                   className="border-2 border-primary text-primary bg-transparent hover:bg-primary hover:text-white px-8 shadow-lg h-12 text-lg transition-colors w-full sm:w-auto"
-                  onClick={async () => await User.login()}
-                >
+                  onClick={async () => await User.login()}>
+
                   {t('nav.login')}
                 </Button>
-              </div>
-            ) : (
+              </div> :
+
               <div className="max-w-md mx-auto lg:mx-0">
                 <p className="text-primary text-xl mb-6 font-semibold">{t('home.welcomeBack')}, {user.full_name}!</p>
                 <Link to="/Latest" className="w-full sm:w-auto block">
@@ -188,22 +188,22 @@ export default function Home() {
                   </AuroraButton>
                 </Link>
               </div>
-            )}
+              }
           </div>
 
           {/* Right Column: Image */}
           <div className="order-2 relative flex items-center justify-center perspective-1000">
             <TiltCard className="w-full">
-              <img 
-                src={siteSettings?.hero_image_light || "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c87ff5923f3448855aec56/9fa10a590_GeneratedImageNovember202025-4_06PM.png"} 
-                alt="Perspekt Light Theme" 
-                className="w-full h-full object-cover rounded-2xl shadow-xl dark:hidden pointer-events-none"
-              />
-              <img 
-                src={siteSettings?.hero_image_dark || "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c87ff5923f3448855aec56/f16872292_GeneratedImageNovember202025-4_01PM.png"} 
-                alt="Perspekt Dark Theme" 
-                className="w-full h-full object-cover rounded-2xl shadow-xl hidden dark:block pointer-events-none"
-              />
+              <img
+                  src={siteSettings?.hero_image_light || "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c87ff5923f3448855aec56/9fa10a590_GeneratedImageNovember202025-4_06PM.png"}
+                  alt="Perspekt Light Theme"
+                  className="w-full h-full object-cover rounded-2xl shadow-xl dark:hidden pointer-events-none" />
+
+              <img
+                  src={siteSettings?.hero_image_dark || "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c87ff5923f3448855aec56/f16872292_GeneratedImageNovember202025-4_01PM.png"}
+                  alt="Perspekt Dark Theme"
+                  className="w-full h-full object-cover rounded-2xl shadow-xl hidden dark:block pointer-events-none" />
+
             </TiltCard>
           </div>
         </div>
@@ -219,22 +219,22 @@ export default function Home() {
           {/* LEFT COLUMN (Sidebar A) - cols-3 */}
           <div className="lg:col-span-3 order-3 lg:order-1 space-y-12">
             {/* Quick Reads */}
-            {articles.filter(a => (a.reading_time || 0) <= 3).length > 0 && (
+            {articles.filter((a) => (a.reading_time || 0) <= 3).length > 0 &&
               <div className="space-y-4">
                 <div className="flex items-center space-x-2 mb-4 pb-2 border-b border-accent/20">
                   <Clock className="w-5 h-5 text-accent" />
                   <h3 className="font-bold text-lg text-primary tracking-wide uppercase text-sm">Quick Reads</h3>
                 </div>
                 <div>
-                  {articles
-                    .filter(a => (a.reading_time || 0) <= 3)
-                    .slice(0, 3)
-                    .map(article => (
-                      <CompactArticleCard key={article.id} article={article} topicColors={topicColors} />
-                    ))}
+                  {articles.
+                  filter((a) => (a.reading_time || 0) <= 3).
+                  slice(0, 3).
+                  map((article) =>
+                  <CompactArticleCard key={article.id} article={article} topicColors={topicColors} />
+                  )}
                 </div>
               </div>
-            )}
+              }
 
             {/* Latest Videos */}
             <div className="pt-4">
@@ -245,13 +245,13 @@ export default function Home() {
           {/* CENTER COLUMN (Main Stage) - cols-6 */}
           <div className="lg:col-span-6 order-1 lg:order-2">
             {/* Featured Story */}
-            {articles.length > 0 && (
-              <FeaturedArticleCard 
-                article={featuredArticles[0] || articles[0]} 
-                topicColors={topicColors} 
-                user={user} 
-              />
-            )}
+            {articles.length > 0 &&
+              <FeaturedArticleCard
+                article={featuredArticles[0] || articles[0]}
+                topicColors={topicColors}
+                user={user} />
+
+              }
 
             {/* Latest Publications Stream */}
             <div className="mt-12">
@@ -260,18 +260,18 @@ export default function Home() {
                 <h3 className="font-bold text-xl text-primary font-heading italic">Latest Publications</h3>
               </div>
               <div className="space-y-8">
-                {articles
-                  .filter(a => a.id !== (featuredArticles[0]?.id || articles[0]?.id))
-                  .slice(0, 5)
-                  .map(article => (
-                    <ArticleCard
-                      key={article.id}
-                      article={article}
-                      topicColors={topicColors}
-                      user={user}
-                      showImage={true}
-                    />
-                  ))}
+                {articles.
+                  filter((a) => a.id !== (featuredArticles[0]?.id || articles[0]?.id)).
+                  slice(0, 5).
+                  map((article) =>
+                  <ArticleCard
+                    key={article.id}
+                    article={article}
+                    topicColors={topicColors}
+                    user={user}
+                    showImage={true} />
+
+                  )}
               </div>
                <div className="mt-8 text-center">
                   <Link to="/Latest">
@@ -286,8 +286,8 @@ export default function Home() {
           {/* RIGHT COLUMN (Sidebar B) - cols-3 */}
           <div className="lg:col-span-3 order-2 lg:order-3 space-y-12">
              {/* Subscription CTA */}
-             {!user ? (
-               <div className="card-surface rounded-xl p-6 text-center bg-gradient-to-br from-warm-sand/30 to-laks/30 dark:from-slate-ink dark:to-nordic-sea/20 border border-accent/20 shadow-lg">
+             {!user ?
+              <div className="card-surface rounded-xl p-6 text-center bg-gradient-to-br from-warm-sand/30 to-laks/30 dark:from-slate-ink dark:to-nordic-sea/20 border border-accent/20 shadow-lg">
                 <Star className="w-10 h-10 text-accent mx-auto mb-4 animate-pulse" />
                 <h3 className="font-bold text-xl text-primary mb-3 font-heading">{t('home.getAccess')}</h3>
                 <p className="text-sm text-secondary mb-6 leading-relaxed">
@@ -298,48 +298,48 @@ export default function Home() {
                     {t('home.startSubscription')}
                   </Button>
                 </Link>
-              </div>
-             ) : (
-                <div className="card-surface rounded-xl p-6 border border-default shadow-sm">
+              </div> :
+
+              <div className="card-surface rounded-xl p-6 border border-default shadow-sm">
                    <h3 className="font-bold text-lg text-primary mb-2">Welcome, {user.full_name}</h3>
                    <p className="text-sm text-secondary mb-4">You have full access to all our premium content.</p>
                    <Link to="/Account">
                       <Button variant="outline" size="sm" className="w-full">My Account</Button>
                    </Link>
                 </div>
-             )}
+              }
 
             {/* Opinion Cluster */}
-            {articles.filter(a => a.topic === 'opinion').length > 0 && (
+            {articles.filter((a) => a.topic === 'opinion').length > 0 &&
               <div className="space-y-4">
                  <div className="flex items-center justify-between mb-4 pb-2 border-b border-default">
                     <h3 className="font-bold text-lg text-primary tracking-wide uppercase text-sm">{t('topics.opinion')}</h3>
                     <Link to="/Topics?filter=opinion" className="text-xs text-accent hover:underline">View All</Link>
                  </div>
-                 {articles
-                    .filter(a => a.topic === 'opinion' && a.id !== (featuredArticles[0]?.id || articles[0]?.id))
-                    .slice(0, 2)
-                    .map(article => (
-                       <CompactArticleCard key={article.id} article={article} topicColors={topicColors} />
-                    ))}
+                 {articles.
+                filter((a) => a.topic === 'opinion' && a.id !== (featuredArticles[0]?.id || articles[0]?.id)).
+                slice(0, 2).
+                map((article) =>
+                <CompactArticleCard key={article.id} article={article} topicColors={topicColors} />
+                )}
               </div>
-            )}
+              }
 
              {/* News Cluster */}
-             {articles.filter(a => a.topic === 'news').length > 0 && (
+             {articles.filter((a) => a.topic === 'news').length > 0 &&
               <div className="space-y-4">
                  <div className="flex items-center justify-between mb-4 pb-2 border-b border-default">
                     <h3 className="font-bold text-lg text-primary tracking-wide uppercase text-sm">{t('topics.news')}</h3>
                     <Link to="/Topics?filter=news" className="text-xs text-accent hover:underline">View All</Link>
                  </div>
-                 {articles
-                    .filter(a => a.topic === 'news' && a.id !== (featuredArticles[0]?.id || articles[0]?.id))
-                    .slice(0, 2)
-                    .map(article => (
-                       <CompactArticleCard key={article.id} article={article} topicColors={topicColors} />
-                    ))}
+                 {articles.
+                filter((a) => a.topic === 'news' && a.id !== (featuredArticles[0]?.id || articles[0]?.id)).
+                slice(0, 2).
+                map((article) =>
+                <CompactArticleCard key={article.id} article={article} topicColors={topicColors} />
+                )}
               </div>
-            )}
+              }
             
             {/* Newsletter */}
             <div className="pt-4 border-t border-default">
@@ -351,6 +351,6 @@ export default function Home() {
         </div>
       </section>
       </div>
-    </div>
-  );
+    </div>);
+
 }
