@@ -13,6 +13,8 @@ import Contact from './pages/Contact';
 import VideoPage from './pages/VideoPage';
 import Search from './pages/Search';
 import About from './pages/About';
+import PaymentSuccess from './pages/PaymentSuccess';
+import PaymentCancel from './pages/PaymentCancel';
 import __Layout from './Layout.jsx';
 
 
@@ -32,6 +34,8 @@ export const PAGES = {
     "VideoPage": VideoPage,
     "Search": Search,
     "About": About,
+    "PaymentSuccess": PaymentSuccess,
+    "PaymentCancel": PaymentCancel,
 }
 
 export const pagesConfig = {

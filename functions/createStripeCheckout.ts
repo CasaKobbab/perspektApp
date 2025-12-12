@@ -73,8 +73,8 @@ Deno.serve(async (req) => {
             ],
             discounts: discounts.length > 0 ? discounts : undefined,
             allow_promotion_codes: true,
-            success_url: `${origin}/Account?session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: `${origin}/Subscribe?canceled=true`,
+            success_url: `${origin}/PaymentSuccess?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `${origin}/PaymentCancel`,
             client_reference_id: user.id,
         });
 
