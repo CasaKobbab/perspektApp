@@ -147,7 +147,7 @@ export default function Topics() {
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center mb-16">
-            <h1 className="text-5xl md:text-7xl font-bold font-serif mb-6 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-500 animate-in fade-in slide-in-from-bottom-4 duration-700">
+            <h1 className="text-5xl md:text-7xl font-bold font-heading mb-6 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-500 animate-in fade-in slide-in-from-bottom-4 duration-700">
               {t('nav.topics')}
             </h1>
             <p className="text-gray-600 dark:text-gray-400 text-xl max-w-2xl mx-auto leading-relaxed animate-in fade-in slide-in-from-bottom-5 duration-700 delay-100">
@@ -219,7 +219,7 @@ export default function Topics() {
                     {currentTopic?.name}
                  </Badge>
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold font-serif mb-4 text-gray-900 dark:text-white">
+              <h1 className="text-4xl md:text-5xl font-bold font-heading mb-4 text-gray-900 dark:text-white">
                 {currentTopic?.name}
               </h1>
               <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl">

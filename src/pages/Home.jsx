@@ -153,7 +153,7 @@ export default function Home() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Column: Text & CTA */}
           <div className="text-center lg:text-left order-1">
-            <h1 className="text-primary mb-6 font-serif text-4xl lg:text-6xl leading-tight font-bold">
+            <h1 className="text-primary mb-6 font-heading text-4xl lg:text-6xl leading-tight font-bold">
               {t('home.title')}
               <span className="uppercase gradient-text lg:block lg:mt-2"> {t('home.titleHighlight')}</span>
             </h1>
@@ -257,7 +257,7 @@ export default function Home() {
             <div className="mt-12">
               <div className="flex items-center space-x-2 mb-8">
                 <div className="h-1 w-6 bg-accent rounded-full"></div>
-                <h3 className="font-bold text-xl text-primary font-serif italic">Latest Publications</h3>
+                <h3 className="font-bold text-xl text-primary font-heading italic">Latest Publications</h3>
               </div>
               <div className="space-y-8">
                 {articles
@@ -289,7 +289,7 @@ export default function Home() {
              {!user ? (
                <div className="card-surface rounded-xl p-6 text-center bg-gradient-to-br from-warm-sand/30 to-laks/30 dark:from-slate-ink dark:to-nordic-sea/20 border border-accent/20 shadow-lg">
                 <Star className="w-10 h-10 text-accent mx-auto mb-4 animate-pulse" />
-                <h3 className="font-bold text-xl text-primary mb-3 font-serif">{t('home.getAccess')}</h3>
+                <h3 className="font-bold text-xl text-primary mb-3 font-heading">{t('home.getAccess')}</h3>
                 <p className="text-sm text-secondary mb-6 leading-relaxed">
                   {t('home.subscribeSupport')}
                 </p>

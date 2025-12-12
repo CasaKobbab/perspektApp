@@ -263,7 +263,7 @@ export default function ArticlePage() {
               }
             </div>
 
-            <h1 className="text-4xl lg:text-5xl font-bold text-primary font-serif leading-tight mb-6">
+            <h1 className="text-4xl lg:text-5xl font-bold text-primary font-heading leading-tight mb-6">
               {article.title}
             </h1>
 
@@ -361,7 +361,7 @@ export default function ArticlePage() {
                     <div className="bg-accent/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
                         <Lock className="w-8 h-8 text-accent" />
                     </div>
-                    <h3 className="text-2xl font-bold text-body mb-4 font-serif">
+                    <h3 className="text-2xl font-bold text-body mb-4 font-heading">
                       {article.access_level === 'premium' ?
                     t('article.premiumContent') :
                     t('article.limitedAccess')
@@ -404,7 +404,7 @@ export default function ArticlePage() {
                         <img src={author.avatar_url || 'https://via.placeholder.com/96'} alt={author.name} className="w-24 h-24 rounded-full mr-0 sm:mr-6 mb-4 sm:mb-0 object-cover flex-shrink-0 shadow-sm border border-default" />
                         <div>
                             <p className="text-sm font-semibold uppercase text-accent mb-2">{t('authors.writtenBy')}</p>
-                            <h3 className="text-2xl font-bold text-body mb-2 font-serif">{author.name}</h3>
+                            <h3 className="text-2xl font-bold text-body mb-2 font-heading">{author.name}</h3>
                             <p className="text-secondary mb-4">{author.bio}</p>
                             <Link to={createPageUrl(`Author?slug=${author.slug}`)}>
                                 <Button variant="link" className="text-accent hover:text-accent-hover p-0 h-auto font-medium text-base hover:no-underline">{t('authors.viewAllArticles')} →</Button>
