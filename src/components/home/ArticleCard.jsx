@@ -37,15 +37,21 @@ export default function ArticleCard({ article, topicColors, user, showImage = tr
     }
   };
 
+  const primaryTopic = article.topics?.[0] || article.topic;
+
   return (
     <article className="card-surface rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group border border-default">
       <div className="p-6">
         <div className="flex items-center gap-4 mb-4 flex-wrap">
-          <Link to={createPageUrl(`Topics?filter=${article.topic}`)}>
-            <Badge className={`${topicColors[article.topic] || "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200"} transition-colors`}>
-              {t(getTopicKey(article.topic))}
+          <Link to={createPageUrl(`Topics?filter=${primaryTopic}`)}>
+            <Badge className={`${topicColors[primaryTopic] || "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200"} transition-colors`}>
+              {t(getTopicKey(primaryTopic))}
             </Badge>
           </Link>
+          {/* Optional: Show +X more topics if multiple */}
+          {article.topics?.length > 1 && (
+             <span className="text-xs text-muted-foreground">+{article.topics.length - 1}</span>
+          )}
           <div className="flex items-center text-sm text-secondary">
             <Clock className="w-4 h-4 mr-1" />
             {article.reading_time || 5} {t('common.readingTime')}

@@ -310,14 +310,14 @@ export default function Home() {
               }
 
             {/* Opinion Cluster */}
-            {articles.filter((a) => a.topic === 'opinion').length > 0 &&
+            {articles.filter((a) => (a.topics?.includes('opinion') || a.topic === 'opinion')).length > 0 &&
               <div className="space-y-4">
                  <div className="flex items-center justify-between mb-4 pb-2 border-b border-default">
                     <h3 className="font-bold text-lg text-primary tracking-wide uppercase text-sm">{t('topics.opinion')}</h3>
                     <Link to="/Topics?filter=opinion" className="text-xs text-accent hover:underline">View All</Link>
                  </div>
                  {articles.
-                filter((a) => a.topic === 'opinion' && a.id !== (featuredArticles[0]?.id || articles[0]?.id)).
+                filter((a) => (a.topics?.includes('opinion') || a.topic === 'opinion') && a.id !== (featuredArticles[0]?.id || articles[0]?.id)).
                 slice(0, 2).
                 map((article) =>
                 <CompactArticleCard key={article.id} article={article} topicColors={topicColors} />
@@ -326,14 +326,14 @@ export default function Home() {
               }
 
              {/* News Cluster */}
-             {articles.filter((a) => a.topic === 'news').length > 0 &&
+             {articles.filter((a) => (a.topics?.includes('news') || a.topic === 'news')).length > 0 &&
               <div className="space-y-4">
                  <div className="flex items-center justify-between mb-4 pb-2 border-b border-default">
                     <h3 className="font-bold text-lg text-primary tracking-wide uppercase text-sm">{t('topics.news')}</h3>
                     <Link to="/Topics?filter=news" className="text-xs text-accent hover:underline">View All</Link>
                  </div>
                  {articles.
-                filter((a) => a.topic === 'news' && a.id !== (featuredArticles[0]?.id || articles[0]?.id)).
+                filter((a) => (a.topics?.includes('news') || a.topic === 'news') && a.id !== (featuredArticles[0]?.id || articles[0]?.id)).
                 slice(0, 2).
                 map((article) =>
                 <CompactArticleCard key={article.id} article={article} topicColors={topicColors} />

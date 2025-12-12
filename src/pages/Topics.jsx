@@ -52,13 +52,15 @@ export default function Topics() {
         );
 
         let articleFilter = { status: 'published', locale: currentLocale };
-        if (selectedTopic) {
-          articleFilter.topic = selectedTopic;
-        }
+        // We fetch more articles and filter client-side to support multi-topic array containment
+        // because simple equality filter on 'topic' field misses secondary topics.
+        const allArticles = await Article.filter(articleFilter, '-published_date', 100);
 
-        const allArticles = await Article.filter(articleFilter, '-published_date', 30);
+        const filteredArticles = selectedTopic 
+            ? allArticles.filter(a => (a.topics?.includes(selectedTopic) || a.topic === selectedTopic))
+            : allArticles;
 
-        setArticles(allArticles);
+        setArticles(filteredArticles);
         setUser(currentUser);
       } catch (error) {
         console.error('Error loading articles:', error);

@@ -237,12 +237,14 @@ export default function ArticlePage() {
           </Button>
 
           <div className="mb-8">
-            <div className="flex items-center gap-4 mb-6">
-              <Link to={createPageUrl(`Topics?filter=${article.topic}`)}> {/* Wrapped Badge with Link */}
-                <Badge className={topicColors[article.topic] || "bg-gray-100 text-gray-800"}>
-                  {t(getTopicKey(article.topic))}
-                </Badge>
-              </Link>
+            <div className="flex items-center gap-4 mb-6 flex-wrap">
+              {(article.topics && article.topics.length > 0 ? article.topics : [article.topic]).map((topicSlug) => (
+                  <Link key={topicSlug} to={createPageUrl(`Topics?filter=${topicSlug}`)}>
+                    <Badge className={topicColors[topicSlug] || "bg-gray-100 text-gray-800"}>
+                      {t(getTopicKey(topicSlug))}
+                    </Badge>
+                  </Link>
+              ))}
               <div className="flex items-center text-sm text-muted">
                 <Clock className="w-4 h-4 mr-1" />
                 {article.reading_time || 5} {t('common.readingTime')}
