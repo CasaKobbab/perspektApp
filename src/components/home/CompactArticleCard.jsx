@@ -40,7 +40,7 @@ export default function CompactArticleCard({ article, topicColors }) {
       </div>
       
       <Link to={createPageUrl(`Article?id=${article.id}`)}>
-        <h3 className="text-base font-bold text-primary font-serif leading-snug group-hover:bg-gradient-to-r group-hover:from-emerald-500 group-hover:via-teal-400 group-hover:to-cyan-500 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
+        <h3 className="text-base font-bold text-primary font-heading leading-snug group-hover:bg-gradient-to-r group-hover:from-emerald-500 group-hover:via-teal-400 group-hover:to-cyan-500 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
           {article.title}
         </h3>
       </Link>

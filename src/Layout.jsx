@@ -101,9 +101,12 @@ function LayoutContent({ children, currentPageName }) {
   return (
     <div className="min-h-screen bg-primary text-body transition-colors duration-300">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Poppins:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600&display=swap');
         
         :root {
+          --font-heading: 'Poppins', sans-serif;
+          --font-body: 'Lora', serif;
+          --font-special: 'Space Grotesk', sans-serif;
           /* Light theme colors */
           --pure-white: #FFFFFF;
           --off-white: #FAFAFA;
@@ -165,9 +168,21 @@ function LayoutContent({ children, currentPageName }) {
           --shadow-lg: 0 10px 15px rgba(255, 255, 255, 0.1);
         }
         
-        * {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        body {
+          font-family: var(--font-body);
         }
+
+        h1, h2, h3, .logo, .font-heading {
+          font-family: var(--font-heading);
+        }
+
+        h4, h5, h6, blockquote, .text-muted, .text-sm, .text-xs, .font-special {
+          font-family: var(--font-special);
+        }
+
+        .font-serif { font-family: var(--font-body) !important; }
+        .font-sans { font-family: var(--font-heading) !important; }
+        .font-mono { font-family: var(--font-special) !important; }
         
         /* Utility classes */
         .bg-primary { background-color: var(--bg-primary); }

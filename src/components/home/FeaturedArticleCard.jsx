@@ -53,7 +53,7 @@ export default function FeaturedArticleCard({ article, topicColors, user }) {
 
       <div className="p-8">
         <Link to={createPageUrl(`Article?id=${article.id}`)}>
-          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4 font-serif leading-tight group-hover:bg-gradient-to-r group-hover:from-emerald-500 group-hover:via-teal-400 group-hover:to-cyan-500 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
+          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4 font-heading leading-tight group-hover:bg-gradient-to-r group-hover:from-emerald-500 group-hover:via-teal-400 group-hover:to-cyan-500 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
             {article.title}
           </h2>
         </Link>
