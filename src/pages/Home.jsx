@@ -153,7 +153,7 @@ export default function Home() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Column: Text & CTA */}
           <div className="text-center lg:text-left order-1">
-            <h1 className="text-primary mb-6 font-heading text-4xl lg:text-6xl leading-[1.1] font-bold tracking-tight">
+            <h1 className="text-primary mb-6 font-heading text-4xl lg:text-6xl leading-tight lg:leading-snug font-bold tracking-tight">
               {t('home.title')}
               <span className="uppercase gradient-text block mt-2"> {t('home.titleHighlight')}</span>
             </h1>
