@@ -12,7 +12,9 @@ import {
   ArrowLeft,
   Twitter,
   Facebook,
-  Linkedin, // Added Linkedin import
+  Linkedin,
+  Instagram,
+  Globe,
   Link as LinkIcon } from
 "lucide-react";
 import { format } from "date-fns";
@@ -406,6 +408,35 @@ export default function ArticlePage() {
                             <p className="text-sm font-semibold uppercase text-accent mb-2">{t('authors.writtenBy')}</p>
                             <h3 className="text-2xl font-bold text-body mb-2 font-heading">{author.name}</h3>
                             <p className="text-secondary mb-4">{author.bio}</p>
+                            
+                            <div className="flex items-center gap-4 mb-4">
+                                {author.social_links?.twitter && (
+                                    <a href={author.social_links.twitter} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-teal-500 transition-colors">
+                                        <Twitter className="w-5 h-5" />
+                                    </a>
+                                )}
+                                {author.social_links?.linkedin && (
+                                    <a href={author.social_links.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-teal-500 transition-colors">
+                                        <Linkedin className="w-5 h-5" />
+                                    </a>
+                                )}
+                                {author.social_links?.facebook && (
+                                    <a href={author.social_links.facebook} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-teal-500 transition-colors">
+                                        <Facebook className="w-5 h-5" />
+                                    </a>
+                                )}
+                                {author.social_links?.instagram && (
+                                    <a href={author.social_links.instagram} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-teal-500 transition-colors">
+                                        <Instagram className="w-5 h-5" />
+                                    </a>
+                                )}
+                                {author.social_links?.website && (
+                                    <a href={author.social_links.website} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-teal-500 transition-colors">
+                                        <Globe className="w-5 h-5" />
+                                    </a>
+                                )}
+                            </div>
+
                             <Link to={createPageUrl(`Author?slug=${author.slug}`)}>
                                 <Button variant="link" className="text-accent hover:text-accent-hover p-0 h-auto font-medium text-base hover:no-underline">{t('authors.viewAllArticles')} →</Button>
                             </Link>

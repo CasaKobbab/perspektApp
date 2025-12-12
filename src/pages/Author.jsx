@@ -3,7 +3,7 @@ import { AuthorProfile, Article, User } from "@/entities/all";
 import { useTranslation, createPageUrl } from "@/components/i18n/translations";
 import { Link } from "react-router-dom";
 import ArticleCard from "../components/home/ArticleCard";
-import { ArrowLeft, Twitter, Linkedin, Link as LinkIcon } from "lucide-react";
+import { ArrowLeft, Twitter, Linkedin, Facebook, Instagram, Globe, Link as LinkIcon } from "lucide-react";
 
 export default function AuthorPage() {
   const [currentLocale, setCurrentLocale] = useState('nb');
@@ -100,10 +100,32 @@ export default function AuthorPage() {
                 <div>
                     <h1 className="text-4xl font-bold text-primary font-serif">{author.name}</h1>
                     <p className="text-secondary mt-4 text-lg max-w-2xl">{author.bio}</p>
-                    <div className="flex justify-center md:justify-start items-center space-x-4 mt-6">
-                        {author.social_links?.twitter && <a href={author.social_links.twitter} target="_blank" rel="noopener noreferrer" className="text-muted hover:text-primary"><Twitter /></a>}
-                        {author.social_links?.linkedin && <a href={author.social_links.linkedin} target="_blank" rel="noopener noreferrer" className="text-muted hover:text-primary"><Linkedin /></a>}
-                        {author.social_links?.website && <a href={author.social_links.website} target="_blank" rel="noopener noreferrer" className="text-muted hover:text-primary"><LinkIcon /></a>}
+                    <div className="flex justify-center md:justify-start items-center gap-4 mt-6">
+                        {author.social_links?.twitter && (
+                            <a href={author.social_links.twitter} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-teal-500 transition-colors">
+                                <Twitter className="w-6 h-6" />
+                            </a>
+                        )}
+                        {author.social_links?.linkedin && (
+                            <a href={author.social_links.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-teal-500 transition-colors">
+                                <Linkedin className="w-6 h-6" />
+                            </a>
+                        )}
+                        {author.social_links?.facebook && (
+                            <a href={author.social_links.facebook} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-teal-500 transition-colors">
+                                <Facebook className="w-6 h-6" />
+                            </a>
+                        )}
+                        {author.social_links?.instagram && (
+                            <a href={author.social_links.instagram} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-teal-500 transition-colors">
+                                <Instagram className="w-6 h-6" />
+                            </a>
+                        )}
+                        {author.social_links?.website && (
+                            <a href={author.social_links.website} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-teal-500 transition-colors">
+                                <Globe className="w-6 h-6" />
+                            </a>
+                        )}
                     </div>
                 </div>
             </div>

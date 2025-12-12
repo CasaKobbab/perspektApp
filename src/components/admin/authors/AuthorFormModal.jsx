@@ -40,7 +40,7 @@ export default function AuthorFormModal({ isOpen, onClose, author, onSave, curre
     slug: "",
     bio: "",
     avatar_url: "",
-    social_links: { twitter: "", linkedin: "", website: "" },
+    social_links: { twitter: "", linkedin: "", facebook: "", instagram: "", website: "" },
     user_id: "",
   });
   const [isSaving, setIsSaving] = useState(false);
@@ -60,7 +60,7 @@ export default function AuthorFormModal({ isOpen, onClose, author, onSave, curre
     } else {
       setFormData({
         name: "", slug: "", bio: "", avatar_url: "",
-        social_links: { twitter: "", linkedin: "", website: "" }, user_id: ""
+        social_links: { twitter: "", linkedin: "", facebook: "", instagram: "", website: "" }, user_id: ""
       });
     }
   }, [author]);
@@ -146,6 +146,32 @@ export default function AuthorFormModal({ isOpen, onClose, author, onSave, curre
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="bio" className="text-right text-primary">{t('admin.authorBio')}</Label>
             <Textarea id="bio" name="bio" value={formData.bio} onChange={handleInputChange} className="col-span-3" />
+          </div>
+
+          <div className="border-t border-border my-4 pt-4">
+             <h4 className="text-sm font-medium mb-4 text-center">Social Media</h4>
+             <div className="space-y-3">
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="twitter" className="text-right text-primary">Twitter / X</Label>
+                  <Input id="twitter" name="twitter" placeholder="https://x.com/username" value={formData.social_links?.twitter || ""} onChange={handleSocialChange} className="col-span-3" />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="linkedin" className="text-right text-primary">LinkedIn</Label>
+                  <Input id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/username" value={formData.social_links?.linkedin || ""} onChange={handleSocialChange} className="col-span-3" />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="facebook" className="text-right text-primary">Facebook</Label>
+                  <Input id="facebook" name="facebook" placeholder="https://facebook.com/username" value={formData.social_links?.facebook || ""} onChange={handleSocialChange} className="col-span-3" />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="instagram" className="text-right text-primary">Instagram</Label>
+                  <Input id="instagram" name="instagram" placeholder="https://instagram.com/username" value={formData.social_links?.instagram || ""} onChange={handleSocialChange} className="col-span-3" />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="website" className="text-right text-primary">Website</Label>
+                  <Input id="website" name="website" placeholder="https://example.com" value={formData.social_links?.website || ""} onChange={handleSocialChange} className="col-span-3" />
+                </div>
+             </div>
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="avatar" className="text-right text-primary">{t('admin.authorAvatar')}</Label>
