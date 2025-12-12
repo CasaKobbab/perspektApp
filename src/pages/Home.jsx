@@ -11,7 +11,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
 import ArticleCard from "../components/home/ArticleCard";
-import FeaturedSection from "../components/home/FeaturedSection";
+import CompactArticleCard from "../components/home/CompactArticleCard";
+import FeaturedArticleCard from "../components/home/FeaturedArticleCard";
 import TopicNavigation from "../components/home/TopicNavigation";
 import NewsletterSignup from "../components/home/NewsletterSignup";
 import LatestVideos from "../components/home/LatestVideos";
@@ -211,78 +212,141 @@ export default function Home() {
       {/* Topic Navigation */}
       <TopicNavigation />
 
-      {/* Featured Articles */}
-      {featuredArticles.length > 0 && (
-        <FeaturedSection articles={featuredArticles} topicColors={topicColors} t={t} />
-      )}
-
-      {/* Latest Articles Grid with 3 columns */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-primary font-serif mb-2">{t('home.latestArticles')}</h2>
-          <p className="text-secondary">{t('home.latestSubtitle')}</p>
-        </div>
-
-        <div className="grid lg:grid-cols-12 gap-8">
-          {/* Latest Videos - Left Column */}
-          <div className="lg:col-span-3">
-            <LatestVideos videos={videos} topicColors={topicColors} />
-          </div>
-
-          {/* Main Content - Center Column */}
-          <div className="lg:col-span-6">
-            <div className="space-y-8">
-              {articles.slice(0, 6).map((article) => (
-                <ArticleCard
-                  key={article.id}
-                  article={article}
-                  topicColors={topicColors}
-                  user={user}
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* Sidebar - Right Column */}
-          <div className="lg:col-span-3 space-y-8">
-            {/* Newsletter Signup */}
-            <NewsletterSignup user={user} />
-
-            {/* Trending Topics */}
-            <div className="card-surface rounded-lg p-6">
-              <h3 className="text-lg font-semibold mb-4 flex items-center text-primary">
-                <TrendingUp className="w-5 h-5 mr-2 text-nordic-sea" />
-                {t('home.popularTopics')}
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {Object.keys(topicColors).map((topic) => (
-                  <Link key={topic} to={`/Topics?filter=${topic}`}>
-                    <Badge
-                      variant="secondary"
-                      className={`${topicColors[topic]} cursor-pointer hover:opacity-80 transition-opacity`}
-                    >
-                      {t(`topics.${topic}`)}
-                    </Badge>
-                  </Link>
-                ))}
+      {/* Magazine Layout Grid */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+          
+          {/* LEFT COLUMN (Sidebar A) - cols-3 */}
+          <div className="lg:col-span-3 order-3 lg:order-1 space-y-12">
+            {/* Quick Reads */}
+            {articles.filter(a => (a.reading_time || 0) <= 3).length > 0 && (
+              <div className="space-y-4">
+                <div className="flex items-center space-x-2 mb-4 pb-2 border-b border-accent/20">
+                  <Clock className="w-5 h-5 text-accent" />
+                  <h3 className="font-bold text-lg text-primary tracking-wide uppercase text-sm">Quick Reads</h3>
+                </div>
+                <div>
+                  {articles
+                    .filter(a => (a.reading_time || 0) <= 3)
+                    .slice(0, 3)
+                    .map(article => (
+                      <CompactArticleCard key={article.id} article={article} topicColors={topicColors} />
+                    ))}
+                </div>
               </div>
-            </div>
+            )}
 
-            {/* Subscription CTA */}
-            {!user && (
-              <div className="card-surface rounded-lg p-6 text-center bg-gradient-to-br from-warm-sand to-laks dark:from-slate-ink dark:to-nordic-sea">
-                <Star className="w-8 h-8 text-nordic-sea dark:text-laks mx-auto mb-3" />
-                <h3 className="font-semibold text-primary mb-2">{t('home.getAccess')}</h3>
-                <p className="text-sm text-secondary mb-4">
+            {/* Latest Videos */}
+            <div className="pt-4">
+               <LatestVideos videos={videos} topicColors={topicColors} />
+            </div>
+          </div>
+
+          {/* CENTER COLUMN (Main Stage) - cols-6 */}
+          <div className="lg:col-span-6 order-1 lg:order-2">
+            {/* Featured Story */}
+            {articles.length > 0 && (
+              <FeaturedArticleCard 
+                article={featuredArticles[0] || articles[0]} 
+                topicColors={topicColors} 
+                user={user} 
+              />
+            )}
+
+            {/* Latest Publications Stream */}
+            <div className="mt-12">
+              <div className="flex items-center space-x-2 mb-8">
+                <div className="h-1 w-6 bg-accent rounded-full"></div>
+                <h3 className="font-bold text-xl text-primary font-serif italic">Latest Publications</h3>
+              </div>
+              <div className="space-y-8">
+                {articles
+                  .filter(a => a.id !== (featuredArticles[0]?.id || articles[0]?.id))
+                  .slice(0, 5)
+                  .map(article => (
+                    <ArticleCard
+                      key={article.id}
+                      article={article}
+                      topicColors={topicColors}
+                      user={user}
+                      showImage={true}
+                    />
+                  ))}
+              </div>
+               <div className="mt-8 text-center">
+                  <Link to="/Latest">
+                    <Button variant="outline" className="w-full border-default hover:bg-surface">
+                      {t('home.seeAll')} <ArrowRight className="w-4 h-4 ml-2" />
+                    </Button>
+                  </Link>
+               </div>
+            </div>
+          </div>
+
+          {/* RIGHT COLUMN (Sidebar B) - cols-3 */}
+          <div className="lg:col-span-3 order-2 lg:order-3 space-y-12">
+             {/* Subscription CTA */}
+             {!user ? (
+               <div className="card-surface rounded-xl p-6 text-center bg-gradient-to-br from-warm-sand/30 to-laks/30 dark:from-slate-ink dark:to-nordic-sea/20 border border-accent/20 shadow-lg">
+                <Star className="w-10 h-10 text-accent mx-auto mb-4 animate-pulse" />
+                <h3 className="font-bold text-xl text-primary mb-3 font-serif">{t('home.getAccess')}</h3>
+                <p className="text-sm text-secondary mb-6 leading-relaxed">
                   {t('home.subscribeSupport')}
                 </p>
                 <Link to="/Subscribe">
-                  <Button size="sm" className="btn-primary w-full">
-                    {t('home.seePrices')}
+                  <Button className="btn-gradient w-full font-bold shadow-md transform hover:-translate-y-0.5 transition-transform">
+                    {t('home.startSubscription')}
                   </Button>
                 </Link>
               </div>
+             ) : (
+                <div className="card-surface rounded-xl p-6 border border-default shadow-sm">
+                   <h3 className="font-bold text-lg text-primary mb-2">Welcome, {user.full_name}</h3>
+                   <p className="text-sm text-secondary mb-4">You have full access to all our premium content.</p>
+                   <Link to="/Account">
+                      <Button variant="outline" size="sm" className="w-full">My Account</Button>
+                   </Link>
+                </div>
+             )}
+
+            {/* Opinion Cluster */}
+            {articles.filter(a => a.topic === 'opinion').length > 0 && (
+              <div className="space-y-4">
+                 <div className="flex items-center justify-between mb-4 pb-2 border-b border-default">
+                    <h3 className="font-bold text-lg text-primary tracking-wide uppercase text-sm">{t('topics.opinion')}</h3>
+                    <Link to="/Topics?filter=opinion" className="text-xs text-accent hover:underline">View All</Link>
+                 </div>
+                 {articles
+                    .filter(a => a.topic === 'opinion' && a.id !== (featuredArticles[0]?.id || articles[0]?.id))
+                    .slice(0, 2)
+                    .map(article => (
+                       <CompactArticleCard key={article.id} article={article} topicColors={topicColors} />
+                    ))}
+              </div>
             )}
+
+             {/* News Cluster */}
+             {articles.filter(a => a.topic === 'news').length > 0 && (
+              <div className="space-y-4">
+                 <div className="flex items-center justify-between mb-4 pb-2 border-b border-default">
+                    <h3 className="font-bold text-lg text-primary tracking-wide uppercase text-sm">{t('topics.news')}</h3>
+                    <Link to="/Topics?filter=news" className="text-xs text-accent hover:underline">View All</Link>
+                 </div>
+                 {articles
+                    .filter(a => a.topic === 'news' && a.id !== (featuredArticles[0]?.id || articles[0]?.id))
+                    .slice(0, 2)
+                    .map(article => (
+                       <CompactArticleCard key={article.id} article={article} topicColors={topicColors} />
+                    ))}
+              </div>
+            )}
+            
+            {/* Newsletter */}
+            <div className="pt-4 border-t border-default">
+               <h3 className="font-bold text-lg text-primary mb-4 tracking-wide uppercase text-sm">Newsletter</h3>
+               <NewsletterSignup user={user} minimal={true} />
+            </div>
+
           </div>
         </div>
       </section>
