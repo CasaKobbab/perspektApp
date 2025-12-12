@@ -342,6 +342,14 @@ const translations = {
       videoNotFound: "Videoen ble ikke funnet.",
       goToHomepage: "Gå til forsiden",
       publishedOn: "Publisert den"
+    },
+    // About Page
+    about: {
+      title: "Velkommen til Perspekt.",
+      intro: "I en verden av flyktige overskrifter og polariserte debatter, velger vi en annen vei.",
+      mission: "Perspekt er et uavhengig norsk mediehus dedikert til kritisk journalistikk, dyp analyse og perspektivene som ofte ikke blir hørt. Vårt oppdrag er ikke bare å rapportere hva som skjedde, men å forstå hvorfor.",
+      values: "Vi tror på kraften i nyanser, nødvendigheten av å tenke langsiktig, og verdien av en samtale der det å lytte er like viktig som å snakke.",
+      joinUs: "Bli med oss og sett dagsorden."
     }
   },
   en: {
@@ -686,6 +694,14 @@ const translations = {
       videoNotFound: "Video not found.",
       goToHomepage: "Go to homepage",
       publishedOn: "Published on"
+    },
+    // About Page
+    about: {
+      title: "Welcome to Perspekt.",
+      intro: "In a world of fleeting headlines and polarized debates, we choose a different path.",
+      mission: "Perspekt is an independent Norwegian media house dedicated to critical journalism, deep analysis, and the perspectives that often go unheard. Our mission is not just to report what happened, but to understand why.",
+      values: "We believe in the power of nuance, the necessity of slow thinking, and the value of a conversation where listening is as important as speaking.",
+      joinUs: "Join us in shaping the agenda."
     }
   }
 };

@@ -91,11 +91,14 @@ function LayoutContent({ children, currentPageName }) {
     }
   };
 
+  import { Info } from "lucide-react";
+
   const navigationItems = [
   { name: t('nav.home'), href: "/Home", icon: Home },
   { name: t('nav.latest'), href: "/Latest", icon: FileText },
   { name: t('nav.topics'), href: "/Topics", icon: Bookmark },
-  { name: t('nav.authors'), href: "/Authors", icon: Users }];
+  { name: t('nav.authors'), href: "/Authors", icon: Users },
+  { name: t('nav.about'), href: "/About", icon: Info }];
 
 
   return (
