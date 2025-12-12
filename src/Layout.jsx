@@ -14,7 +14,8 @@ import {
   X,
   Globe,
   Sun,
-  Moon } from
+  Moon,
+  Info } from
 "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -90,8 +91,6 @@ function LayoutContent({ children, currentPageName }) {
       setIsMenuOpen(false);
     }
   };
-
-  import { Info } from "lucide-react";
 
   const navigationItems = [
   { name: t('nav.home'), href: "/Home", icon: Home },
