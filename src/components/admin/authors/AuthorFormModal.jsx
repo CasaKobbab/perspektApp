@@ -7,8 +7,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
-  DialogClose,
-} from "@/components/ui/dialog";
+  DialogClose } from
+"@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -21,16 +21,16 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+  SelectValue } from
+"@/components/ui/select";
 
 // Helper to generate slug from name
 const generateSlug = (name) => {
-  return name
-    .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, "") // Remove special chars
-    .replace(/\s+/g, "-") // Replace spaces with -
-    .replace(/-+/g, "-"); // Replace multiple - with single -
+  return name.
+  toLowerCase().
+  replace(/[^a-z0-9\s-]/g, "") // Remove special chars
+  .replace(/\s+/g, "-") // Replace spaces with -
+  .replace(/-+/g, "-"); // Replace multiple - with single -
 };
 
 export default function AuthorFormModal({ isOpen, onClose, author, onSave, currentLocale }) {
@@ -41,7 +41,7 @@ export default function AuthorFormModal({ isOpen, onClose, author, onSave, curre
     bio: "",
     avatar_url: "",
     social_links: { twitter: "", linkedin: "", facebook: "", instagram: "", website: "" },
-    user_id: "",
+    user_id: ""
   });
   const [isSaving, setIsSaving] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
@@ -55,7 +55,7 @@ export default function AuthorFormModal({ isOpen, onClose, author, onSave, curre
         bio: author.bio || "",
         avatar_url: author.avatar_url || "",
         social_links: author.social_links || { twitter: "", linkedin: "", website: "" },
-        user_id: author.user_id || "",
+        user_id: author.user_id || ""
       });
     } else {
       setFormData({
@@ -64,11 +64,11 @@ export default function AuthorFormModal({ isOpen, onClose, author, onSave, curre
       });
     }
   }, [author]);
-  
+
   useEffect(() => {
     async function fetchUsers() {
-        const userList = await User.list();
-        setUsers(userList);
+      const userList = await User.list();
+      setUsers(userList);
     }
     fetchUsers();
   }, []);
@@ -79,7 +79,7 @@ export default function AuthorFormModal({ isOpen, onClose, author, onSave, curre
       setFormData((prev) => ({
         ...prev,
         name: value,
-        slug: generateSlug(value),
+        slug: generateSlug(value)
       }));
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
@@ -90,12 +90,12 @@ export default function AuthorFormModal({ isOpen, onClose, author, onSave, curre
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      social_links: { ...prev.social_links, [name]: value },
+      social_links: { ...prev.social_links, [name]: value }
     }));
   };
-  
+
   const handleUserLinkChange = (userId) => {
-      setFormData(prev => ({ ...prev, user_id: userId }));
+    setFormData((prev) => ({ ...prev, user_id: userId }));
   };
 
   const handleImageUpload = async (e) => {
@@ -150,7 +150,7 @@ export default function AuthorFormModal({ isOpen, onClose, author, onSave, curre
 
           <div className="border-t border-border my-4 pt-4">
              <h4 className="text-sm font-medium mb-4 text-center">Social Media</h4>
-             <div className="space-y-3">
+             <div className="space-y-1">
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="twitter" className="text-right text-primary">Twitter / X</Label>
                   <Input id="twitter" name="twitter" placeholder="https://x.com/username" value={formData.social_links?.twitter || ""} onChange={handleSocialChange} className="col-span-3" />
@@ -176,7 +176,7 @@ export default function AuthorFormModal({ isOpen, onClose, author, onSave, curre
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="avatar" className="text-right text-primary">{t('admin.authorAvatar')}</Label>
             <div className="col-span-3 flex items-center gap-4">
-              {isUploading ? <Loader2 className="w-10 h-10 animate-spin" /> : (formData.avatar_url && <img src={formData.avatar_url} alt="Avatar" className="w-16 h-16 rounded-full object-cover"/>)}
+              {isUploading ? <Loader2 className="w-10 h-10 animate-spin" /> : formData.avatar_url && <img src={formData.avatar_url} alt="Avatar" className="w-16 h-16 rounded-full object-cover" />}
               <Input id="avatar" type="file" onChange={handleImageUpload} className="flex-1" />
             </div>
           </div>
@@ -189,9 +189,9 @@ export default function AuthorFormModal({ isOpen, onClose, author, onSave, curre
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value={null}>{t('admin.notLinked')}</SelectItem>
-                {users.map(user => (
-                  <SelectItem key={user.id} value={user.id}>{user.full_name} ({user.email})</SelectItem>
-                ))}
+                {users.map((user) =>
+                <SelectItem key={user.id} value={user.id}>{user.full_name} ({user.email})</SelectItem>
+                )}
               </SelectContent>
             </Select>
           </div>
@@ -200,17 +200,17 @@ export default function AuthorFormModal({ isOpen, onClose, author, onSave, curre
             <DialogClose asChild>
               <Button type="button" variant="outline">{t('common.cancel')}</Button>
             </DialogClose>
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               disabled={isSaving || isUploading}
-              className="bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-white border-0"
-            >
+              className="bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-white border-0">
+
               {isSaving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               {t('admin.saveAuthor')}
             </Button>
           </DialogFooter>
         </form>
       </DialogContent>
-    </Dialog>
-  );
+    </Dialog>);
+
 }
