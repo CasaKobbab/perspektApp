@@ -56,6 +56,7 @@ export default function AdminArticleEditor() {
     author_name: "",
     author_avatar_url: "",
     topic: "news",
+    topics: [], // NEW: topics array
     tags: [],
     featured_image: "",
     image_alt: "",
@@ -103,6 +104,7 @@ export default function AdminArticleEditor() {
             setArticle({
               ...existingArticle,
               tags: existingArticle.tags || [],
+              topics: existingArticle.topics || (existingArticle.topic ? [existingArticle.topic] : []), // NEW: Initialize topics
               locale: existingArticle.locale || currentLocale,
               translation_group_id: existingArticle.translation_group_id || generateUUID(),
               author_profile_id: existingArticle.author_profile_id || "",
@@ -123,6 +125,7 @@ export default function AdminArticleEditor() {
             author_name: user.full_name, // Fallback to current user's name
             author_avatar_url: "",
             topic: "news",
+            topics: ["news"], // Default to news
             tags: [],
             featured_image: "",
             image_alt: "",
@@ -283,6 +286,37 @@ export default function AdminArticleEditor() {
     }
   };
 
+  // NEW: Handler for Topics changes
+  const handleTopicsChange = (slug) => {
+      setArticle(prev => {
+          const currentTopics = prev.topics || [];
+          if (currentTopics.includes(slug)) {
+              return prev; // Already selected
+          }
+          const newTopics = [...currentTopics, slug];
+          return {
+              ...prev,
+              topics: newTopics,
+              topic: newTopics[0] // Sync primary topic
+          };
+      });
+  };
+
+  const removeTopic = (slug) => {
+      setArticle(prev => {
+          const newTopics = prev.topics.filter(t => t !== slug);
+          // If we removed the last topic, default to 'news' or empty but we prefer having at least one
+          if (newTopics.length === 0) {
+              return { ...prev, topics: [], topic: "" };
+          }
+          return {
+              ...prev,
+              topics: newTopics,
+              topic: newTopics[0] // Update primary topic
+          };
+      });
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -308,6 +342,19 @@ export default function AdminArticleEditor() {
     // Ensure author_profile_id is sent, even if it's an empty string
     if (articleData.author_profile_id === "") {
       articleData.author_profile_id = null; // Store as null if not selected
+    }
+
+    // Ensure topics array is populated
+    if (!articleData.topics || articleData.topics.length === 0) {
+        if (articleData.topic) {
+            articleData.topics = [articleData.topic];
+        } else {
+            articleData.topics = ["news"]; // Fallback
+            articleData.topic = "news";
+        }
+    } else {
+        // Sync topic to be the first of topics
+        articleData.topic = articleData.topics[0];
     }
 
 
@@ -417,19 +464,36 @@ export default function AdminArticleEditor() {
             </div>
 
             <div>
-              <Label htmlFor="topic" className="font-semibold text-primary">{t('admin.topic')}</Label>
-              <Select value={article.topic} onValueChange={(v) => handleSelectOrSwitchChange("topic", v)}>
-                <SelectTrigger className="bg-surface border-default text-primary">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-surface border-default">
-                  {availableTopics.map((topic) =>
-                    <SelectItem key={topic.slug} value={topic.slug} className="text-primary hover:bg-warm-sand dark:hover:bg-slate-ink">
-                      {t(topic.nameKey)}
-                    </SelectItem>
-                  )}
-                </SelectContent>
-              </Select>
+              <Label className="font-semibold text-primary">{t('admin.topic')}</Label>
+              <div className="space-y-3">
+                  <div className="flex flex-wrap gap-2 mb-2">
+                      {article.topics && article.topics.map(topicSlug => (
+                          <div key={topicSlug} className="bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full text-sm flex items-center gap-2">
+                              <span>{t(availableTopics.find(t => t.slug === topicSlug)?.nameKey || topicSlug)}</span>
+                              <button type="button" onClick={() => removeTopic(topicSlug)} className="hover:text-emerald-900">
+                                  <X className="w-3 h-3" />
+                              </button>
+                          </div>
+                      ))}
+                  </div>
+                  
+                  <Select onValueChange={handleTopicsChange}>
+                    <SelectTrigger className="bg-surface border-default text-primary">
+                      <span className="text-muted-foreground">Add topic...</span>
+                    </SelectTrigger>
+                    <SelectContent className="bg-surface border-default">
+                      {availableTopics.map((topic) => (
+                         <SelectItem 
+                            key={topic.slug} 
+                            value={topic.slug} 
+                            disabled={article.topics?.includes(topic.slug)}
+                            className="text-primary hover:bg-warm-sand dark:hover:bg-slate-ink">
+                          {t(topic.nameKey)}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+              </div>
             </div>
 
             <div>
