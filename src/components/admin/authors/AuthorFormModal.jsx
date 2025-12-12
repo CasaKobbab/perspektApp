@@ -134,7 +134,7 @@ export default function AuthorFormModal({ isOpen, onClose, author, onSave, curre
         <DialogHeader>
           <DialogTitle>{author ? t('admin.editAuthor') : t('admin.newAuthor')}</DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="grid gap-6 py-4">
+        <form onSubmit={handleSubmit} className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right text-primary">{t('admin.fullName')}</Label>
             <Input id="name" name="name" value={formData.name} onChange={handleInputChange} className="col-span-3" required />
