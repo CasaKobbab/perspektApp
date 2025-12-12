@@ -476,17 +476,7 @@ export default function AdminArticleEditor() {
               </Select>
             </div>
 
-            <div className="md:col-span-2">
-              <Label htmlFor="tags" className="font-semibold text-primary">{t('admin.tags')}</Label>
-              <Input
-                id="tags"
-                name="tags"
-                value={article.tags.join(", ")}
-                onChange={(e) => handleSelectOrSwitchChange("tags", e.target.value.split(",").map((t) => t.trim()))}
-                className="bg-surface border-default text-primary"
-              />
-              <p className="text-sm text-secondary mt-1">{t('admin.tagsHint')}</p>
-            </div>
+
 
             <div className="md:col-span-2">
               <Label htmlFor="featured_image" className="font-semibold text-primary">{t('admin.featuredImage')}</Label>
