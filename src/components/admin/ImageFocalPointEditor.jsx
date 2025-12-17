@@ -166,18 +166,24 @@ export default function ImageFocalPointEditor({
             <div className="flex gap-2">
               <Button
                 type="button"
-                variant={previewMode === 'desktop' ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => setPreviewMode('desktop')}
+                className={previewMode === 'desktop' 
+                  ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white border-0 shadow-sm' 
+                  : 'bg-transparent border-2 border-default text-secondary hover:border-accent hover:text-accent'
+                }
               >
                 <Monitor className="w-4 h-4 mr-1" />
                 Desktop
               </Button>
               <Button
                 type="button"
-                variant={previewMode === 'mobile' ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => setPreviewMode('mobile')}
+                className={previewMode === 'mobile' 
+                  ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white border-0 shadow-sm' 
+                  : 'bg-transparent border-2 border-default text-secondary hover:border-accent hover:text-accent'
+                }
               >
                 <Smartphone className="w-4 h-4 mr-1" />
                 Mobile
