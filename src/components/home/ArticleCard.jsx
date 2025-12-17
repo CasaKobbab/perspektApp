@@ -89,8 +89,8 @@ export default function ArticleCard({ article, topicColors, user, showImage = tr
           </p>
         )}
 
-        <div className="flex items-center justify-between pt-4 border-t border-default">
-          <div className="flex items-center text-sm text-secondary">
+        <div className="flex flex-col sm:flex-row gap-4 sm:gap-0 sm:items-center justify-between pt-4 border-t border-default">
+          <div className="flex items-center text-sm text-secondary w-full sm:w-auto">
             <img 
               src={article.author_avatar_url || 'https://via.placeholder.com/24'} 
               alt={article.author_name} 
@@ -110,9 +110,9 @@ export default function ArticleCard({ article, topicColors, user, showImage = tr
           </div>
 
           {!canReadArticle() && (
-            <Link to={createPageUrl("Subscribe")}>
-              <Button size="sm" variant="outline" className="text-xs border-accent text-accent hover:bg-accent hover:text-on-accent transition-colors">
-                {t('article.subscribeToRead')}
+            <Link to={createPageUrl("Subscribe")} className="w-full sm:w-auto">
+              <Button size="sm" className="w-full sm:w-auto bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-semibold shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 border-none">
+                {t('article.subscribeToRead')} <Lock className="w-3 h-3 ml-2" />
               </Button>
             </Link>
           )}
