@@ -59,7 +59,8 @@ export default function Subscribe() {
       }
 
       const { data } = await base44.functions.invoke('createStripeCheckout', { 
-        priceId: planId === 'annual' ? "ANNUAL" : "MONTHLY" 
+        priceId: planId === 'annual' ? "ANNUAL" : "MONTHLY",
+        couponId: null // Let backend apply default coupons from env vars
       });
 
       console.log("Checkout Session Created:", data);
