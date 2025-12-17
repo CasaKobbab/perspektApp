@@ -39,9 +39,12 @@ export default function FeaturedArticleCard({ article, topicColors, user }) {
         <Link to={createPageUrl(`Article?id=${article.id}`)} className="block relative aspect-video overflow-hidden">
            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60 z-10 transition-opacity group-hover:opacity-40" />
           <img 
-            src={article.featured_image} 
-            alt={article.image_alt || article.title}
-            className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+           src={article.featured_image} 
+           alt={article.image_alt || article.title}
+           className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+           style={{
+             objectPosition: `${article.image_focus_x ?? 50}% ${article.image_focus_y ?? 50}%`
+           }}
           />
           <div className="absolute bottom-4 left-4 z-20">
              <Badge className={`${topicColors[article.topic]} shadow-sm`}>
