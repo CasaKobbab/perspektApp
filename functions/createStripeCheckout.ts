@@ -3,134 +3,119 @@ import Stripe from 'npm:stripe';
 
 Deno.serve(async (req) => {
     try {
-        // VALIDATION: Check Stripe Secret Key
+        // 1. CRITICAL CONFIG VALIDATION
+        // using Deno.env.get is required for Deno runtime
         const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
         if (!stripeKey) {
-            console.error("FATAL: STRIPE_SECRET_KEY not configured");
-            return Response.json({ error: "Server Error: Missing Stripe Key" }, { status: 500 });
+            console.error("CRITICAL: STRIPE_SECRET_KEY is missing from environment variables");
+            return Response.json({ error: "Server Config Error: Missing Stripe Key" }, { status: 500 });
         }
 
-        const stripe = new Stripe(stripeKey);
+        // Initialize Stripe with fetch client explicitly for Deno safety
+        const stripe = new Stripe(stripeKey, {
+            httpClient: Stripe.createFetchHttpClient(),
+            apiVersion: '2023-10-16', // Pinning version for stability
+        });
 
-        // AUTH: Validate user
+        // 2. AUTHENTICATION
         const base44 = createClientFromRequest(req);
         const user = await base44.auth.me();
 
         if (!user) {
-            console.error("Unauthorized checkout attempt");
-            return Response.json({ error: 'Unauthorized' }, { status: 401 });
+            return Response.json({ error: "Unauthorized: Please log in" }, { status: 401 });
         }
 
-        console.log(`[Checkout] User: ${user.email} (${user.id})`);
-
-        // PARSE: Get request body
-        const body = await req.json();
-        const { priceId: inputId, couponId: inputCouponId, successUrl, cancelUrl } = body;
-
-        console.log(`[Checkout] Input priceId: ${inputId}, couponId: ${inputCouponId || 'none'}`);
-
-        // VALIDATION: Check Price ID
-        if (!inputId) {
-            console.error("Missing priceId in request");
-            return Response.json({ error: "Missing Price ID" }, { status: 400 });
+        // 3. SAFE BODY PARSING
+        let body;
+        try {
+            body = await req.json();
+        } catch (e) {
+            return Response.json({ error: "Invalid Request: Malformed JSON" }, { status: 400 });
         }
 
-        // RESOLVE: Price ID and Coupon
-        let priceId;
-        let couponId = inputCouponId || null;
-
-        if (inputId === 'ANNUAL') {
-            priceId = Deno.env.get("STRIPE_PRICE_ID_ANNUAL");
-            if (!couponId) {
-                couponId = Deno.env.get("STRIPE_COUPON_ANNUAL") || null;
-            }
-            console.log(`[Checkout] Resolved ANNUAL -> priceId: ${priceId}, couponId: ${couponId || 'none'}`);
-        } else if (inputId === 'MONTHLY') {
-            priceId = Deno.env.get("STRIPE_PRICE_ID_MONTHLY");
-            if (!couponId) {
-                couponId = Deno.env.get("STRIPE_COUPON_MONTHLY") || null;
-            }
-            console.log(`[Checkout] Resolved MONTHLY -> priceId: ${priceId}, couponId: ${couponId || 'none'}`);
-        } else {
-            // Direct Stripe Price ID
-            priceId = inputId;
-            console.log(`[Checkout] Using direct priceId: ${priceId}`);
-        }
+        const { priceId, successUrl, cancelUrl, couponId } = body;
 
         if (!priceId) {
-            console.error("Price configuration missing for plan:", inputId);
-            return Response.json({ error: 'Price configuration missing' }, { status: 500 });
+            return Response.json({ error: "User Error: Missing Price ID" }, { status: 400 });
         }
 
-        // CUSTOMER: Create or retrieve
+        // 4. RESOLVE PRICES & COUPONS (Robust Mapping)
+        let finalPriceId = priceId;
+        let finalCouponId = couponId;
+
+        if (priceId === 'ANNUAL') {
+            finalPriceId = Deno.env.get("STRIPE_PRICE_ID_ANNUAL");
+            // Only apply default coupon if specific one wasn't passed
+            if (!finalCouponId) finalCouponId = Deno.env.get("STRIPE_COUPON_ANNUAL");
+        } else if (priceId === 'MONTHLY') {
+            finalPriceId = Deno.env.get("STRIPE_PRICE_ID_MONTHLY");
+            if (!finalCouponId) finalCouponId = Deno.env.get("STRIPE_COUPON_MONTHLY");
+        }
+
+        if (!finalPriceId) {
+            console.error(`Configuration Error: Price ID not found for '${priceId}'`);
+            return Response.json({ error: "Server Config Error: Price ID not configured" }, { status: 500 });
+        }
+
+        // 5. CUSTOMER RESOLUTION
         let customerId = user.stripe_customer_id;
-
         if (!customerId) {
-            console.log(`[Checkout] Creating new Stripe customer for ${user.email}`);
-            const customer = await stripe.customers.create({
-                email: user.email,
-                name: user.full_name,
-                metadata: { userId: user.id }
-            });
-            customerId = customer.id;
-            await base44.auth.updateMe({ stripe_customer_id: customerId });
-            console.log(`[Checkout] Created customer: ${customerId}`);
-        } else {
-            console.log(`[Checkout] Using existing customer: ${customerId}`);
+            try {
+                const customer = await stripe.customers.create({
+                    email: user.email,
+                    name: user.full_name,
+                    metadata: { userId: user.id }
+                });
+                customerId = customer.id;
+                // Save for future use
+                await base44.auth.updateMe({ stripe_customer_id: customerId });
+            } catch (custErr) {
+                console.error("Stripe Customer Create Error:", custErr);
+                return Response.json({ error: "Failed to create payment profile" }, { status: 500 });
+            }
         }
 
-        // SESSION CONFIG: Build session configuration
+        // 6. SESSION CREATION
+        // Robust fallback for URLs if not provided
+        const baseUrl = Deno.env.get("BASE_URL") || "https://perspekt.no";
+        const finalSuccessUrl = successUrl || `${baseUrl}/PaymentSuccess?session_id={CHECKOUT_SESSION_ID}`;
+        const finalCancelUrl = cancelUrl || `${baseUrl}/PaymentCancel`;
+
         const sessionConfig = {
             customer: customerId,
             mode: 'subscription',
             payment_method_types: ['card'],
             line_items: [
                 {
-                    price: priceId,
+                    price: finalPriceId,
                     quantity: 1,
                 },
             ],
             allow_promotion_codes: true,
+            success_url: finalSuccessUrl,
+            cancel_url: finalCancelUrl,
             client_reference_id: user.id,
         };
 
-        // COUPON LOGIC (Safe Mode): Only add discounts if couponId is non-empty string
-        if (couponId && typeof couponId === 'string' && couponId.trim().length > 0) {
-            sessionConfig.discounts = [{ coupon: couponId.trim() }];
-            console.log(`[Checkout] Applied coupon: ${couponId}`);
-        } else {
-            console.log(`[Checkout] No coupon applied`);
+        // Safe coupon application
+        if (finalCouponId && typeof finalCouponId === 'string' && finalCouponId.trim().length > 0) {
+            sessionConfig.discounts = [{ coupon: finalCouponId.trim() }];
         }
 
-        // URLs: Use provided or construct from origin
-        const envUrl = Deno.env.get("BASE_URL") || Deno.env.get("NEXT_PUBLIC_BASE_URL");
-        const origin = (envUrl || "https://perspekt.no").replace(/\/$/, "");
-
-        sessionConfig.success_url = successUrl || `${origin}/PaymentSuccess?session_id={CHECKOUT_SESSION_ID}`;
-        sessionConfig.cancel_url = cancelUrl || `${origin}/PaymentCancel`;
-
-        console.log(`[Checkout] Success URL: ${sessionConfig.success_url}`);
-        console.log(`[Checkout] Cancel URL: ${sessionConfig.cancel_url}`);
-
-        // CREATE SESSION
-        console.log(`[Checkout] Creating Stripe session...`);
+        console.log(`Initiating checkout for user ${user.email} with price ${finalPriceId}`);
+        
         const session = await stripe.checkout.sessions.create(sessionConfig);
-
-        console.log(`[Checkout] ✅ Session created: ${session.id}`);
-        console.log(`[Checkout] Redirect URL: ${session.url}`);
 
         return Response.json({ 
             sessionId: session.id, 
             url: session.url 
         });
 
-    } catch (error) {
-        console.error("❌ [Checkout Error]:", error.message);
-        console.error("Stack:", error.stack);
-        
-        // Return detailed error message
+    } catch (err) {
+        // Global Error Handler
+        console.error("CRITICAL CHECKOUT CRASH:", err);
         return Response.json({ 
-            error: error.message || "Unknown checkout error" 
+            error: err.message || "Internal Server Error during checkout" 
         }, { status: 500 });
     }
 });
