@@ -330,7 +330,10 @@ export default function ArticlePage() {
               <img
               src={article.featured_image}
               alt={article.image_alt || article.title}
-              className="w-full h-64 md:h-96 object-cover rounded-xl" />
+              className="w-full h-64 md:h-96 object-cover rounded-xl"
+              style={{
+                objectPosition: `${article.image_focus_x ?? 50}% ${article.image_focus_y ?? 50}%`
+              }} />
 
               {article.image_alt &&
             <p className="text-sm text-muted mt-2 italic">{article.image_alt}</p>

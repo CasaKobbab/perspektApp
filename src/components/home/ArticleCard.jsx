@@ -70,6 +70,9 @@ export default function ArticleCard({ article, topicColors, user, showImage = tr
               src={article.featured_image} 
               alt={article.image_alt || article.title}
               className="w-full h-48 object-cover rounded-lg group-hover:scale-105 transition-transform duration-300 shadow-sm"
+              style={{
+                objectPosition: `${article.image_focus_x ?? 50}% ${article.image_focus_y ?? 50}%`
+              }}
             />
           </Link>
         )}

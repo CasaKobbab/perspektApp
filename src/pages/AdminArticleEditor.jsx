@@ -20,6 +20,7 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { ArrowLeft, Save, Loader2, Upload, X } from "lucide-react"; // NEW: Import Loader2 for saving state
 import { UploadFile } from "@/integrations/Core"; // NEW: Import UploadFile integration
+import ImageFocalPointEditor from "@/components/admin/ImageFocalPointEditor";
 
 // Simple UUID generator function
 const generateUUID = () => {
@@ -60,6 +61,8 @@ export default function AdminArticleEditor() {
     tags: [],
     featured_image: "",
     image_alt: "",
+    image_focus_x: 50,
+    image_focus_y: 50,
     status: "draft",
     access_level: "free",
     featured: false,
@@ -110,7 +113,9 @@ export default function AdminArticleEditor() {
               author_profile_id: existingArticle.author_profile_id || "",
               author_name: existingArticle.author_name || "",
               author_avatar_url: existingArticle.author_avatar_url || "",
-              published_date: existingArticle.published_date || "" // Ensure published_date is loaded
+              published_date: existingArticle.published_date || "", // Ensure published_date is loaded
+              image_focus_x: existingArticle.image_focus_x ?? 50,
+              image_focus_y: existingArticle.image_focus_y ?? 50
             });
           }
         } else {
@@ -135,7 +140,9 @@ export default function AdminArticleEditor() {
             locale: currentLocale,
             translation_group_id: generateUUID(),
             original_article_id: null,
-            published_date: "" // Ensure published_date is initialized
+            published_date: "", // Ensure published_date is initialized
+            image_focus_x: 50,
+            image_focus_y: 50
           };
 
           if (user.author_profile_id) {
@@ -176,7 +183,11 @@ export default function AdminArticleEditor() {
   };
 
   const handleRemoveImage = () => {
-    setArticle((prev) => ({ ...prev, featured_image: "" }));
+    setArticle((prev) => ({ ...prev, featured_image: "", image_focus_x: 50, image_focus_y: 50 }));
+  };
+
+  const handleFocalPointChange = (x, y) => {
+    setArticle((prev) => ({ ...prev, image_focus_x: x, image_focus_y: y }));
   };
 
   // NEW: Custom handler for the Quill editor's image button
@@ -543,50 +554,15 @@ export default function AdminArticleEditor() {
 
 
             <div className="md:col-span-2">
-              <Label htmlFor="featured_image" className="font-semibold text-primary">{t('admin.featuredImage')}</Label>
-              <div className="mt-2">
-                {article.featured_image ? (
-                  <div className="relative group">
-                    <img
-                      src={article.featured_image}
-                      alt="Featured"
-                      className="w-full h-64 object-cover rounded-lg border border-default"
-                    />
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
-                      <Button
-                        type="button"
-                        variant="destructive"
-                        onClick={handleRemoveImage}
-                        className="flex items-center gap-2"
-                      >
-                        <X className="w-4 h-4" />
-                        {t('admin.removeImage')}
-                      </Button>
-                    </div>
-                  </div>
-                ) : (
-                  <div
-                    className={`h-40 border-2 border-dashed border-default rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-teal-500 transition-colors bg-surface ${isUploadingImage ? 'opacity-50 pointer-events-none' : ''}`}
-                    onClick={() => fileInputRef.current?.click()}
-                  >
-                    <input
-                      type="file"
-                      ref={fileInputRef}
-                      className="hidden"
-                      accept="image/*"
-                      onChange={handleImageUpload}
-                    />
-                    {isUploadingImage ? (
-                      <Loader2 className="w-8 h-8 text-teal-500 animate-spin mb-2" />
-                    ) : (
-                      <Upload className="w-8 h-8 text-secondary mb-2" />
-                    )}
-                    <p className="text-sm text-secondary font-medium">
-                      {isUploadingImage ? t('admin.uploading') : t('admin.dragDropHint')}
-                    </p>
-                  </div>
-                )}
-              </div>
+              <ImageFocalPointEditor
+                imageUrl={article.featured_image}
+                focusX={article.image_focus_x}
+                focusY={article.image_focus_y}
+                onImageChange={handleImageUpload}
+                onFocalPointChange={handleFocalPointChange}
+                onRemove={handleRemoveImage}
+                isUploading={isUploadingImage}
+              />
             </div>
             <div className="md:col-span-2">
               <Label htmlFor="image_alt" className="font-semibold text-primary">{t('admin.imageAlt')}</Label>
