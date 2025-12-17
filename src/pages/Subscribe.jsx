@@ -58,29 +58,20 @@ export default function Subscribe() {
         return;
       }
 
-      console.log(`Starting checkout for plan: ${planId}`);
-      
       const { data } = await base44.functions.invoke('createStripeCheckout', { 
-        priceId: planId === 'annual' ? "ANNUAL" : "MONTHLY",
-        couponId: null // Let backend apply default coupons from env vars
+        priceId: planId === 'annual' ? "ANNUAL" : "MONTHLY" 
       });
 
-      console.log("Checkout Response:", data);
-      
-      if (data?.error) {
-        throw new Error(data.error);
-      }
+      console.log("Checkout Session Created:", data);
       
       if (data?.url) {
-        console.log("Redirecting to Stripe checkout...");
         window.location.href = data.url;
       } else {
         throw new Error("Failed to retrieve checkout URL");
       }
     } catch (error) {
       console.error("Subscription error:", error);
-      const errorMessage = error.message || "Failed to start subscription. Please try again.";
-      alert(errorMessage);
+      alert("Failed to start subscription. Please try again.");
     } finally {
       setIsLoading(false);
     }
