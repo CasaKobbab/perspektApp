@@ -58,11 +58,11 @@ export default function Subscribe() {
         return;
       }
 
-      const priceId = planId === 'annual' ? "ANNUAL" : "MONTHLY";
-      console.log("🚀 Initiating checkout with price:", priceId);
+      const planName = planId === 'annual' ? "annual" : "monthly";
+      console.log("🚀 Initiating checkout for plan:", planName);
 
       const response = await base44.functions.invoke('createStripeCheckout', { 
-        priceId: priceId,
+        planName: planName,
         successUrl: `${window.location.origin}/PaymentSuccess?session_id={CHECKOUT_SESSION_ID}`,
         cancelUrl: `${window.location.origin}/PaymentCancel`
       });

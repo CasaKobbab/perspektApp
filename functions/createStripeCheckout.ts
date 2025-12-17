@@ -4,7 +4,6 @@ import Stripe from 'npm:stripe';
 Deno.serve(async (req) => {
     try {
         // 1. CRITICAL CONFIG VALIDATION
-        // using Deno.env.get is required for Deno runtime
         const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
         if (!stripeKey) {
             console.error("CRITICAL: STRIPE_SECRET_KEY is missing from environment variables");
@@ -14,7 +13,7 @@ Deno.serve(async (req) => {
         // Initialize Stripe with fetch client explicitly for Deno safety
         const stripe = new Stripe(stripeKey, {
             httpClient: Stripe.createFetchHttpClient(),
-            apiVersion: '2023-10-16', // Pinning version for stability
+            apiVersion: '2023-10-16',
         });
 
         // 2. AUTHENTICATION
@@ -33,29 +32,34 @@ Deno.serve(async (req) => {
             return Response.json({ error: "Invalid Request: Malformed JSON" }, { status: 400 });
         }
 
-        const { priceId, successUrl, cancelUrl, couponId } = body;
+        const { planName, successUrl, cancelUrl } = body;
+
+        if (!planName) {
+            return Response.json({ error: "User Error: Missing Plan Name" }, { status: 400 });
+        }
+
+        console.log(`[Checkout] Processing request for plan: ${planName} by user: ${user.email}`);
+
+        // 4. SERVER-SIDE ID RESOLUTION
+        let priceId;
+        let couponId;
+
+        if (planName === 'annual' || planName === 'ANNUAL') {
+            priceId = Deno.env.get("STRIPE_PRICE_ID_ANNUAL");
+            couponId = Deno.env.get("STRIPE_COUPON_ANNUAL");
+        } else if (planName === 'monthly' || planName === 'MONTHLY') {
+            priceId = Deno.env.get("STRIPE_PRICE_ID_MONTHLY");
+            couponId = Deno.env.get("STRIPE_COUPON_MONTHLY");
+        } else {
+             return Response.json({ error: "Invalid Plan Name. Must be 'monthly' or 'annual'" }, { status: 400 });
+        }
 
         if (!priceId) {
-            return Response.json({ error: "User Error: Missing Price ID" }, { status: 400 });
+            console.error(`Configuration Error: Price ID not found for plan '${planName}'`);
+            return Response.json({ error: `Server Config Error: Price ID not configured for ${planName}` }, { status: 500 });
         }
 
-        // 4. RESOLVE PRICES & COUPONS (Robust Mapping)
-        let finalPriceId = priceId;
-        let finalCouponId = couponId;
-
-        if (priceId === 'ANNUAL') {
-            finalPriceId = Deno.env.get("STRIPE_PRICE_ID_ANNUAL");
-            // Only apply default coupon if specific one wasn't passed
-            if (!finalCouponId) finalCouponId = Deno.env.get("STRIPE_COUPON_ANNUAL");
-        } else if (priceId === 'MONTHLY') {
-            finalPriceId = Deno.env.get("STRIPE_PRICE_ID_MONTHLY");
-            if (!finalCouponId) finalCouponId = Deno.env.get("STRIPE_COUPON_MONTHLY");
-        }
-
-        if (!finalPriceId) {
-            console.error(`Configuration Error: Price ID not found for '${priceId}'`);
-            return Response.json({ error: "Server Config Error: Price ID not configured" }, { status: 500 });
-        }
+        console.log(`[Checkout] Resolved IDs - Price: ${priceId}, Coupon: ${couponId || 'None'}`);
 
         // 5. CUSTOMER RESOLUTION
         let customerId = user.stripe_customer_id;
@@ -87,7 +91,7 @@ Deno.serve(async (req) => {
             payment_method_types: ['card'],
             line_items: [
                 {
-                    price: finalPriceId,
+                    price: priceId,
                     quantity: 1,
                 },
             ],
@@ -98,11 +102,9 @@ Deno.serve(async (req) => {
         };
 
         // Safe coupon application
-        if (finalCouponId && typeof finalCouponId === 'string' && finalCouponId.trim().length > 0) {
-            sessionConfig.discounts = [{ coupon: finalCouponId.trim() }];
+        if (couponId && typeof couponId === 'string' && couponId.trim().length > 0) {
+            sessionConfig.discounts = [{ coupon: couponId.trim() }];
         }
-
-        console.log(`Initiating checkout for user ${user.email} with price ${finalPriceId}`);
         
         const session = await stripe.checkout.sessions.create(sessionConfig);
 
