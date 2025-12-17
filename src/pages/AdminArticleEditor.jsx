@@ -4,8 +4,11 @@ import { Article } from "@/entities/Article"; // Specific import for Article
 import { User } from "@/entities/User"; // Specific import for User
 import { AuthorProfile } from "@/entities/AuthorProfile"; // NEW: Import AuthorProfile entity
 import { useTranslation, createPageUrl } from "@/components/i18n/translations";
-import ReactQuill from "react-quill";
+import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import BlotFormatter from 'quill-blot-formatter';
+
+Quill.register('modules/blotFormatter', BlotFormatter);
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -220,6 +223,7 @@ export default function AdminArticleEditor() {
 
   // NEW: Configuration for the Quill editor's modules and formats
   const modules = {
+    blotFormatter: {},
     toolbar: {
       container: [
         [{ header: [1, 2, 3, 4, false] }],
