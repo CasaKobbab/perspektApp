@@ -58,20 +58,35 @@ export default function Subscribe() {
         return;
       }
 
-      const { data } = await base44.functions.invoke('createStripeCheckout', { 
-        priceId: planId === 'annual' ? "ANNUAL" : "MONTHLY" 
+      const priceId = planId === 'annual' ? "ANNUAL" : "MONTHLY";
+      console.log("🚀 Initiating checkout with price:", priceId);
+
+      const response = await base44.functions.invoke('createStripeCheckout', { 
+        priceId: priceId,
+        successUrl: `${window.location.origin}/PaymentSuccess?session_id={CHECKOUT_SESSION_ID}`,
+        cancelUrl: `${window.location.origin}/PaymentCancel`
       });
 
-      console.log("Checkout Session Created:", data);
+      console.log("✅ Checkout response:", response);
       
-      if (data?.url) {
-        window.location.href = data.url;
+      if (!response.data) {
+        throw new Error("No data in response");
+      }
+
+      if (response.data.error) {
+        throw new Error(response.data.error);
+      }
+      
+      if (response.data.url) {
+        console.log("🔗 Redirecting to:", response.data.url);
+        window.location.href = response.data.url;
       } else {
-        throw new Error("Failed to retrieve checkout URL");
+        throw new Error("No checkout URL in response");
       }
     } catch (error) {
-      console.error("Subscription error:", error);
-      alert("Failed to start subscription. Please try again.");
+      console.error("❌ Subscription error:", error);
+      const errorMessage = error.message || error.data?.error || "Unknown error occurred";
+      alert(`Checkout Error: ${errorMessage}\n\nPlease try again or contact support if the problem persists.`);
     } finally {
       setIsLoading(false);
     }
