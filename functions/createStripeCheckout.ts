@@ -15,17 +15,32 @@ Deno.serve(async (req) => {
         const { priceId: inputId, couponId: inputCouponId } = await req.json();
 
         let priceId;
-        let couponId = inputCouponId || null;
+        let couponId = null;
 
-        // Resolve Price ID
+        // Validate and set coupon if provided
+        if (inputCouponId && typeof inputCouponId === 'string' && inputCouponId.trim().length > 0) {
+            couponId = inputCouponId.trim();
+        }
+
+        // Resolve Price ID and default coupons
         if (inputId === 'ANNUAL') {
             priceId = Deno.env.get("STRIPE_PRICE_ID_ANNUAL");
-            // Apply default coupon if no specific coupon was passed
-            if (!couponId) couponId = Deno.env.get("STRIPE_COUPON_ANNUAL");
+            // Apply default coupon only if no specific coupon was passed and env var exists
+            if (!couponId) {
+                const defaultCoupon = Deno.env.get("STRIPE_COUPON_ANNUAL");
+                if (defaultCoupon && defaultCoupon.trim().length > 0) {
+                    couponId = defaultCoupon.trim();
+                }
+            }
         } else if (inputId === 'MONTHLY') {
             priceId = Deno.env.get("STRIPE_PRICE_ID_MONTHLY");
-            // Apply default coupon if no specific coupon was passed
-            if (!couponId) couponId = Deno.env.get("STRIPE_COUPON_MONTHLY");
+            // Apply default coupon only if no specific coupon was passed and env var exists
+            if (!couponId) {
+                const defaultCoupon = Deno.env.get("STRIPE_COUPON_MONTHLY");
+                if (defaultCoupon && defaultCoupon.trim().length > 0) {
+                    couponId = defaultCoupon.trim();
+                }
+            }
         } else {
             // Allow passing a direct Stripe Price ID
             priceId = inputId;
@@ -34,6 +49,8 @@ Deno.serve(async (req) => {
         if (!priceId) {
             return Response.json({ error: 'Price configuration missing' }, { status: 500 });
         }
+
+        console.log(`Processing checkout - Price: ${priceId}, Coupon: ${couponId || 'None'}`);
 
         let customerId = user.stripe_customer_id;
 
@@ -50,18 +67,8 @@ Deno.serve(async (req) => {
             await base44.auth.updateMe({ stripe_customer_id: customerId });
         }
 
-        const discounts = [];
-        if (couponId) {
-            discounts.push({ coupon: couponId });
-        }
-
-        // Robust Origin Resolver
-        const envUrl = Deno.env.get("BASE_URL") || Deno.env.get("NEXT_PUBLIC_BASE_URL");
-        const origin = (envUrl || "https://perspekt.no").replace(/\/$/, "");
-        
-        console.log(`Checkout Origin used: ${origin}`);
-
-        const session = await stripe.checkout.sessions.create({
+        // Build session config
+        const sessionConfig = {
             customer: customerId,
             mode: 'subscription',
             payment_method_types: ['card'],
@@ -71,16 +78,33 @@ Deno.serve(async (req) => {
                     quantity: 1,
                 },
             ],
-            discounts: discounts.length > 0 ? discounts : undefined,
             allow_promotion_codes: true,
             success_url: `${origin}/PaymentSuccess?session_id={CHECKOUT_SESSION_ID}`,
             cancel_url: `${origin}/PaymentCancel`,
             client_reference_id: user.id,
-        });
+        };
+
+        // Only add discounts if we have a valid coupon
+        if (couponId && couponId.length > 0) {
+            sessionConfig.discounts = [{ coupon: couponId }];
+            console.log(`Applying coupon: ${couponId}`);
+        }
+
+        // Robust Origin Resolver
+        const envUrl = Deno.env.get("BASE_URL") || Deno.env.get("NEXT_PUBLIC_BASE_URL");
+        const origin = (envUrl || "https://perspekt.no").replace(/\/$/, "");
+        
+        console.log(`Checkout Origin used: ${origin}`);
+
+        const session = await stripe.checkout.sessions.create(sessionConfig);
 
         return Response.json({ sessionId: session.id, url: session.url });
     } catch (error) {
         console.error("Stripe Checkout Error:", error);
-        return Response.json({ error: error.message }, { status: 500 });
+        // Return detailed error message for debugging
+        return Response.json({ 
+            error: error.message || 'Failed to create checkout session',
+            details: error.type || 'unknown_error'
+        }, { status: 500 });
     }
 });
