@@ -25,24 +25,24 @@ export default function Terms() {
       },
       terms: [
         {
-          title: "1. Abonnement og Betaling",
-          body: "Abonnementet løper forskuddsvis og fornyes automatisk (månedlig eller årlig) inntil det sies opp. Beløpet trekkes automatisk fra ditt registrerte betalingskort via Stripe. Du kan når som helst administrere eller avslutte abonnementet via \"Min Konto\"."
+          title: "Innledning",
+          body: "Perspective Media AS\nDisse vilkårene gjelder for kjøp av abonnement og digitale tjenester levert av Perspective Media AS. Ved å gjennomføre et kjøp godtar du vilkårene nedenfor."
         },
         {
-          title: "2. Angrerett (Viktig)",
-          body: "Ved kjøp av digitale tjenester (tilgang til artikler og innhold) samtykker du til at leveringen starter umiddelbart. Du erkjenner at angreretten på 14 dager derfor bortfaller, jf. angrerettloven § 22 bokstav n."
+          title: "1. Abonnement",
+          body: "1.1 Innhold og tilgang\nEt abonnement gir tilgang til digitalt innhold og eventuelle medlemsfordeler som beskrevet på kjøpstidspunktet. Tilgang gis umiddelbart etter godkjent betaling.\n\n1.2 Automatisk fornyelse\nAbonnementet fornyes automatisk ved utløpet av hver periode, med mindre det sies opp. Du blir belastet på nytt for hver abonnementsperiode.\n\n1.3 Betaling\nBetaling skjer forskuddsvis via Vipps eller Stripe (kort).\n• Ved bruk av Vipps opprettes en fast betalingsavtale, som du kan administrere og avslutte i Vipps-appen:\nProfil → Abonnement → Administrer Abonnement → Avslutt Abonnement (Cancel subscription).\n• Ved bruk av Stripe behandles kortinformasjon av Stripe – vi lagrer ingen kortdata selv.\nKvittering sendes automatisk på e-post etter hver transaksjon.\n\n1.4 Oppsigelse\nAbonnementet kan sies opp når som helst. Oppsigelsen gjelder fra utløpet av inneværende betalte periode. Betalte perioder refunderes ikke."
         },
         {
-          title: "3. Oppsigelse",
-          body: "Du kan si opp abonnementet når som helst. Tilgangen vil da vare ut den inneværende perioden du allerede har betalt for. Det gis ingen refusjon for påbegynte perioder."
+          title: "2. Angrerett",
+          body: "2.1 Digitale abonnement\nDu har 14 dagers angrerett fra kjøpsdato – forutsatt at du ikke har tatt abonnementet i bruk.\nAngreretten bortfaller hvis:\n• du har fått tilgang til innholdet,\n• du har samtykket til umiddelbar levering, og\n• du har akseptert at angreretten da bortfaller.\nDette bekreftes ved kjøp.\nØnsker du å bruke angreretten, må du kontakte oss innen fristen."
         },
         {
-          title: "4. Opphavsrett og Bruk",
-          body: "Alt innhold på Perspekt (tekst, bilder, video) er beskyttet av åndsverkloven. Abonnementet er personlig. Det er ikke tillatt å dele innloggingsinformasjon eller kopiere/distribuere innholdet uten tillatelse."
+          title: "3. Endringer i vilkår",
+          body: "Perspective Media AS forbeholder seg retten til å oppdatere disse vilkårene. Ved vesentlige endringer varsles abonnenter på e-post eller ved innlogging i forkant."
         },
         {
-          title: "5. Debattregler",
-          body: "Vi oppfordrer til en saklig og respektfull debatt. Perspekt forbeholder seg retten til å fjerne upassende kommentarer og utestenge brukere som bryter våre retningslinjer."
+          title: "4. Kontakt og klager",
+          body: "Spørsmål, oppsigelser eller bruk av angrerett kan sendes til:\nE-post: info@perspekt.no\nOrganisasjonsnummer: 936 463 096\nAdresse: Olafiagangen 3, 0188 Oslo\n\nVed tvist kan du kontakte Forbrukerrådet eller benytte EUs klageportal:\nhttps://ec.europa.eu/odr"
         }
       ],
       privacy: [
@@ -92,24 +92,24 @@ export default function Terms() {
       },
       terms: [
         {
-          title: "1. Subscription and Payment",
-          body: "Subscriptions are billed in advance and renew automatically (monthly or annually) until cancelled. Payments are processed automatically via Stripe. You can manage or cancel your subscription at any time via \"My Account\"."
+          title: "Introduction",
+          body: "Perspective Media AS\nThese terms apply to the purchase of subscriptions and digital services provided by Perspective Media AS. By completing a purchase, you agree to the terms below."
+        },
+        {
+          title: "1. Subscription",
+          body: "1.1 Content and Access\nA subscription provides access to digital content and any membership benefits as described at the time of purchase. Access is granted immediately upon approved payment.\n\n1.2 Automatic Renewal\nThe subscription renews automatically at the end of each period unless cancelled. You will be charged again for each subscription period.\n\n1.3 Payment\nPayment is made in advance via Vipps or Stripe (card).\n• When using Vipps, a fixed payment agreement is created, which you can manage and end in the Vipps app:\nProfile → Subscriptions → Manage Subscriptions → Cancel Subscription.\n• When using Stripe, card information is processed by Stripe – we do not store any card data ourselves.\nA receipt is sent automatically by email after each transaction.\n\n1.4 Cancellation\nThe subscription can be cancelled at any time. The cancellation applies from the expiration of the current paid period. Paid periods are not refunded."
         },
         {
           title: "2. Right of Withdrawal",
-          body: "For the purchase of digital services (access to content), you consent to immediate delivery. You acknowledge that the standard 14-day right of withdrawal is therefore waived, in accordance with the Right of Withdrawal Act (Angrerettloven)."
+          body: "2.1 Digital Subscriptions\nYou have a 14-day right of withdrawal from the purchase date – provided you have not started using the subscription.\nThe right of withdrawal lapses if:\n• you have gained access to the content,\n• you have consented to immediate delivery, and\n• you have accepted that the right of withdrawal then lapses.\nThis is confirmed at purchase.\nIf you wish to exercise the right of withdrawal, you must contact us within the deadline."
         },
         {
-          title: "3. Cancellation",
-          body: "You may cancel your subscription at any time. Access will continue until the end of the current billing period. No refunds are provided for partial periods."
+          title: "3. Changes to Terms",
+          body: "Perspective Media AS reserves the right to update these terms. In the event of significant changes, subscribers will be notified by email or upon login in advance."
         },
         {
-          title: "4. Copyright and Usage",
-          body: "All content on Perspekt (text, images, video) is protected by copyright law. Your subscription is personal. Sharing login credentials or redistributing content without permission is prohibited."
-        },
-        {
-          title: "5. User Conduct",
-          body: "We encourage civil and respectful debate. Perspekt reserves the right to remove inappropriate comments and ban users who violate our community guidelines."
+          title: "4. Contact and Complaints",
+          body: "Questions, cancellations, or use of the right of withdrawal can be sent to:\nEmail: info@perspekt.no\nOrganization number: 936 463 096\nAddress: Olafiagangen 3, 0188 Oslo\n\nIn case of a dispute, you can contact the Consumer Council or use the EU's complaint portal:\nhttps://ec.europa.eu/odr"
         }
       ],
       privacy: [
@@ -208,7 +208,7 @@ export default function Terms() {
                     <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
                       {section.title}
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed whitespace-pre-line">
                       {section.body}
                     </p>
                   </div>
