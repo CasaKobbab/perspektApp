@@ -11,7 +11,8 @@ import AdminSettings from "../components/admin/pages/AdminSettings";
 import AdminVideos from "../components/admin/pages/AdminVideos";
 import AdminScriptSettings from "../components/admin/pages/AdminScriptSettings";
 import AdminBanners from "../components/admin/pages/AdminBanners";
-import { ShieldAlert, FileText, Video, Users, BookOpen, UserRound, Settings, Image as ImageIcon, Code } from "lucide-react";
+import AdminAnalytics from "../components/admin/pages/AdminAnalytics";
+import { ShieldAlert, FileText, Video, Users, BookOpen, UserRound, Settings, Image as ImageIcon, Code, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function Admin() {
@@ -73,6 +74,8 @@ export default function Admin() {
         return <AdminSettings user={user} currentLocale={currentLocale} />;
       case "scripts":
         return <AdminScriptSettings currentLocale={currentLocale} />;
+      case "analytics":
+        return <AdminAnalytics currentLocale={currentLocale} />;
       default:
         // New default case rendering a dashboard of cards
         return (
@@ -150,6 +153,15 @@ export default function Admin() {
               <Code className="w-12 h-12 text-accent mb-4" />
               <h2 className="text-2xl font-bold mb-2 text-primary">{t('admin.scriptSettings') || "Script Injection"}</h2>
               <p className="text-secondary">{t('admin.scriptSettingsDesc') || "Manage marketing pixels and scripts."}</p>
+            </div>
+
+            <div
+              onClick={() => setActivePage('analytics')}
+              className="card-surface p-6 rounded-lg cursor-pointer hover:shadow-lg transition-shadow border-2 border-transparent hover:border-accent">
+
+              <TrendingUp className="w-12 h-12 text-accent mb-4" />
+              <h2 className="text-2xl font-bold mb-2 text-primary">Analytics</h2>
+              <p className="text-secondary">View GA4 performance reports.</p>
             </div>
           </div>
         );

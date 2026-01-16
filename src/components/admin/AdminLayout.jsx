@@ -13,6 +13,7 @@ import {
   Menu,
   X,
   Code,
+  TrendingUp,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { User as UserEntity } from "@/entities/User";
@@ -30,6 +31,7 @@ export default function AdminLayout({ children, activePage, setActivePage, user,
     { name: "Banners", slug: "banners", icon: FileText, roles: ["admin", "editor"] },
     { name: t('admin.settings'), slug: "settings", icon: Settings, roles: ["admin"] },
     { name: t('admin.scriptSettings') || "Scripts", slug: "scripts", icon: Code, roles: ["admin"] },
+    { name: "Analytics", slug: "analytics", icon: TrendingUp, roles: ["admin", "editor"] },
     ];
   
   const handleLogout = async () => {
