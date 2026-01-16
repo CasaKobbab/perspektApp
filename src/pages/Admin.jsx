@@ -8,9 +8,10 @@ import AdminUsers from "../components/admin/pages/AdminUsers";
 import AdminTopics from "../components/admin/pages/AdminTopics";
 import AdminAuthors from "../components/admin/pages/AdminAuthors";
 import AdminSettings from "../components/admin/pages/AdminSettings";
-import AdminVideos from "../components/admin/pages/AdminVideos"; // New import
+import AdminVideos from "../components/admin/pages/AdminVideos";
+import AdminScriptSettings from "../components/admin/pages/AdminScriptSettings";
 import AdminBanners from "../components/admin/pages/AdminBanners";
-import { ShieldAlert, FileText, Video, Users, BookOpen, UserRound, Settings, Image as ImageIcon } from "lucide-react"; // Added new icons
+import { ShieldAlert, FileText, Video, Users, BookOpen, UserRound, Settings, Image as ImageIcon, Code } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function Admin() {
@@ -70,6 +71,8 @@ export default function Admin() {
         return <AdminAuthors user={user} currentLocale={currentLocale} />;
       case "settings":
         return <AdminSettings user={user} currentLocale={currentLocale} />;
+      case "scripts":
+        return <AdminScriptSettings currentLocale={currentLocale} />;
       default:
         // New default case rendering a dashboard of cards
         return (
@@ -138,6 +141,15 @@ export default function Admin() {
               <Settings className="w-12 h-12 text-accent mb-4" />
               <h2 className="text-2xl font-bold mb-2 text-primary">{t('admin.settingsManagement')}</h2>
               <p className="text-secondary">{t('admin.settingsManagementDesc')}</p>
+            </div>
+
+            <div
+              onClick={() => setActivePage('scripts')}
+              className="card-surface p-6 rounded-lg cursor-pointer hover:shadow-lg transition-shadow border-2 border-transparent hover:border-accent">
+
+              <Code className="w-12 h-12 text-accent mb-4" />
+              <h2 className="text-2xl font-bold mb-2 text-primary">{t('admin.scriptSettings') || "Script Injection"}</h2>
+              <p className="text-secondary">{t('admin.scriptSettingsDesc') || "Manage marketing pixels and scripts."}</p>
             </div>
           </div>
         );

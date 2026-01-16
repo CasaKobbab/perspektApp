@@ -26,6 +26,7 @@ import {
   DropdownMenuTrigger } from
 "@/components/ui/dropdown-menu";
 import { User as UserEntity } from "@/entities/User";
+import { base44 } from "@/api/base44Client";
 
 function LayoutContent({ children, currentPageName }) {
   const location = useLocation();
@@ -37,6 +38,32 @@ function LayoutContent({ children, currentPageName }) {
   const { t } = useTranslation(currentLocale);
 
   useEffect(() => {
+    // Fetch and inject scripts
+    const injectScripts = async () => {
+      try {
+        const settings = await base44.entities.ScriptSettings.list();
+        if (settings && settings.length > 0) {
+          const { head_scripts, body_end_scripts } = settings[0];
+
+          if (head_scripts) {
+            const range = document.createRange();
+            const fragment = range.createContextualFragment(head_scripts);
+            document.head.appendChild(fragment);
+          }
+
+          if (body_end_scripts) {
+            const range = document.createRange();
+            const fragment = range.createContextualFragment(body_end_scripts);
+            document.body.appendChild(fragment);
+          }
+        }
+      } catch (error) {
+        console.error("Failed to inject scripts:", error);
+      }
+    };
+
+    injectScripts();
+
     const initializeLocale = async () => {
       try {
         const currentUser = await UserEntity.me();

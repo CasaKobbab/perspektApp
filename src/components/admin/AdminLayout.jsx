@@ -12,6 +12,7 @@ import {
   Home,
   Menu,
   X,
+  Code,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { User as UserEntity } from "@/entities/User";
@@ -28,6 +29,7 @@ export default function AdminLayout({ children, activePage, setActivePage, user,
     { name: t('admin.topics'), slug: "topics", icon: Bookmark, roles: ["admin", "editor"] },
     { name: "Banners", slug: "banners", icon: FileText, roles: ["admin", "editor"] },
     { name: t('admin.settings'), slug: "settings", icon: Settings, roles: ["admin"] },
+    { name: t('admin.scriptSettings') || "Scripts", slug: "scripts", icon: Code, roles: ["admin"] },
     ];
   
   const handleLogout = async () => {

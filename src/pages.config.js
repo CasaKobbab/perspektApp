@@ -1,41 +1,41 @@
-import Home from './pages/Home';
-import Subscribe from './pages/Subscribe';
-import Article from './pages/Article';
+import About from './pages/About';
+import Account from './pages/Account';
 import Admin from './pages/Admin';
 import AdminArticleEditor from './pages/AdminArticleEditor';
-import Latest from './pages/Latest';
-import Topics from './pages/Topics';
-import Authors from './pages/Authors';
+import Article from './pages/Article';
 import Author from './pages/Author';
-import Account from './pages/Account';
-import Terms from './pages/Terms';
+import Authors from './pages/Authors';
 import Contact from './pages/Contact';
-import VideoPage from './pages/VideoPage';
-import Search from './pages/Search';
-import About from './pages/About';
-import PaymentSuccess from './pages/PaymentSuccess';
+import Home from './pages/Home';
+import Latest from './pages/Latest';
 import PaymentCancel from './pages/PaymentCancel';
+import PaymentSuccess from './pages/PaymentSuccess';
+import Search from './pages/Search';
+import Subscribe from './pages/Subscribe';
+import Terms from './pages/Terms';
+import Topics from './pages/Topics';
+import VideoPage from './pages/VideoPage';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
-    "Home": Home,
-    "Subscribe": Subscribe,
-    "Article": Article,
+    "About": About,
+    "Account": Account,
     "Admin": Admin,
     "AdminArticleEditor": AdminArticleEditor,
-    "Latest": Latest,
-    "Topics": Topics,
-    "Authors": Authors,
+    "Article": Article,
     "Author": Author,
-    "Account": Account,
-    "Terms": Terms,
+    "Authors": Authors,
     "Contact": Contact,
-    "VideoPage": VideoPage,
-    "Search": Search,
-    "About": About,
-    "PaymentSuccess": PaymentSuccess,
+    "Home": Home,
+    "Latest": Latest,
     "PaymentCancel": PaymentCancel,
+    "PaymentSuccess": PaymentSuccess,
+    "Search": Search,
+    "Subscribe": Subscribe,
+    "Terms": Terms,
+    "Topics": Topics,
+    "VideoPage": VideoPage,
 }
 
 export const pagesConfig = {
