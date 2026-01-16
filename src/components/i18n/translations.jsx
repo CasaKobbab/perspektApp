@@ -346,6 +346,23 @@ const translations = {
       goToHomepage: "Gå til forsiden",
       publishedOn: "Publisert den"
     },
+    // Cookie Consent
+    cookie: {
+      title: "Vi bruker informasjonskapsler",
+      description: "Vi bruker informasjonskapsler for å forbedre din opplevelse, analysere trafikk og levere tilpasset markedsføring.",
+      acceptAll: "Godta alle",
+      rejectAll: "Avvis alle",
+      preferences: "Innstillinger",
+      save: "Lagre innstillinger",
+      essential: "Nødvendige",
+      essentialDesc: "Nødvendige for at nettstedet skal fungere. Kan ikke deaktiveres.",
+      analytics: "Analyse",
+      analyticsDesc: "Hjelper oss å forstå hvordan besøkende bruker nettstedet.",
+      marketing: "Markedsføring",
+      marketingDesc: "Brukes for å vise relevante annonser og spore kampanjer.",
+      settingsTitle: "Innstillinger for informasjonskapsler",
+      privacyPolicy: "Personvernerklæring"
+    },
     // About Page
     about: {
       title: "Velkommen til Perspekt.",
