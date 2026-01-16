@@ -27,6 +27,7 @@ import {
 "@/components/ui/dropdown-menu";
 import { User as UserEntity } from "@/entities/User";
 import { base44 } from "@/api/base44Client";
+import CookieManager from "@/components/privacy/CookieManager";
 
 function LayoutContent({ children, currentPageName }) {
   const location = useLocation();
@@ -38,32 +39,6 @@ function LayoutContent({ children, currentPageName }) {
   const { t } = useTranslation(currentLocale);
 
   useEffect(() => {
-    // Fetch and inject scripts
-    const injectScripts = async () => {
-      try {
-        const settings = await base44.entities.ScriptSettings.list();
-        if (settings && settings.length > 0) {
-          const { head_scripts, body_end_scripts } = settings[0];
-
-          if (head_scripts) {
-            const range = document.createRange();
-            const fragment = range.createContextualFragment(head_scripts);
-            document.head.appendChild(fragment);
-          }
-
-          if (body_end_scripts) {
-            const range = document.createRange();
-            const fragment = range.createContextualFragment(body_end_scripts);
-            document.body.appendChild(fragment);
-          }
-        }
-      } catch (error) {
-        console.error("Failed to inject scripts:", error);
-      }
-    };
-
-    injectScripts();
-
     const initializeLocale = async () => {
       try {
         const currentUser = await UserEntity.me();
@@ -129,6 +104,7 @@ function LayoutContent({ children, currentPageName }) {
 
   return (
     <div className="min-h-screen bg-primary text-body transition-colors duration-300">
+      <CookieManager currentLocale={currentLocale} />
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Poppins:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600&display=swap');
         

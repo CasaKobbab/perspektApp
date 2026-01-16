@@ -701,6 +701,23 @@ const translations = {
       goToHomepage: "Go to homepage",
       publishedOn: "Published on"
     },
+    // Cookie Consent
+    cookie: {
+      title: "We use cookies",
+      description: "We use cookies to improve your experience, analyze traffic, and deliver personalized marketing.",
+      acceptAll: "Accept All",
+      rejectAll: "Reject All",
+      preferences: "Preferences",
+      save: "Save Preferences",
+      essential: "Essential",
+      essentialDesc: "Necessary for the website to function. Cannot be disabled.",
+      analytics: "Analytics",
+      analyticsDesc: "Helps us understand how visitors interact with the website.",
+      marketing: "Marketing",
+      marketingDesc: "Used to display relevant ads and track campaigns.",
+      settingsTitle: "Cookie Settings",
+      privacyPolicy: "Privacy Policy"
+    },
     // About Page
     about: {
       title: "Welcome to Perspekt.",
