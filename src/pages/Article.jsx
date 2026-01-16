@@ -25,6 +25,7 @@ import { useTranslation, createPageUrl, getTopicKey } from "@/components/i18n/tr
 import PaywallModal from "../components/article/PaywallModal";
 import RelatedArticles from "../components/article/RelatedArticles";
 import { AuthorProfile } from "@/entities/AuthorProfile"; // Added AuthorProfile import
+import SEO from "@/components/seo/SEO";
 
 export default function ArticlePage() {
   const navigate = useNavigate();
@@ -224,6 +225,12 @@ export default function ArticlePage() {
 
   return (
     <>
+      <SEO 
+        title={article.title} 
+        description={article.dek || article.excerpt} 
+        image={article.featured_image}
+        type="article"
+      />
       <article className="bg-primary min-h-screen">
         {/* Article Header */}
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

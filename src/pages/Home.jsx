@@ -20,6 +20,7 @@ import ImageMarquee from "../components/home/ImageMarquee";
 import { AuroraButton } from "../components/ui/AuroraButton";
 import { SpotlightBackground } from "../components/ui/SpotlightBackground";
 import { TiltCard } from "../components/ui/TiltCard";
+import SEO from "@/components/seo/SEO";
 
 export default function Home() {
   const [currentLocale, setCurrentLocale] = useState('nb');
@@ -130,6 +131,11 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-paper-white dark:bg-slate-ink transition-colors duration-300 relative overflow-hidden">
+      <SEO 
+        title={t('home.title').replace(/<[^>]*>?/gm, '') + " " + t('home.titleHighlight')} 
+        description={t('home.subtitle')} 
+        image={siteSettings?.hero_image_light}
+      />
       <SpotlightBackground />
       <div className="relative z-10">
       <style>
