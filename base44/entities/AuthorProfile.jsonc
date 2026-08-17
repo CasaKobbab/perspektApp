@@ -1,0 +1,54 @@
+{
+  "name": "AuthorProfile",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Author's full name"
+    },
+    "slug": {
+      "type": "string",
+      "description": "URL-friendly slug for the author's page"
+    },
+    "bio": {
+      "type": "string",
+      "description": "Author's biography, can be rich text"
+    },
+    "avatar_url": {
+      "type": "string",
+      "description": "URL for the author's profile picture"
+    },
+    "image_alt": {
+      "type": "string",
+      "description": "Alt text for the avatar"
+    },
+    "social_links": {
+      "type": "object",
+      "properties": {
+        "twitter": {
+          "type": "string"
+        },
+        "linkedin": {
+          "type": "string"
+        },
+        "facebook": {
+          "type": "string"
+        },
+        "instagram": {
+          "type": "string"
+        },
+        "website": {
+          "type": "string"
+        }
+      }
+    },
+    "user_id": {
+      "type": "string",
+      "description": "ID of the linked User entity account, if any."
+    }
+  },
+  "required": [
+    "name",
+    "slug"
+  ]
+}

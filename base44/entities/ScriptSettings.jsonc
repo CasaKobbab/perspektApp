@@ -1,0 +1,15 @@
+{
+  "name": "ScriptSettings",
+  "type": "object",
+  "properties": {
+    "head_scripts": {
+      "type": "string",
+      "description": "Scripts to be injected into the <head> section of the HTML (e.g., Google Analytics, Meta Pixel)."
+    },
+    "body_end_scripts": {
+      "type": "string",
+      "description": "Scripts to be injected before the closing </body> tag (e.g., Google Tag Manager)."
+    }
+  },
+  "required": []
+}

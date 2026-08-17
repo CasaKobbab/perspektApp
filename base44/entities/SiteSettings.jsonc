@@ -1,0 +1,76 @@
+{
+  "name": "SiteSettings",
+  "type": "object",
+  "properties": {
+    "site_name": {
+      "type": "string",
+      "default": "Perspekt"
+    },
+    "site_description": {
+      "type": "string",
+      "default": "Uavhengige analyser, kritisk journalistikk og meningsfulle debatter."
+    },
+    "logo_url": {
+      "type": "string"
+    },
+    "favicon_url": {
+      "type": "string"
+    },
+    "hero_image_light": {
+      "type": "string",
+      "description": "Hero image for light theme"
+    },
+    "hero_image_dark": {
+      "type": "string",
+      "description": "Hero image for dark theme"
+    },
+    "contact_email": {
+      "type": "string"
+    },
+    "default_locale": {
+      "type": "string",
+      "enum": [
+        "nb",
+        "en"
+      ],
+      "default": "nb"
+    },
+    "enabled_locales": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [
+        "nb",
+        "en"
+      ]
+    },
+    "default_article_access": {
+      "type": "string",
+      "enum": [
+        "free",
+        "metered",
+        "premium"
+      ],
+      "default": "free"
+    },
+    "metered_articles_limit": {
+      "type": "number",
+      "default": 3
+    },
+    "default_article_status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "in_review",
+        "published"
+      ],
+      "default": "draft"
+    },
+    "featured_articles_limit": {
+      "type": "number",
+      "default": 3
+    }
+  },
+  "required": []
+}

@@ -1,0 +1,66 @@
+{
+  "name": "Video",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Video title"
+    },
+    "description": {
+      "type": "string",
+      "description": "Short description of the video"
+    },
+    "video_url": {
+      "type": "string",
+      "description": "URL to the video (YouTube, Vimeo, or direct link)"
+    },
+    "thumbnail_url": {
+      "type": "string",
+      "description": "URL to video thumbnail image"
+    },
+    "duration": {
+      "type": "string",
+      "description": "Video duration (e.g., '5:23')"
+    },
+    "topic": {
+      "type": "string",
+      "enum": [
+        "news",
+        "opinion",
+        "culture",
+        "technology",
+        "economy",
+        "sports"
+      ],
+      "description": "Video category"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "published",
+        "archived"
+      ],
+      "default": "draft"
+    },
+    "locale": {
+      "type": "string",
+      "enum": [
+        "nb",
+        "en"
+      ],
+      "default": "nb",
+      "description": "Video language"
+    },
+    "published_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When video was published"
+    }
+  },
+  "required": [
+    "title",
+    "video_url",
+    "locale"
+  ]
+}

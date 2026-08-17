@@ -1,0 +1,59 @@
+{
+  "name": "User",
+  "type": "object",
+  "properties": {
+    "stripe_customer_id": {
+      "type": "string",
+      "description": "Stripe Customer ID"
+    },
+    "stripe_subscription_id": {
+      "type": "string",
+      "description": "Stripe Subscription ID"
+    },
+    "stripe_price_id": {
+      "type": "string",
+      "description": "Stripe Price ID (Plan)"
+    },
+    "subscription_status": {
+      "type": "string",
+      "description": "Subscription Status (active, trialing, past_due, canceled, etc.)"
+    },
+    "subscription_plan": {
+      "type": "string",
+      "description": "Plan identifier (e.g., 'monthly', 'yearly')"
+    },
+    "subscription_end_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the current subscription period ends"
+    },
+    "preferred_locale": {
+      "type": "string",
+      "default": "nb",
+      "description": "User's preferred language"
+    },
+    "newsletter_subscribed": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the user has subscribed to the newsletter"
+    },
+    "articles_read": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of articles read in the current period"
+    },
+    "last_read_reset": {
+      "type": "string",
+      "format": "date",
+      "description": "Date when the articles_read counter was last reset"
+    },
+    "saved_article_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of IDs of articles saved by the user"
+    }
+  },
+  "required": []
+}

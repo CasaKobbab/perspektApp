@@ -1,0 +1,155 @@
+{
+  "name": "Article",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Article headline"
+    },
+    "dek": {
+      "type": "string",
+      "description": "Article standfirst/subtitle"
+    },
+    "slug": {
+      "type": "string",
+      "description": "URL-friendly version of title"
+    },
+    "body": {
+      "type": "string",
+      "description": "Article content in rich text"
+    },
+    "excerpt": {
+      "type": "string",
+      "description": "Short summary for previews"
+    },
+    "author_profile_id": {
+      "type": "string",
+      "description": "ID of the author's profile from AuthorProfile entity"
+    },
+    "author_name": {
+      "type": "string",
+      "description": "Denormalized name of the author for list views"
+    },
+    "author_avatar_url": {
+      "type": "string",
+      "description": "Denormalized avatar URL of the author for list views"
+    },
+    "topic": {
+      "type": "string",
+      "enum": [
+        "news",
+        "opinion",
+        "culture",
+        "technology",
+        "economy",
+        "sports"
+      ],
+      "description": "Article category (language-agnostic slug)"
+    },
+    "topics": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "news",
+          "opinion",
+          "culture",
+          "technology",
+          "economy",
+          "sports"
+        ]
+      },
+      "description": "Article categories (language-agnostic slugs)"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Article tags"
+    },
+    "featured_image": {
+      "type": "string",
+      "description": "URL to featured image"
+    },
+    "image_alt": {
+      "type": "string",
+      "description": "Alt text for featured image"
+    },
+    "image_focus_x": {
+      "type": "number",
+      "default": 50,
+      "description": "Horizontal focal point percentage (0-100)"
+    },
+    "image_focus_y": {
+      "type": "number",
+      "default": 50,
+      "description": "Vertical focal point percentage (0-100)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "in_review",
+        "published",
+        "archived"
+      ],
+      "default": "draft"
+    },
+    "access_level": {
+      "type": "string",
+      "enum": [
+        "free",
+        "metered",
+        "premium"
+      ],
+      "default": "free",
+      "description": "Article access level"
+    },
+    "reading_time": {
+      "type": "number",
+      "description": "Estimated reading time in minutes"
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false,
+      "description": "Featured on homepage"
+    },
+    "published_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When article was published"
+    },
+    "meta_title": {
+      "type": "string",
+      "description": "SEO title"
+    },
+    "meta_description": {
+      "type": "string",
+      "description": "SEO description"
+    },
+    "locale": {
+      "type": "string",
+      "enum": [
+        "nb",
+        "en"
+      ],
+      "default": "nb",
+      "description": "Article language"
+    },
+    "translation_group_id": {
+      "type": "string",
+      "description": "Links all translations of this article together"
+    },
+    "original_article_id": {
+      "type": "string",
+      "description": "Reference to the original article if this is a translation"
+    }
+  },
+  "required": [
+    "title",
+    "body",
+    "topic",
+    "locale"
+  ]
+}

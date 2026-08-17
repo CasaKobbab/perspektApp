@@ -1,0 +1,41 @@
+{
+  "name": "Topic",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Display name of the topic"
+    },
+    "slug": {
+      "type": "string",
+      "description": "URL-friendly slug (e.g., 'news', 'opinion'). Must match article topic enum."
+    },
+    "description": {
+      "type": "string",
+      "description": "A short description of the topic for display purposes."
+    },
+    "color_class": {
+      "type": "string",
+      "description": "Tailwind CSS background and text color class (e.g., 'bg-red-100 text-red-800')."
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Controls if the topic is visible on the public site."
+    },
+    "locale": {
+      "type": "string",
+      "enum": [
+        "nb",
+        "en"
+      ],
+      "default": "nb"
+    }
+  },
+  "required": [
+    "name",
+    "slug",
+    "locale",
+    "color_class"
+  ]
+}

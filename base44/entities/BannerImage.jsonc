@@ -1,0 +1,26 @@
+{
+  "name": "BannerImage",
+  "type": "object",
+  "properties": {
+    "image_url": {
+      "type": "string",
+      "description": "URL of the banner image"
+    },
+    "alt_text": {
+      "type": "string",
+      "description": "Alt text for accessibility"
+    },
+    "caption": {
+      "type": "string",
+      "description": "Text to display over the image"
+    },
+    "duration": {
+      "type": "number",
+      "default": 5000,
+      "description": "Duration in milliseconds for this slide"
+    }
+  },
+  "required": [
+    "image_url"
+  ]
+}
